@@ -8,17 +8,24 @@
 #  under the terms of the GNU General Public License as published by the Free
 #  Software Foundation; either version 2 of the License, or (at your option)
 #  any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful, but WITHOUT
 #  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 #  more details.
+#  You should have received a copy of the GNU General Public License along
+#  with this program; if not, write to the Free Software Foundation, Inc.,
+#  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
 from gi.repository import Gtk
+from gi.repository import Gio
+from cpucompare.constants import *
 
-class CPUCompareUI(object):
+class CPUCompareUI(Gtk.Application):
   def __init__(self, database):
+    Gtk.Application.__init__(self, application_id=APP_ID,
+      flags=Gio.ApplicationFlags.FLAGS_NONE)
     self.loadUI('ui/cpucompare.glade')
     self.database = database
     # Determine max score for relative score
@@ -35,6 +42,7 @@ class CPUCompareUI(object):
     builder.add_from_file(sFilename)
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
+    self.winMain.set_title(APP_NAME)
     self.optCPUType1 = builder.get_object("optCPUType1")
     self.optCPUTypeN = builder.get_object("optCPUTypeN")
     self.optCPUTypeAll = builder.get_object("optCPUTypeAll")
@@ -57,7 +65,7 @@ class CPUCompareUI(object):
     # Disconnect from the database and close
     self.database.close()
     Gtk.main_quit()
-  
+
   def on_optCPUType_toggled(self, widget):
     # Do nothing if the signal is fired for the disabled state
     if widget.get_active():
@@ -105,7 +113,7 @@ class CPUCompareUI(object):
         sSQL += ' AND quantity>1'
       sSQL += ' ORDER BY model1'
       for row in self.database.select(sSQL, brand):
-        self.storeSeries.append((len(row[0]) > 0 and row[0] or 'Unknown', 
+        self.storeSeries.append((len(row[0]) > 0 and row[0] or 'Unknown',
           row[0]))
       # Automatically set the first item
       if len(self.storeSeries) > 0:
@@ -152,7 +160,16 @@ class CPUCompareUI(object):
       int(self.lblScore2.get_text()),
       int(self.lblScore2.get_text()) * 100 / self.lMaxScore,
     ))
-      
+
   def on_btnClear_clicked(self, widget):
     # Clear the treeview data
     self.storeCompares.clear()
+
+  def on_btnAbout_clicked(self, widget):
+    builder = Gtk.Builder()
+    builder.add_from_file('ui/about.glade')
+    dlgAbout = builder.get_object("dialogAbout")
+    dlgAbout.set_program_name(APP_NAME)
+    dlgAbout.set_version(APP_VERSION)
+    dlgAbout.run()
+    dlgAbout.destroy()

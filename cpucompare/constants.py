@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -19,12 +18,6 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from cpucompare.ui import CPUCompareUI
-from cpucompare.database import SQLite3Connection
-
-if __name__ == '__main__':
-  database = SQLite3Connection()
-  database.open('data/cpucompare.db')
-
-  gui = CPUCompareUI(database)
-  gui.run()
+APP_NAME='CPUCompare'
+APP_VERSION='0.1'
+APP_ID='cpucompare.muflone.com'
