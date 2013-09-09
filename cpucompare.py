@@ -17,10 +17,10 @@
 ##
 
 from cpucompare_ui import CPUCompareUI
-from cpucompare_database import CPUCompareDatabase
+from cpucompare_database import SQLite3Connection
 
 if __name__ == '__main__':
-  database = CPUCompareDatabase()
+  database = SQLite3Connection()
   database.open('data/cpucompare.db')
 
   gui = CPUCompareUI(database)

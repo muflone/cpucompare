@@ -17,7 +17,7 @@
 
 import sqlite3
 
-class CPUCompareDatabase(object):
+class SQLite3Connection(object):
   def __init__(self, sDatabase=None):
     self.connection = None
     # Automatically open the database if its file path was provided
