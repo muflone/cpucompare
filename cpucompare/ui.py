@@ -59,6 +59,7 @@ class CPUCompareUI(Gtk.Application):
     self.cboSeries = builder.get_object('cboSeries')
     self.cboModels = builder.get_object('cboModels')
     self.lblScore2 = builder.get_object('lblScore2')
+    self.tvwCompares = builder.get_object('tvwCompares')
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
@@ -161,6 +162,7 @@ class CPUCompareUI(Gtk.Application):
       int(self.lblScore2.get_text()),
       int(self.lblScore2.get_text()) * 100 / self.lMaxScore,
     ))
+    self.tvwCompares.set_cursor(len(self.storeCompares) - 1)
 
   def on_btnClear_clicked(self, widget):
     # Clear the treeview data
