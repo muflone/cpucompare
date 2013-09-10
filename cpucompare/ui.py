@@ -190,7 +190,8 @@ class CPUCompareUI(Gtk.Application):
     builder.add_from_file(os.path.join(DIR_UI, 'about.glade'))
     dlgAbout = builder.get_object("dialogAbout")
     dlgAbout.set_program_name(APP_NAME)
-    dlgAbout.set_version(APP_VERSION)
+    dlgAbout.set_version('Version %s\nDatabase version %s' % (
+      APP_VERSION, DATABASE_VERSION))
     dlgAbout.set_comments(APP_DESCRIPTION)
     dlgAbout.set_website(APP_URL)
     dlgAbout.set_copyright(APP_COPYRIGHT)

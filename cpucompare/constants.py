@@ -39,3 +39,4 @@ else:
 
 DIR_DATA=os.path.join(DIR_PREFIX, 'data')
 DIR_UI=os.path.join(DIR_PREFIX, 'ui')
+DATABASE_VERSION=20130806
