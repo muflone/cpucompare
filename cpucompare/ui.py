@@ -105,7 +105,7 @@ class CPUCompareUI(Gtk.Application):
   def on_cboBrands_changed(self, widget):
     # Load the series for the requested brand
     self.storeSeries.clear()
-    iSelectedRowIndex = widget.get_active()
+    iSelectedRowIndex = self.cboBrands.get_active()
     if iSelectedRowIndex >= 0:
       brand = self.storeBrands[iSelectedRowIndex][0]
       sSQL = 'SELECT DISTINCT model1 FROM cpu WHERE brand=?'
