@@ -19,12 +19,14 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from ui import CPUCompareUI
-from database import SQLite3Connection
+from cpucompare.ui import CPUCompareUI
+from cpucompare.database import SQLite3Connection
+from cpucompare.constants import *
+import os.path
 
 if __name__ == '__main__':
   database = SQLite3Connection()
-  database.open('data/cpucompare.db')
+  database.open(os.path.join(DIR_DATA, 'cpucompare.db'))
 
   gui = CPUCompareUI(database)
   gui.run()
