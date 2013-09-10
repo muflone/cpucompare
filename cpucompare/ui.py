@@ -125,13 +125,15 @@ class CPUCompareUI(Gtk.Application):
   def on_cboSeries_changed(self, widget):
     # Load the models for the requested series
     self.storeModels.clear()
-    iSelectedRowIndex = self.cboBrands.get_active()
-    # There must be always a brand already selected to have a series chosen
-    assert(iSelectedRowIndex >= 0)
-    brand = self.storeBrands[iSelectedRowIndex][0]
+    # Retrieve the series
     iSelectedRowIndex = self.cboSeries.get_active()
     if iSelectedRowIndex >= 0:
       series = self.storeSeries[iSelectedRowIndex][1]
+      iSelectedRowIndex = self.cboBrands.get_active()
+      # There must be always a brand already selected to have a series chosen
+      assert(iSelectedRowIndex >= 0)
+      # Retrieve the brand
+      brand = self.storeBrands[iSelectedRowIndex][0]
       sSQL = 'SELECT cpu_name, score1, quantity FROM cpu '
       sSQL += 'WHERE brand=? '
       sSQL += 'AND model1=?'
