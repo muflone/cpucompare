@@ -19,8 +19,8 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from cpucompare.ui import CPUCompareUI
-from cpucompare.database import SQLite3Connection
+from ui import CPUCompareUI
+from database import SQLite3Connection
 
 if __name__ == '__main__':
   database = SQLite3Connection()

@@ -20,7 +20,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Gio
-from cpucompare.constants import *
+from constants import *
 
 class CPUCompareUI(Gtk.Application):
   def __init__(self, database):
@@ -172,5 +172,8 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout.set_program_name(APP_NAME)
     dlgAbout.set_version(APP_VERSION)
     dlgAbout.set_comments(APP_DESCRIPTION)
+    dlgAbout.set_website(APP_URL)
+    dlgAbout.set_copyright(APP_COPYRIGHT)
+    dlgAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]),
     dlgAbout.run()
     dlgAbout.destroy()
