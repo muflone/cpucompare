@@ -167,6 +167,7 @@ class CPUCompareUI(Gtk.Application):
     self.storeCompares.clear()
 
   def on_btnAbout_clicked(self, widget):
+    # Show the about dialog
     builder = Gtk.Builder()
     builder.add_from_file(os.path.join(DIR_UI, 'about.glade'))
     dlgAbout = builder.get_object("dialogAbout")
