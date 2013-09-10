@@ -20,4 +20,5 @@
 
 APP_NAME='CPUCompare'
 APP_VERSION='0.1'
+APP_DESCRIPTION='A GTK+ application to make comparisons between CPU models.'
 APP_ID='cpucompare.muflone.com'

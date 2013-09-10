@@ -171,5 +171,6 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout = builder.get_object("dialogAbout")
     dlgAbout.set_program_name(APP_NAME)
     dlgAbout.set_version(APP_VERSION)
+    dlgAbout.set_comments(APP_DESCRIPTION)
     dlgAbout.run()
     dlgAbout.destroy()
