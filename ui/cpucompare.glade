@@ -147,6 +147,7 @@
                     <property name="receives_default">True</property>
                     <property name="image">imgAbout</property>
                     <property name="always_show_image">True</property>
+                    <accelerator key="F1" signal="clicked"/>
                     <signal name="clicked" handler="on_btnAbout_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -302,6 +303,26 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkButton" id="btnClear">
+                    <property name="label">gtk-clear</property>
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <accelerator key="Delete" signal="clicked" modifiers="GDK_SHIFT_MASK"/>
+                    <signal name="clicked" handler="on_btnClear_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkButton" id="btnAdd">
                     <property name="label">gtk-add</property>
                     <property name="visible">True</property>
@@ -310,6 +331,7 @@
                     <property name="use_underline">True</property>
                     <property name="use_stock">True</property>
                     <property name="always_show_image">True</property>
+                    <accelerator key="Insert" signal="clicked"/>
                     <signal name="clicked" handler="on_btnAdd_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -317,24 +339,6 @@
                     <property name="fill">True</property>
                     <property name="pack_type">end</property>
                     <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="btnClear">
-                    <property name="label">gtk-clear</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="use_underline">True</property>
-                    <property name="use_stock">True</property>
-                    <property name="always_show_image">True</property>
-                    <signal name="clicked" handler="on_btnClear_clicked" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="pack_type">end</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -347,6 +351,7 @@
                     <property name="use_underline">True</property>
                     <property name="use_stock">True</property>
                     <property name="always_show_image">True</property>
+                    <accelerator key="Delete" signal="clicked"/>
                     <signal name="clicked" handler="on_btnDelete_clicked" swapped="no"/>
                   </object>
                   <packing>
