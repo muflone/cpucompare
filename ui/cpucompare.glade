@@ -6,14 +6,6 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-about</property>
   </object>
-  <object class="GtkListStore" id="storeBrands">
-    <columns>
-      <!-- column-name colBrand -->
-      <column type="gchararray"/>
-      <!-- column-name colBrandKey -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <object class="GtkListStore" id="storeCompares">
     <columns>
       <!-- column-name colCompareIndex -->
@@ -30,6 +22,14 @@
       <column type="gint"/>
       <!-- column-name colCompareScoreRelative -->
       <column type="gint"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="storeBrands">
+    <columns>
+      <!-- column-name colBrand -->
+      <column type="gchararray"/>
+      <!-- column-name colBrandKey -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkListStore" id="storeModels">
@@ -55,6 +55,7 @@
   <object class="GtkWindow" id="winMain">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
+    <property name="default_width">500</property>
     <signal name="delete-event" handler="on_winMain_delete_event" swapped="no"/>
     <child>
       <object class="GtkBox" id="boxMain">
