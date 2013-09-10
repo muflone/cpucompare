@@ -59,6 +59,7 @@ class CPUCompareUI(Gtk.Application):
     self.cboSeries = builder.get_object('cboSeries')
     self.cboModels = builder.get_object('cboModels')
     self.lblScore2 = builder.get_object('lblScore2')
+    self.btnDelete = builder.get_object('btnDelete')
     self.tvwCompares = builder.get_object('tvwCompares')
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
@@ -151,6 +152,13 @@ class CPUCompareUI(Gtk.Application):
     if iSelectedRowIndex >= 0:
       self.lblScore2.set_text(str(self.storeModels[iSelectedRowIndex][2]))
 
+  def on_btnDelete_clicked(self, widget):
+    # Remove the selected item from the treeview data
+    (model, paths) = self.tvwCompares.get_selection().get_selected_rows()
+    if len(paths) > 0:
+      model.remove(model.get_iter(paths[0]))
+      self.btnDelete.set_sensitive(len(self.storeCompares) > 0)
+
   def on_btnAdd_clicked(self, widget):
     # Add the selected item to the treeview data
     self.storeCompares.append((
@@ -163,10 +171,12 @@ class CPUCompareUI(Gtk.Application):
       int(self.lblScore2.get_text()) * 100 / self.lMaxScore,
     ))
     self.tvwCompares.set_cursor(len(self.storeCompares) - 1)
+    self.btnDelete.set_sensitive(True)
 
   def on_btnClear_clicked(self, widget):
     # Clear the treeview data
     self.storeCompares.clear()
+    self.btnDelete.set_sensitive(False)
 
   def on_btnAbout_clicked(self, widget):
     # Show the about dialog
