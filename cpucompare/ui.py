@@ -21,12 +21,13 @@
 from gi.repository import Gtk
 from gi.repository import Gio
 from constants import *
+import os.path
 
 class CPUCompareUI(Gtk.Application):
   def __init__(self, database):
     Gtk.Application.__init__(self, application_id=APP_ID,
       flags=Gio.ApplicationFlags.FLAGS_NONE)
-    self.loadUI('ui/cpucompare.glade')
+    self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
     self.database = database
     # Determine max score for relative score
     for row in self.database.select('SELECT MAX(score1) FROM cpu'):
@@ -167,7 +168,7 @@ class CPUCompareUI(Gtk.Application):
 
   def on_btnAbout_clicked(self, widget):
     builder = Gtk.Builder()
-    builder.add_from_file('ui/about.glade')
+    builder.add_from_file(os.path.join(DIR_UI, 'about.glade'))
     dlgAbout = builder.get_object("dialogAbout")
     dlgAbout.set_program_name(APP_NAME)
     dlgAbout.set_version(APP_VERSION)

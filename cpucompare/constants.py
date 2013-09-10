@@ -18,6 +18,9 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
+import sys
+import os.path
+
 APP_NAME='CPUCompare'
 APP_VERSION='0.1'
 APP_DESCRIPTION='A GTK+ application to make comparisons between CPU models.'
@@ -26,3 +29,13 @@ APP_URL='https://github.com/muflone/cpucompare'
 APP_AUTHOR='Fabio Castelli'
 APP_AUTHOR_EMAIL='webreg@vbsimple.net'
 APP_COPYRIGHT='Copyright 2013 %s' % APP_AUTHOR
+
+# If there's a file data/cpucompare.db then the shared data are searched in
+# relative paths, else the standard paths are used
+if os.path.isfile(os.path.join('data', 'cpucompare.db')):
+  DIR_PREFIX='.'
+else:
+  DIR_PREFIX=os.path.join(sys.prefix, 'share', 'cpucompare')
+
+DIR_DATA=os.path.join(DIR_PREFIX, 'data')
+DIR_UI=os.path.join(DIR_PREFIX, 'ui')
