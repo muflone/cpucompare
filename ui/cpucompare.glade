@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
+  <object class="GtkEntryCompletion" id="entrycompletionSearch">
+    <property name="model">storeModels</property>
+    <property name="text_column">0</property>
+    <signal name="match-selected" handler="on_entrycompletionSearch_match_selected" swapped="no"/>
+  </object>
   <object class="GtkImage" id="imgAbout">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -285,12 +290,41 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="lblScoreValue">
-                <property name="width_request">90</property>
+              <object class="GtkBox" id="box1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">XXXXX</property>
+                <child>
+                  <object class="GtkLabel" id="lblScoreValue">
+                    <property name="width_request">90</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">XXXXX</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entrySearch">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
+                    <property name="primary_icon_stock">gtk-find</property>
+                    <property name="secondary_icon_stock">gtk-clear</property>
+                    <property name="primary_icon_activatable">False</property>
+                    <property name="placeholder_text">Find a model in the current series</property>
+                    <property name="completion">entrycompletionSearch</property>
+                    <signal name="icon-press" handler="on_entrySearch_icon_press" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="left_attach">1</property>

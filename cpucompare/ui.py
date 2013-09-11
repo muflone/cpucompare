@@ -59,9 +59,20 @@ class CPUCompareUI(Gtk.Application):
     self.cboSeries = builder.get_object('cboSeries')
     self.cboModels = builder.get_object('cboModels')
     self.lblScoreValue = builder.get_object('lblScoreValue')
+    self.btnAdd = builder.get_object('btnAdd')
     self.btnClear = builder.get_object('btnClear')
     self.btnDelete = builder.get_object('btnDelete')
     self.tvwCompares = builder.get_object('tvwCompares')
+    self.entrySearch = builder.get_object('entrySearch')
+    self.entrycompletionSearch = builder.get_object('entrycompletionSearch')
+    # The GtkEntryCompletion seems to have a bug which doesn't show the popup
+    # at full height when the text column is set inside Glade instead of with
+    # set_text_column method, so here I'm setting the text column again
+    self.entrycompletionSearch.set_text_column(0)
+    # Add a match function to find the input text in the whole text instead
+    # of matching only the models starting with the input key
+    self.entrycompletionSearch.set_match_func(
+      self.entrycompletionSearch_match_func, self.storeModels)
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
@@ -204,3 +215,22 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]),
     dlgAbout.run()
     dlgAbout.destroy()
+
+  def on_entrySearch_icon_press(self, widget, icon_pos, event):
+    # The clear icon was activated
+    if icon_pos == Gtk.EntryIconPosition.SECONDARY:
+      self.entrySearch.set_text('')
+
+  def entrycompletionSearch_match_func(self, widget, key, treeiter, data):
+    # Search the item using the input text, irregardless of the text case
+    # This will find all the items which contains the input key, not only
+    # those which begins with such text
+    return key in data[treeiter][0].lower()
+
+  def on_entrycompletionSearch_match_selected(self, widget, model, treeiter):
+    # Automatically select the matched model and add it to the compares list
+    self.cboModels.set_active_iter(treeiter)
+    self.btnAdd.clicked()
+    # Clear the search text and ignore the default behavior to complete the item
+    self.entrySearch.set_text('')
+    return True
