@@ -58,7 +58,7 @@ class CPUCompareUI(Gtk.Application):
     self.cboBrands = builder.get_object('cboBrands')
     self.cboSeries = builder.get_object('cboSeries')
     self.cboModels = builder.get_object('cboModels')
-    self.lblScore2 = builder.get_object('lblScore2')
+    self.lblScoreValue = builder.get_object('lblScoreValue')
     self.btnClear = builder.get_object('btnClear')
     self.btnDelete = builder.get_object('btnDelete')
     self.tvwCompares = builder.get_object('tvwCompares')
@@ -159,7 +159,7 @@ class CPUCompareUI(Gtk.Application):
     # Update the label with the selected cpu score
     iSelectedRowIndex = self.cboModels.get_active()
     if iSelectedRowIndex >= 0:
-      self.lblScore2.set_text(str(self.storeModels[iSelectedRowIndex][2]))
+      self.lblScoreValue.set_text(str(self.storeModels[iSelectedRowIndex][2]))
 
   def on_btnDelete_clicked(self, widget):
     # Remove the selected item from the treeview data
@@ -177,8 +177,8 @@ class CPUCompareUI(Gtk.Application):
       self.storeBrands[self.cboBrands.get_active()][0],
       self.storeSeries[self.cboSeries.get_active()][0],
       self.storeModels[self.cboModels.get_active()][0],
-      int(self.lblScore2.get_text()),
-      int(self.lblScore2.get_text()) * 100 / self.lMaxScore,
+      int(self.lblScoreValue.get_text()),
+      int(self.lblScoreValue.get_text()) * 100 / self.lMaxScore,
     ))
     self.tvwCompares.set_cursor(len(self.storeCompares) - 1)
     self.btnClear.set_sensitive(True)
@@ -204,6 +204,3 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]),
     dlgAbout.run()
     dlgAbout.destroy()
-
-  def on_actionAbout_activate(self, widget):
-    print widget
