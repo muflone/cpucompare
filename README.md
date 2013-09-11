@@ -28,7 +28,7 @@ python2 setup.py install --root NEW_PATH
 Usage
 ======
 
-When the application is not installed please use:
+If the application is not installed please use:
 cd /path/to/folder
 python2 cpucompare.py
 
