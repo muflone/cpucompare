@@ -122,7 +122,7 @@ class CPUCompareUI(Gtk.Application):
     self.storeSeries.clear()
     iSelectedRowIndex = self.cboBrands.get_active()
     if iSelectedRowIndex >= 0:
-      brand = self.storeBrands[iSelectedRowIndex][0]
+      brand = self.storeBrands[iSelectedRowIndex][1]
       sSQL = 'SELECT DISTINCT model1 FROM cpu WHERE '
       # Determine the CPU quantities
       sSQL += self.get_cpu_quantities()
