@@ -21,6 +21,9 @@
 from gi.repository import Gtk
 from gi.repository import Gio
 from constants import *
+from models import CPUCompareModelBrands
+from models import CPUCompareModelSeries
+from models import CPUCompareModelModels
 import os.path
 
 class CPUCompareUI(Gtk.Application):
@@ -51,9 +54,9 @@ class CPUCompareUI(Gtk.Application):
       if widget.get_active():
         self.oSelectedCPUType = widget
         break
-    self.storeBrands = builder.get_object('storeBrands')
-    self.storeSeries = builder.get_object('storeSeries')
-    self.storeModels = builder.get_object('storeModels')
+    self.brands = CPUCompareModelBrands(builder.get_object('storeBrands'))
+    self.series = CPUCompareModelSeries(builder.get_object('storeSeries'))
+    self.models = CPUCompareModelModels(builder.get_object('storeModels'))
     self.storeCompares = builder.get_object('storeCompares')
     self.cboBrands = builder.get_object('cboBrands')
     self.cboSeries = builder.get_object('cboSeries')
@@ -72,7 +75,7 @@ class CPUCompareUI(Gtk.Application):
     # Add a match function to find the input text in the whole text instead
     # of matching only the models starting with the input key
     self.entrycompletionSearch.set_match_func(
-      self.entrycompletionSearch_match_func, self.storeModels)
+      self.entrycompletionSearch_match_func, self.models)
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
@@ -94,7 +97,7 @@ class CPUCompareUI(Gtk.Application):
     if widget.get_active():
       # Save the previous brand
       if self.cboBrands.get_active() >= 0:
-        sPreviousBrand = self.storeBrands[self.cboBrands.get_active()][1]
+        sPreviousBrand = self.brands.get_key(self.cboBrands.get_active())
       else:
         sPreviousBrand = None
       # Determine which brands to extract
@@ -104,22 +107,22 @@ class CPUCompareUI(Gtk.Application):
       sSQL += self.get_cpu_quantities()
       sSQL += ' ORDER BY brand'
       # Clear the model and load the brands
-      self.storeBrands.clear()
+      self.brands.clear()
       # Retrieve the brands available for the selected CPU type
       for row in self.database.select(sSQL):
         # Add each row in the ListStore
-        oLastTreeIter = self.storeBrands.append(
+        oLastTreeIter = self.brands.append(
           len(row[0]) == 0 and ('Unknown', '') or (row[0], row[0])
         )
         # Restore the previously selected brand
         if sPreviousBrand == row[0]:
           self.cboBrands.set_active_iter(oLastTreeIter)
-      if self.cboBrands.get_active() < 0 and len(self.storeBrands) > 0:
+      if self.cboBrands.get_active() < 0 and self.brands.count() > 0:
         self.cboBrands.set_active(0)
 
   def on_cboBrands_changed(self, widget):
     # Load the series for the requested brand
-    self.storeSeries.clear()
+    self.series.clear()
     iSelectedRowIndex = self.cboBrands.get_active()
     if iSelectedRowIndex >= 0:
       lArguments = []
@@ -128,23 +131,24 @@ class CPUCompareUI(Gtk.Application):
       sSQL += self.get_cpu_quantities()
       # Filter by brand
       sSQL += ' AND brand=?'
-      lArguments.append(self.storeBrands[iSelectedRowIndex][1])
+      lArguments.append(self.brands.get_key([iSelectedRowIndex]))
       sSQL += ' ORDER BY model1'
       for row in self.database.select(sSQL, *lArguments):
-        self.storeSeries.append((len(row[0]) > 0 and row[0] or 'Unknown',
+        self.series.append((
+          len(row[0]) > 0 and row[0] or 'Unknown',
           row[0]
         ))
       # Automatically set the first item
-      if len(self.storeSeries) > 0:
+      if self.series.count() > 0:
         self.cboSeries.set_active(0)
 
   def on_cboSeries_changed(self, widget):
     # Load the models for the requested series
-    self.storeModels.clear()
+    self.models.clear()
     # Retrieve the series
     iSelectedRowIndex = self.cboSeries.get_active()
     if iSelectedRowIndex >= 0:
-      series = self.storeSeries[iSelectedRowIndex][1]
+      series = self.series.get_key(iSelectedRowIndex)
       iSelectedRowIndex = self.cboBrands.get_active()
       # There must be always a brand already selected to have a series chosen
       assert(iSelectedRowIndex >= 0)
@@ -154,13 +158,13 @@ class CPUCompareUI(Gtk.Application):
       sSQL += self.get_cpu_quantities()
       # Filter by brand
       sSQL += ' AND brand=?'
-      lArguments.append(self.storeBrands[iSelectedRowIndex][0])
+      lArguments.append(self.brands.get_key(iSelectedRowIndex))
       # Filter by series
       sSQL += ' AND model1=?'
       lArguments.append(series)
       sSQL += ' ORDER BY cpu_name'
       for row in self.database.select(sSQL, *lArguments):
-        self.storeModels.append((
+        self.models.append((
           len(row[0]) > 0 and row[0] or 'Unknown',
           row[0],
           row[1],
@@ -169,14 +173,14 @@ class CPUCompareUI(Gtk.Application):
           row[4]
         ))
       # Automatically set the first item
-      if len(self.storeModels) > 0:
+      if self.models.count() > 0:
         self.cboModels.set_active(0)
 
   def on_cboModels_changed(self, widget):
     # Update the label with the selected cpu score
     iSelectedRowIndex = self.cboModels.get_active()
     if iSelectedRowIndex >= 0:
-      self.lblScoreValue.set_text(str(self.storeModels[iSelectedRowIndex][2]))
+      self.lblScoreValue.set_text(str(self.models.get_score(iSelectedRowIndex)))
 
   def on_btnDelete_clicked(self, widget):
     # Remove the selected item from the treeview data
@@ -188,15 +192,16 @@ class CPUCompareUI(Gtk.Application):
 
   def on_btnAdd_clicked(self, widget):
     # Add the selected item to the treeview data
-    treeIter = self.storeModels[self.cboModels.get_active()]
+    iSelectedRowIndex = self.cboModels.get_active()
+    treeIter = self.models.model[iSelectedRowIndex]
     self.storeCompares.append((
       len(self.storeCompares) + 1,
-      treeIter[3],
-      treeIter[4],
-      treeIter[5],
-      treeIter[0],
-      int(self.lblScoreValue.get_text()),
-      int(self.lblScoreValue.get_text()) * 100 / self.lMaxScore,
+      self.models.get_quantity(iSelectedRowIndex),
+      self.models.get_brand(iSelectedRowIndex),
+      self.models.get_series(iSelectedRowIndex),
+      self.models.get_value(iSelectedRowIndex),
+      self.models.get_score(iSelectedRowIndex),
+      self.models.get_score(iSelectedRowIndex) * 100 / self.lMaxScore,
     ))
     self.tvwCompares.set_cursor(len(self.storeCompares) - 1)
     self.btnClear.set_sensitive(True)
@@ -228,11 +233,11 @@ class CPUCompareUI(Gtk.Application):
     if icon_pos == Gtk.EntryIconPosition.SECONDARY:
       self.entrySearch.set_text('')
 
-  def entrycompletionSearch_match_func(self, widget, key, treeiter, data):
+  def entrycompletionSearch_match_func(self, widget, key, treeiter, model):
     # Search the item using the input text, irregardless of the text case
     # This will find all the items which contains the input key, not only
     # those which begins with such text
-    return key in data[treeiter][0].lower()
+    return key in model.get_value(treeiter).lower()
 
   def on_entrycompletionSearch_match_selected(self, widget, model, treeiter):
     # Automatically select the matched model and add it to the compares list
