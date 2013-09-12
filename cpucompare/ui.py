@@ -108,12 +108,9 @@ class CPUCompareUI(Gtk.Application):
       sSQL += ' ORDER BY brand'
       # Clear the model and load the brands
       self.brands.clear()
-      # Retrieve the brands available for the selected CPU type
+      # Add all the resulting rows to the model
       for row in self.database.select(sSQL):
-        # Add each row in the ListStore
-        oLastTreeIter = self.brands.append(
-          row['brand'] and (row['brand'], row['brand']) or ('Unknown', '')
-        )
+        oLastTreeIter = self.brands.add_row(row)
         # Restore the previously selected brand
         if sPreviousBrand == row['brand']:
           self.cboBrands.set_active_iter(oLastTreeIter)
@@ -133,11 +130,9 @@ class CPUCompareUI(Gtk.Application):
       sSQL += ' AND brand=?'
       lArguments.append(self.brands.get_key([iSelectedRowIndex]))
       sSQL += ' ORDER BY model1'
+      # Add all the resulting rows to the model
       for row in self.database.select(sSQL, *lArguments):
-        self.series.append((
-          row['model1'] and row['model1'] or 'Unknown',
-          row['model1']
-        ))
+        self.series.add_row(row)
       # Automatically set the first item
       if self.series.count() > 0:
         self.cboSeries.set_active(0)
@@ -163,15 +158,9 @@ class CPUCompareUI(Gtk.Application):
       sSQL += ' AND model1=?'
       lArguments.append(series)
       sSQL += ' ORDER BY cpu_name'
+      # Add all the resulting rows to the model
       for row in self.database.select(sSQL, *lArguments):
-        self.models.append((
-          row['cpu_name'] and row['cpu_name'] or 'Unknown',
-          row['cpu_name'],
-          row['score1'],
-          row['quantity'],
-          row['brand'],
-          row['model1']
-        ))
+        self.models.add_row(row)
       # Automatically set the first item
       if self.models.count() > 0:
         self.cboModels.set_active(0)

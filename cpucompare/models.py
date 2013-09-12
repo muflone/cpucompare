@@ -33,9 +33,6 @@ class CPUCompareModel(object):
   def clear(self):
     return self.model.clear()
 
-  def append(self, *args):
-    return self.model.append(*args)
-
   def count(self):
     return len(self.model)
 
@@ -43,9 +40,20 @@ class CPUCompareModelBrands(CPUCompareModel):
   def __init__(self, model):
     super(self.__class__, self).__init__(model)
 
+  def add_row(self, row):
+    return self.model.append(
+      row['brand'] and (row['brand'], row['brand']) or ('Unknown', '')
+    )
+
 class CPUCompareModelSeries(CPUCompareModel):
   def __init__(self, model):
     super(self.__class__, self).__init__(model)
+
+  def add_row(self, row):
+    return self.model.append((
+      row['model1'] and row['model1'] or 'Unknown',
+      row['model1']
+    ))
 
 class CPUCompareModelModels(CPUCompareModel):
   COL_SCORE = 2
@@ -66,3 +74,14 @@ class CPUCompareModelModels(CPUCompareModel):
 
   def get_series(self, treeiter):
     return self.model[treeiter][self.__class__.COL_SERIESKEY]
+
+  def add_row(self, row):
+    self.model.append((
+      row['cpu_name'] and row['cpu_name'] or 'Unknown',
+      row['cpu_name'],
+      row['score1'],
+      row['quantity'],
+      row['brand'],
+      row['model1']
+    ))
+    return False
