@@ -81,6 +81,14 @@ class CPUCompareUI(Gtk.Application):
     self.database.close()
     Gtk.main_quit()
 
+  def get_cpu_quantities(self):
+    if self.oSelectedCPUType is self.optCPUType1:
+      return 'quantity=1'
+    elif self.oSelectedCPUType is self.optCPUTypeN:
+      return 'quantity>1'
+    else:
+      return 'quantity>=1'
+
   def on_optCPUType_toggled(self, widget):
     # Do nothing if the signal is fired for the disabled state
     if widget.get_active():
@@ -90,19 +98,14 @@ class CPUCompareUI(Gtk.Application):
       else:
         sPreviousBrand = None
       # Determine which brands to extract
-      sSQL = 'SELECT DISTINCT brand FROM cpu'
-      if widget is self.optCPUType1:
-        sSQL += ' WHERE quantity=1'
-      elif widget is self.optCPUTypeN:
-        sSQL += ' WHERE quantity>1'
-      elif widget is self.optCPUTypeAll:
-        pass
-      else:
-        assert(False)
+      sSQL = 'SELECT DISTINCT brand FROM cpu WHERE '
+      # Determine the CPU quantities
       self.oSelectedCPUType = widget
+      sSQL += self.get_cpu_quantities()
       sSQL += ' ORDER BY brand'
       # Clear the model and load the brands
       self.storeBrands.clear()
+      # Retrieve the brands available for the selected CPU type
       for row in self.database.select(sSQL):
         # Add each row in the ListStore
         oLastTreeIter = self.storeBrands.append(
@@ -120,12 +123,11 @@ class CPUCompareUI(Gtk.Application):
     iSelectedRowIndex = self.cboBrands.get_active()
     if iSelectedRowIndex >= 0:
       brand = self.storeBrands[iSelectedRowIndex][0]
-      sSQL = 'SELECT DISTINCT model1 FROM cpu WHERE brand=?'
-      # Determine the cpu type to extract
-      if self.oSelectedCPUType is self.optCPUType1:
-        sSQL += ' AND quantity=1'
-      elif self.oSelectedCPUType is self.optCPUTypeN:
-        sSQL += ' AND quantity>1'
+      sSQL = 'SELECT DISTINCT model1 FROM cpu WHERE '
+      # Determine the CPU quantities
+      sSQL += self.get_cpu_quantities()
+      # Filter by brand
+      sSQL += ' AND brand=?'
       sSQL += ' ORDER BY model1'
       for row in self.database.select(sSQL, brand):
         self.storeSeries.append((len(row[0]) > 0 and row[0] or 'Unknown',
@@ -146,14 +148,11 @@ class CPUCompareUI(Gtk.Application):
       assert(iSelectedRowIndex >= 0)
       # Retrieve the brand
       brand = self.storeBrands[iSelectedRowIndex][0]
-      sSQL = 'SELECT cpu_name, score1, quantity FROM cpu '
-      sSQL += 'WHERE brand=? '
-      sSQL += 'AND model1=?'
-      # Determine the cpu type to extract
-      if self.oSelectedCPUType is self.optCPUType1:
-        sSQL += 'AND quantity=1'
-      elif self.oSelectedCPUType is self.optCPUTypeN:
-        sSQL += 'AND quantity>1'
+      sSQL = 'SELECT cpu_name, score1, quantity FROM cpu WHERE '
+      # Determine the CPU quantities
+      sSQL += self.get_cpu_quantities()
+      sSQL += ' AND brand=?'
+      sSQL += ' AND model1=?'
       sSQL += ' ORDER BY cpu_name'
       for row in self.database.select(sSQL, brand, series):
         self.storeModels.append((
