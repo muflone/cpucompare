@@ -38,6 +38,7 @@ class SQLite3Connection(object):
 
   def select(self, sSQL, *arguments):
     # Execute an instruction and return its data
+    # print sSQL
     cursor = self.connection.cursor()
     if len(arguments) == 1 and arguments[0] is None:
       cursor.execute(sSQL)
