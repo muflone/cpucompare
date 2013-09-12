@@ -33,8 +33,8 @@ class CPUCompareUI(Gtk.Application):
     self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
     self.database = database
     # Determine max score for relative score
-    for row in self.database.select('SELECT MAX(score1) FROM cpu'):
-      self.lMaxScore = row[0]
+    for row in self.database.select('SELECT MAX(score1) AS maxscore FROM cpu'):
+      self.lMaxScore = row['maxscore']
 
   def run(self):
     self.on_optCPUType_toggled(self.optCPUType1)
@@ -112,10 +112,10 @@ class CPUCompareUI(Gtk.Application):
       for row in self.database.select(sSQL):
         # Add each row in the ListStore
         oLastTreeIter = self.brands.append(
-          len(row[0]) == 0 and ('Unknown', '') or (row[0], row[0])
+          row['brand'] and (row['brand'], row['brand']) or ('Unknown', '')
         )
         # Restore the previously selected brand
-        if sPreviousBrand == row[0]:
+        if sPreviousBrand == row['brand']:
           self.cboBrands.set_active_iter(oLastTreeIter)
       if self.cboBrands.get_active() < 0 and self.brands.count() > 0:
         self.cboBrands.set_active(0)
@@ -135,8 +135,8 @@ class CPUCompareUI(Gtk.Application):
       sSQL += ' ORDER BY model1'
       for row in self.database.select(sSQL, *lArguments):
         self.series.append((
-          len(row[0]) > 0 and row[0] or 'Unknown',
-          row[0]
+          row['model1'] and row['model1'] or 'Unknown',
+          row['model1']
         ))
       # Automatically set the first item
       if self.series.count() > 0:
@@ -165,12 +165,12 @@ class CPUCompareUI(Gtk.Application):
       sSQL += ' ORDER BY cpu_name'
       for row in self.database.select(sSQL, *lArguments):
         self.models.append((
-          len(row[0]) > 0 and row[0] or 'Unknown',
-          row[0],
-          row[1],
-          row[2],
-          row[3],
-          row[4]
+          row['cpu_name'] and row['cpu_name'] or 'Unknown',
+          row['cpu_name'],
+          row['score1'],
+          row['quantity'],
+          row['brand'],
+          row['model1']
         ))
       # Automatically set the first item
       if self.models.count() > 0:

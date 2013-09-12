@@ -30,6 +30,7 @@ class SQLite3Connection(object):
   def open(self, sDatabase):
     # Open the database connection
     self.connection = sqlite3.connect(sDatabase)
+    self.connection.row_factory = sqlite3.Row
 
   def close(self):
     # Close the database connection
