@@ -122,16 +122,18 @@ class CPUCompareUI(Gtk.Application):
     self.storeSeries.clear()
     iSelectedRowIndex = self.cboBrands.get_active()
     if iSelectedRowIndex >= 0:
-      brand = self.storeBrands[iSelectedRowIndex][1]
+      lArguments = []
       sSQL = 'SELECT DISTINCT model1 FROM cpu WHERE '
       # Determine the CPU quantities
       sSQL += self.get_cpu_quantities()
       # Filter by brand
       sSQL += ' AND brand=?'
+      lArguments.append(self.storeBrands[iSelectedRowIndex][1])
       sSQL += ' ORDER BY model1'
-      for row in self.database.select(sSQL, brand):
+      for row in self.database.select(sSQL, *lArguments):
         self.storeSeries.append((len(row[0]) > 0 and row[0] or 'Unknown',
-          row[0]))
+          row[0]
+        ))
       # Automatically set the first item
       if len(self.storeSeries) > 0:
         self.cboSeries.set_active(0)
@@ -146,15 +148,18 @@ class CPUCompareUI(Gtk.Application):
       iSelectedRowIndex = self.cboBrands.get_active()
       # There must be always a brand already selected to have a series chosen
       assert(iSelectedRowIndex >= 0)
-      # Retrieve the brand
-      brand = self.storeBrands[iSelectedRowIndex][0]
+      lArguments = []
       sSQL = 'SELECT cpu_name, score1, quantity FROM cpu WHERE '
       # Determine the CPU quantities
       sSQL += self.get_cpu_quantities()
+      # Filter by brand
       sSQL += ' AND brand=?'
+      lArguments.append(self.storeBrands[iSelectedRowIndex][0])
+      # Filter by series
       sSQL += ' AND model1=?'
+      lArguments.append(series)
       sSQL += ' ORDER BY cpu_name'
-      for row in self.database.select(sSQL, brand, series):
+      for row in self.database.select(sSQL, *lArguments):
         self.storeModels.append((
           len(row[0]) > 0 and row[0] or 'Unknown',
           row[0],
