@@ -28,7 +28,7 @@ import os.path
 
 class CPUCompareUI(Gtk.Application):
   def __init__(self, database):
-    Gtk.Application.__init__(self, application_id=APP_ID,
+    super(self.__class__, self).__init__(application_id=APP_ID,
       flags=Gio.ApplicationFlags.FLAGS_NONE)
     self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
     self.database = database

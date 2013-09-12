@@ -41,11 +41,11 @@ class CPUCompareModel(object):
 
 class CPUCompareModelBrands(CPUCompareModel):
   def __init__(self, model):
-    CPUCompareModel.__init__(self, model)
+    super(self.__class__, self).__init__(model)
 
 class CPUCompareModelSeries(CPUCompareModel):
   def __init__(self, model):
-    CPUCompareModel.__init__(self, model)
+    super(self.__class__, self).__init__(model)
 
 class CPUCompareModelModels(CPUCompareModel):
   COL_SCORE = 2
@@ -53,7 +53,7 @@ class CPUCompareModelModels(CPUCompareModel):
   COL_BRANDKEY = 4
   COL_SERIESKEY = 5
   def __init__(self, model):
-    CPUCompareModel.__init__(self, model)
+    super(self.__class__, self).__init__(model)
 
   def get_score(self, treeiter):
     return self.model[treeiter][self.__class__.COL_SCORE]
