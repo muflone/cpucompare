@@ -149,7 +149,7 @@ class CPUCompareUI(Gtk.Application):
       # There must be always a brand already selected to have a series chosen
       assert(iSelectedRowIndex >= 0)
       lArguments = []
-      sSQL = 'SELECT cpu_name, score1, quantity FROM cpu WHERE '
+      sSQL = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu WHERE '
       # Determine the CPU quantities
       sSQL += self.get_cpu_quantities()
       # Filter by brand
@@ -164,7 +164,9 @@ class CPUCompareUI(Gtk.Application):
           len(row[0]) > 0 and row[0] or 'Unknown',
           row[0],
           row[1],
-          row[2]
+          row[2],
+          row[3],
+          row[4]
         ))
       # Automatically set the first item
       if len(self.storeModels) > 0:
@@ -186,12 +188,13 @@ class CPUCompareUI(Gtk.Application):
 
   def on_btnAdd_clicked(self, widget):
     # Add the selected item to the treeview data
+    treeIter = self.storeModels[self.cboModels.get_active()]
     self.storeCompares.append((
       len(self.storeCompares) + 1,
-      self.storeModels[self.cboModels.get_active()][3],
-      self.storeBrands[self.cboBrands.get_active()][0],
-      self.storeSeries[self.cboSeries.get_active()][0],
-      self.storeModels[self.cboModels.get_active()][0],
+      treeIter[3],
+      treeIter[4],
+      treeIter[5],
+      treeIter[0],
       int(self.lblScoreValue.get_text()),
       int(self.lblScoreValue.get_text()) * 100 / self.lMaxScore,
     ))

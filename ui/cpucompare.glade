@@ -47,6 +47,10 @@
       <column type="gint"/>
       <!-- column-name colModelQuantity -->
       <column type="gint"/>
+      <!-- column-name colModelBrandKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelSeriesKey -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkListStore" id="storeSeries">
