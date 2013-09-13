@@ -24,17 +24,15 @@ from constants import *
 from models import CPUCompareModelBrands
 from models import CPUCompareModelSeries
 from models import CPUCompareModelModels
+from models import CPUCompareModelCompares
 import os.path
 
 class CPUCompareUI(Gtk.Application):
   def __init__(self, database):
     super(self.__class__, self).__init__(application_id=APP_ID,
       flags=Gio.ApplicationFlags.FLAGS_NONE)
-    self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
     self.database = database
-    # Determine max score for relative score
-    for row in self.database.select('SELECT MAX(score1) AS maxscore FROM cpu'):
-      self.lMaxScore = row['maxscore']
+    self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
 
   def run(self):
     self.on_optCPUType_toggled(self.optCPUType1)
@@ -42,6 +40,11 @@ class CPUCompareUI(Gtk.Application):
     Gtk.main()
 
   def loadUI(self, sFilename):
+    # Determine max score for relative score
+    max_score = 0
+    for row in self.database.select('SELECT MAX(score1) AS maxscore FROM cpu'):
+      max_score = row['maxscore']
+    # Load interface UI
     builder = Gtk.Builder()
     builder.add_from_file(sFilename)
     # Obtain widget references
@@ -57,7 +60,8 @@ class CPUCompareUI(Gtk.Application):
     self.brands = CPUCompareModelBrands(builder.get_object('storeBrands'))
     self.series = CPUCompareModelSeries(builder.get_object('storeSeries'))
     self.models = CPUCompareModelModels(builder.get_object('storeModels'))
-    self.storeCompares = builder.get_object('storeCompares')
+    self.compares = CPUCompareModelCompares(builder.get_object('storeCompares'),
+      max_score)
     self.cboBrands = builder.get_object('cboBrands')
     self.cboSeries = builder.get_object('cboSeries')
     self.cboModels = builder.get_object('cboModels')
@@ -176,29 +180,21 @@ class CPUCompareUI(Gtk.Application):
     (model, paths) = self.tvwCompares.get_selection().get_selected_rows()
     if len(paths) > 0:
       model.remove(model.get_iter(paths[0]))
-      self.btnClear.set_sensitive(len(self.storeCompares) > 0)
-      self.btnDelete.set_sensitive(len(self.storeCompares) > 0)
+      self.btnClear.set_sensitive(self.compares.count() > 0)
+      self.btnDelete.set_sensitive(self.compares.count() > 0)
 
   def on_btnAdd_clicked(self, widget):
     # Add the selected item to the treeview data
     iSelectedRowIndex = self.cboModels.get_active()
     treeIter = self.models.model[iSelectedRowIndex]
-    self.storeCompares.append((
-      len(self.storeCompares) + 1,
-      self.models.get_quantity(iSelectedRowIndex),
-      self.models.get_brand(iSelectedRowIndex),
-      self.models.get_series(iSelectedRowIndex),
-      self.models.get_value(iSelectedRowIndex),
-      self.models.get_score(iSelectedRowIndex),
-      self.models.get_score(iSelectedRowIndex) * 100 / self.lMaxScore,
-    ))
-    self.tvwCompares.set_cursor(len(self.storeCompares) - 1)
+    self.compares.add_row(self.models, iSelectedRowIndex)
+    self.tvwCompares.set_cursor(self.compares.count() - 1)
     self.btnClear.set_sensitive(True)
     self.btnDelete.set_sensitive(True)
 
   def on_btnClear_clicked(self, widget):
     # Clear the treeview data
-    self.storeCompares.clear()
+    self.compares.clear()
     self.btnClear.set_sensitive(False)
     self.btnDelete.set_sensitive(False)
 

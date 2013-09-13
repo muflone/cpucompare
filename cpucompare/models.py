@@ -85,3 +85,47 @@ class CPUCompareModelModels(CPUCompareModel):
       row['model1']
     ))
     return False
+
+class CPUCompareModelCompares(CPUCompareModel):
+  COL_MODEL = 0
+  COL_INDEX = 1
+  COL_QUANTITY = 2
+  COL_BRAND = 3
+  COL_SERIES = 4
+  COL_SCORE = 5
+  COL_SCORERELATIVE = 6
+  def __init__(self, model, lMaxScore):
+    super(self.__class__, self).__init__(model)
+    self.max_score = lMaxScore
+
+  def get_quantity(self, treeiter):
+    return self.model[treeiter][self.__class__.COL_QUANTITY]
+
+  def get_brand(self, treeiter):
+    return self.model[treeiter][self.__class__.COL_BRAND]
+
+  def get_series(self, treeiter):
+    return self.model[treeiter][self.__class__.COL_SERIES]
+
+  def get_score(self, treeiter):
+    return self.model[treeiter][self.__class__.COL_SCORE]
+
+  def get_score_relative(self, treeiter):
+    return self.model[treeiter][self.__class__.COL_SCORE] * 100 / self.max_score
+
+  def add_row(self, model, treeiter):
+    # Determine the new Index adding 1 to the last Index
+    if self.count() == 0:
+      new_index = 0
+    else:
+      new_index = self.get_key(self.count() - 1)
+    # Add the data from a CPUCompareModelModels instance
+    return self.model.append((
+      model.get_value(treeiter),
+      new_index + 1,
+      model.get_quantity(treeiter),
+      model.get_brand(treeiter),
+      model.get_series(treeiter),
+      model.get_score(treeiter),
+      model.get_score(treeiter) * 100 / self.max_score
+    ))
