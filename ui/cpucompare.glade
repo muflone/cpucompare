@@ -11,6 +11,14 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-about</property>
   </object>
+  <object class="GtkListStore" id="storeBrands">
+    <columns>
+      <!-- column-name colBrand -->
+      <column type="gchararray"/>
+      <!-- column-name colBrandKey -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="storeCompares">
     <columns>
       <!-- column-name colCompareModel -->
@@ -27,14 +35,6 @@
       <column type="gint"/>
       <!-- column-name colCompareScoreRelative -->
       <column type="gint"/>
-    </columns>
-  </object>
-  <object class="GtkListStore" id="storeBrands">
-    <columns>
-      <!-- column-name colBrand -->
-      <column type="gchararray"/>
-      <!-- column-name colBrandKey -->
-      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkListStore" id="storeModels">
