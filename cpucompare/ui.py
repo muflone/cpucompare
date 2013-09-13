@@ -222,7 +222,8 @@ class CPUCompareUI(Gtk.Application):
 
   def on_entrycompletionSearch_match_selected(self, widget, model, treeiter):
     # Automatically select the matched model and add it to the compares list
-    self.add_cpumodel(self.allmodels, treeiter)
+    self.cboModels.set_active_iter(treeiter)
+    self.add_cpumodel(self.models, treeiter)
     # Clear the search text and ignore the default behavior to complete the item
     self.entrySearch.activate()
     return True
