@@ -136,7 +136,7 @@
                 </child>
                 <child>
                   <object class="GtkRadioButton" id="optCPUTypeAll">
-                    <property name="label" translatable="yes">_ALL</property>
+                    <property name="label" translatable="yes">A_LL</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
