@@ -186,11 +186,7 @@ class CPUCompareUI(Gtk.Application):
   def on_btnAdd_clicked(self, widget):
     # Add the selected item to the treeview data
     iSelectedRowIndex = self.cboModels.get_active()
-    treeIter = self.models.model[iSelectedRowIndex]
-    self.compares.add_row(self.models, iSelectedRowIndex)
-    self.tvwCompares.set_cursor(self.compares.count() - 1)
-    self.btnClear.set_sensitive(True)
-    self.btnDelete.set_sensitive(True)
+    self.add_cpumodel(self.models, iSelectedRowIndex)
 
   def on_btnClear_clicked(self, widget):
     # Clear the treeview data
@@ -226,8 +222,18 @@ class CPUCompareUI(Gtk.Application):
 
   def on_entrycompletionSearch_match_selected(self, widget, model, treeiter):
     # Automatically select the matched model and add it to the compares list
-    self.cboModels.set_active_iter(treeiter)
-    self.btnAdd.clicked()
+    self.add_cpumodel(self.allmodels, treeiter)
     # Clear the search text and ignore the default behavior to complete the item
-    self.entrySearch.set_text('')
+    self.entrySearch.activate()
     return True
+
+  def add_cpumodel(self, treemodel, treeiter):
+    # Add a the CPUCompareModelModels model to the CPUCompareModelCompares model
+    self.compares.add_row(treemodel, treeiter)
+    self.tvwCompares.set_cursor(self.compares.count() - 1)
+    self.btnClear.set_sensitive(True)
+    self.btnDelete.set_sensitive(True)
+
+  def on_entrySearch_activate(self, widget):
+    # Clear the entry search field when ENTER was pressed
+    self.entrySearch.set_text('')
