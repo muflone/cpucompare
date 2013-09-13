@@ -212,7 +212,7 @@ class CPUCompareUI(Gtk.Application):
   def on_entrySearch_icon_press(self, widget, icon_pos, event):
     # The clear icon was activated
     if icon_pos == Gtk.EntryIconPosition.SECONDARY:
-      self.entrySearch.set_text('')
+      self.entrySearch.activate()
 
   def entrycompletionSearch_match_func(self, widget, key, treeiter, model):
     # Search the item using the input text, irregardless of the text case
