@@ -21,6 +21,7 @@
 
 from distutils.core import setup
 from distutils.command.install_scripts import install_scripts
+from distutils.command.install_data import install_data
 
 from glob import glob
 import shutil
@@ -33,6 +34,17 @@ class rename_python_scripts(install_scripts):
     for script in self.get_outputs():
       if script.endswith(".py"):
         shutil.move(script, script[:-3])
+
+class install_icons(install_data):
+  "Install icons in the hicolor theme directory"
+  def run (self):
+    DIR_ICONS = 'icons'
+    for icon_format in os.listdir(DIR_ICONS):
+      icon_dir = os.path.join(DIR_ICONS, icon_format)
+      self.data_files.append((
+        os.path.join('share', 'icons', 'hicolor', icon_format, 'apps'),
+        glob(os.path.join(icon_dir, '*'))))
+    install_data.run(self)
 
 setup(
   name=APP_NAME,
@@ -51,6 +63,7 @@ setup(
     ('share/cpucompare/ui', glob('ui/*.glade'))
   ],
   cmdclass = {
-    'install_scripts': rename_python_scripts
+    'install_scripts': rename_python_scripts,
+    'install_data': install_icons
   }
 )
