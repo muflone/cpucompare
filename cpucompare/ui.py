@@ -206,6 +206,7 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout.set_website(APP_URL)
     dlgAbout.set_copyright(APP_COPYRIGHT)
     dlgAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]),
+    dlgAbout.set_transient_for(self.winMain)
     dlgAbout.run()
     dlgAbout.destroy()
 
