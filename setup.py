@@ -61,8 +61,13 @@ setup(
   scripts=['cpucompare.py'],
   packages=['cpucompare'],
   data_files=[
-    ('share/cpucompare/data', glob('data/*')),
-    ('share/cpucompare/ui', glob('ui/*.glade'))
+    ('share/cpucompare/data', (
+      'data/cpucompare.db',
+      'data/cpucompare.png'
+    )),
+    ('share/cpucompare/ui',
+      glob('ui/*.glade')
+    )
   ],
   cmdclass = {
     'install_scripts': rename_python_scripts,
