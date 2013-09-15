@@ -67,7 +67,10 @@ setup(
     )),
     ('share/cpucompare/ui',
       glob('ui/*.glade')
-    )
+    ),
+    ('share/applications', (
+      'data/cpucompare.desktop',
+    ))
   ],
   cmdclass = {
     'install_scripts': rename_python_scripts,

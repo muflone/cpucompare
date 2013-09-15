@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=CPUCompare
+GenericName=CPUCompare
+Comment=Compare between CPU models
+Comment[it]=Confronti tra modelli di CPU
+Terminal=false
+Categories=System
+Icon=cpucompare
+TryExec=cpucompare
+Exec=cpucompare
