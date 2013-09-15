@@ -27,6 +27,7 @@ import shutil
 from cpucompare.constants import *
 
 class rename_python_scripts(install_scripts):
+  "Rename main executable python script without .py extension"
   def run(self):
     install_scripts.run(self)
     for script in self.get_outputs():
