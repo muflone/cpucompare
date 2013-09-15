@@ -20,6 +20,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Gio
+from gi.repository.GdkPixbuf import Pixbuf
 from constants import *
 from models import CPUCompareModelBrands
 from models import CPUCompareModelSeries
@@ -50,6 +51,7 @@ class CPUCompareUI(Gtk.Application):
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
     self.winMain.set_title(APP_NAME)
+    self.winMain.set_icon_from_file(os.path.join(DIR_DATA, 'cpucompare.png'))
     self.optCPUType1 = builder.get_object("optCPUType1")
     self.optCPUTypeN = builder.get_object("optCPUTypeN")
     self.optCPUTypeAll = builder.get_object("optCPUTypeAll")
@@ -206,6 +208,8 @@ class CPUCompareUI(Gtk.Application):
     dlgAbout.set_website(APP_URL)
     dlgAbout.set_copyright(APP_COPYRIGHT)
     dlgAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]),
+    icon_logo = Pixbuf.new_from_file(os.path.join(DIR_DATA, 'cpucompare.png'))
+    dlgAbout.set_logo(icon_logo)
     dlgAbout.set_transient_for(self.winMain)
     dlgAbout.run()
     dlgAbout.destroy()
