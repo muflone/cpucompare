@@ -23,6 +23,8 @@ from distutils.core import setup
 from distutils.command.install_scripts import install_scripts
 from distutils.command.install_data import install_data
 
+import os
+import os.path
 from glob import glob
 import shutil
 from cpucompare.constants import *
