@@ -20,12 +20,14 @@
 
 from gi.repository import Gtk
 from gi.repository import Gio
+from gi.repository import GObject
 from gi.repository.GdkPixbuf import Pixbuf
 from constants import *
 from models import CPUCompareModelBrands
 from models import CPUCompareModelSeries
 from models import CPUCompareModelModels
 from models import CPUCompareModelCompares
+from daemon_thread import DaemonThread
 import os.path
 
 class CPUCompareUI(Gtk.Application):
@@ -33,9 +35,14 @@ class CPUCompareUI(Gtk.Application):
     super(self.__class__, self).__init__(application_id=APP_ID,
       flags=Gio.ApplicationFlags.FLAGS_NONE)
     self.database = database
+    # Create a new thread for loading all models in the background
+    self.thread_loader = DaemonThread(self.thread_load_all_models)
     self.loadUI(os.path.join(DIR_UI, 'cpucompare.glade'))
 
   def run(self):
+    # Load all the models in the background
+    self.thread_loader.start()
+    # Start the main thread for the GUI
     self.on_optCPUType_toggled(self.optCPUType1)
     self.winMain.show_all()
     Gtk.main()
@@ -62,6 +69,7 @@ class CPUCompareUI(Gtk.Application):
     self.brands = CPUCompareModelBrands(builder.get_object('storeBrands'))
     self.series = CPUCompareModelSeries(builder.get_object('storeSeries'))
     self.models = CPUCompareModelModels(builder.get_object('storeModels'))
+    self.allmodels = CPUCompareModelModels(builder.get_object('storeAllModels'))
     self.compares = CPUCompareModelCompares(builder.get_object('storeCompares'),
       max_score)
     self.cboBrands = builder.get_object('cboBrands')
@@ -81,11 +89,15 @@ class CPUCompareUI(Gtk.Application):
     # Add a match function to find the input text in the whole text instead
     # of matching only the models starting with the input key
     self.entrycompletionSearch.set_match_func(
-      self.entrycompletionSearch_match_func, self.models)
+      self.entrycompletionSearch_match_func, self.allmodels)
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
   def on_winMain_delete_event(self, widget, event):
+    # Cancel the running thread
+    if self.thread_loader.isAlive():
+      self.thread_loader.cancel()
+      self.thread_loader.join()
     # Disconnect from the database and close
     self.database.close()
     Gtk.main_quit()
@@ -227,8 +239,7 @@ class CPUCompareUI(Gtk.Application):
 
   def on_entrycompletionSearch_match_selected(self, widget, model, treeiter):
     # Automatically select the matched model and add it to the compares list
-    self.cboModels.set_active_iter(treeiter)
-    self.add_cpumodel(self.models, treeiter)
+    self.add_cpumodel(self.allmodels, treeiter)
     # Clear the search text and ignore the default behavior to complete the item
     self.entrySearch.activate()
     return True
@@ -243,3 +254,15 @@ class CPUCompareUI(Gtk.Application):
   def on_entrySearch_activate(self, widget):
     # Clear the entry search field when ENTER was pressed
     self.entrySearch.set_text('')
+
+  def thread_load_all_models(self):
+    # Load all the models
+    sSQL = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu '
+    sSQL += 'ORDER BY cpu_name'
+    for row in self.database.select(sSQL):
+      # Cancel the running thread
+      if self.thread_loader.cancelled:
+        break
+      # Add the row in a thread safe way
+      GObject.idle_add(self.allmodels.add_row, row)
+    return False

@@ -2,7 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
   <object class="GtkEntryCompletion" id="entrycompletionSearch">
-    <property name="model">storeModels</property>
+    <property name="model">storeAllModels</property>
     <property name="text_column">0</property>
     <signal name="match-selected" handler="on_entrycompletionSearch_match_selected" swapped="no"/>
   </object>
@@ -10,6 +10,22 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-about</property>
+  </object>
+  <object class="GtkListStore" id="storeAllModels">
+    <columns>
+      <!-- column-name colModel -->
+      <column type="gchararray"/>
+      <!-- column-name colModelKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelScore -->
+      <column type="gint"/>
+      <!-- column-name colModelQuantity -->
+      <column type="gint"/>
+      <!-- column-name colModelBrandKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelSeriesKey -->
+      <column type="gchararray"/>
+    </columns>
   </object>
   <object class="GtkListStore" id="storeBrands">
     <columns>
@@ -98,7 +114,7 @@
               <object class="GtkBox" id="boxType">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="spacing">12</property>
+                <property name="spacing">6</property>
                 <child>
                   <object class="GtkRadioButton" id="optCPUType1">
                     <property name="label" translatable="yes">_Single CPU</property>
@@ -154,6 +170,38 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkSeparator" id="separator1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entrySearch">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
+                    <property name="primary_icon_stock">gtk-find</property>
+                    <property name="secondary_icon_stock">gtk-clear</property>
+                    <property name="primary_icon_activatable">False</property>
+                    <property name="placeholder_text">Find a model</property>
+                    <property name="completion">entrycompletionSearch</property>
+                    <accelerator key="f" signal="grab-focus" modifiers="GDK_CONTROL_MASK"/>
+                    <signal name="activate" handler="on_entrySearch_activate" swapped="no"/>
+                    <signal name="icon-press" handler="on_entrySearch_icon_press" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkButton" id="btnAbout">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -167,7 +215,7 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="pack_type">end</property>
-                    <property name="position">3</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
@@ -304,9 +352,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="box1">
+              <object class="GtkBox" id="boxScore">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="lblScoreValue">
                     <property name="width_request">90</property>
@@ -322,23 +371,62 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entrySearch">
+                  <object class="GtkButton" id="btnClear">
+                    <property name="label">gtk-clear</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="invisible_char">●</property>
-                    <property name="primary_icon_stock">gtk-find</property>
-                    <property name="secondary_icon_stock">gtk-clear</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="placeholder_text">Find a model in the current series</property>
-                    <property name="completion">entrycompletionSearch</property>
-                    <accelerator key="f" signal="grab-focus" modifiers="GDK_CONTROL_MASK"/>
-                    <signal name="activate" handler="on_entrySearch_activate" swapped="no"/>
-                    <signal name="icon-press" handler="on_entrySearch_icon_press" swapped="no"/>
+                    <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <accelerator key="Delete" signal="clicked" modifiers="GDK_SHIFT_MASK"/>
+                    <signal name="clicked" handler="on_btnClear_clicked" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
+                    <property name="pack_type">end</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnAdd">
+                    <property name="label">gtk-add</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <accelerator key="Insert" signal="clicked"/>
+                    <signal name="clicked" handler="on_btnAdd_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnDelete">
+                    <property name="label">gtk-remove</property>
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <accelerator key="Delete" signal="clicked"/>
+                    <signal name="clicked" handler="on_btnDelete_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
@@ -354,81 +442,6 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButtonBox" id="buttonbox1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="spacing">4</property>
-            <property name="layout_style">start</property>
-            <child>
-              <object class="GtkButton" id="btnDelete">
-                <property name="label">gtk-remove</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <accelerator key="Delete" signal="clicked"/>
-                <signal name="clicked" handler="on_btnDelete_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">1</property>
-                <property name="secondary">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnAdd">
-                <property name="label">gtk-add</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <accelerator key="Insert" signal="clicked"/>
-                <signal name="clicked" handler="on_btnAdd_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">2</property>
-                <property name="secondary">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnClear">
-                <property name="label">gtk-clear</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <accelerator key="Delete" signal="clicked" modifiers="GDK_SHIFT_MASK"/>
-                <signal name="clicked" handler="on_btnClear_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">3</property>
-                <property name="secondary">True</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
           </packing>
         </child>
         <child>
