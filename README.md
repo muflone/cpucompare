@@ -6,6 +6,10 @@ CPUCompare
 
 **License:** GPL-2+
 
+Source code: https://github.com/muflone/cpucompare
+
+Documentation: http://cpucompare.muflone.com/
+
 System Requirements
 -------------------
 
