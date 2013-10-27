@@ -1,14 +1,14 @@
 CPUCompare
 ==========
-Descrizione: Un'applicazione GTK per effettuare confronti tra modelli di CPU.
+**Descrizione:** Un'applicazione GTK per effettuare confronti tra modelli di CPU.
 
-Copyright: 2013 Fabio Castelli <webreg(at)vbsimple(dot)net>
+**Copyright:** 2013 Fabio Castelli <webreg(at)vbsimple(dot)net>
 
-Licenza: GPL-2+
+**Licenza:** GPL-2+
 
-Codice sorgente: https://github.com/muflone/cpucompare
+**Codice sorgente:** https://github.com/muflone/cpucompare
 
-Documentazione: http://cpucompare.muflone.com/
+**Documentazione:** http://cpucompare.muflone.com/
 
 Requisiti di sistema
 --------------------
