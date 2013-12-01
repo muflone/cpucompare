@@ -8,7 +8,7 @@ CPUCompare
 
 Source code: https://github.com/muflone/cpucompare
 
-Documentation: http://cpucompare.muflone.com/
+Documentation: http://url.muflone.com/cpucompare
 
 System Requirements
 -------------------

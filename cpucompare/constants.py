@@ -22,10 +22,10 @@ import sys
 import os.path
 
 APP_NAME='CPUCompare'
-APP_VERSION='0.7'
+APP_VERSION='0.7.1'
 APP_DESCRIPTION='A GTK+ application to make comparisons between CPU models.'
 APP_ID='cpucompare.muflone.com'
-APP_URL='https://github.com/muflone/cpucompare'
+APP_URL='http://url.muflone.com/cpucompare'
 APP_AUTHOR='Fabio Castelli'
 APP_AUTHOR_EMAIL='webreg@vbsimple.net'
 APP_COPYRIGHT='Copyright 2013 %s' % APP_AUTHOR
