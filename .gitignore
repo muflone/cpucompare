@@ -1,3 +1,6 @@
+/locale/
 *.pyc
+*.ui~
+*.glade~
+\#*.glade#
 /build/
-/root/
