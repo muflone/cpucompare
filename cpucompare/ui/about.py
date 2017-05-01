@@ -24,7 +24,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.constants import (
     APP_NAME, APP_VERSION, APP_DESCRIPTION, APP_URL, APP_COPYRIGHT,
-    APP_AUTHOR, APP_AUTHOR_EMAIL,
+    APP_AUTHOR, APP_AUTHOR_EMAIL, DATABASE_VERSION,
     FILE_CONTRIBUTORS, FILE_LICENSE, FILE_TRANSLATORS, FILE_RESOURCES,
     FILE_ICON)
 from cpucompare.functions import readlines
@@ -46,7 +46,9 @@ class UIAbout(object):
         self.ui = GtkBuilderLoader('about.ui')
         # Set various properties
         self.ui.dialog_about.set_program_name(APP_NAME)
-        self.ui.dialog_about.set_version(_('Version %s') % APP_VERSION)
+        self.ui.dialog_about.set_version('%s\n%s' % (
+            _('Version %s') % APP_VERSION,
+            _('Database version: %s') % DATABASE_VERSION))
         self.ui.dialog_about.set_comments(_(APP_DESCRIPTION))
         self.ui.dialog_about.set_website(APP_URL)
         self.ui.dialog_about.set_copyright(APP_COPYRIGHT)

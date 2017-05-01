@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare 0.7.0\n"
 "Report-Msgid-Bugs-To: muflone(at)vbsimple.net\n"
-"POT-Creation-Date: 2017-05-01 17:36+0200\n"
+"POT-Creation-Date: 2017-05-01 18:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,12 @@ msgstr ""
 msgid "Version %s"
 msgstr ""
 
-#: cpucompare/ui/about.py:59
+#: cpucompare/ui/about.py:52
+#, python-format
+msgid "Database version: %s"
+msgstr ""
+
+#: cpucompare/ui/about.py:61
 msgid "Contributors:"
 msgstr ""
 
