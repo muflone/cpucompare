@@ -2,7 +2,7 @@ CPUCompare
 ==========
 **Description:** A GTK+ application to make comparisons between CPU models.
 
-**Copyright:** 2013 Fabio Castelli <webreg(at)vbsimple(dot)net>
+**Copyright:** 2013-2017 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
 
 **License:** GPL-2+
 
