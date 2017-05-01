@@ -38,7 +38,7 @@ class CPUSelections(ModelAbstract):
     def __init__(self, model, max_score):
         super(self.__class__, self).__init__(model)
         self.max_score = max_score
-        
+
     def add_data(self, item):
         """Add a new row to the model if it doesn't exists"""
         super(self.__class__, self).add_data(item)

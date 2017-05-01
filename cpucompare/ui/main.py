@@ -312,7 +312,8 @@ class UIMain(object):
     def add_cpu_model_to_compares(self, item):
         """Add a the InfoCPUModel item to the compares list"""
         self.model_selection.add_data(item)
-        self.ui.treeview_selections.set_cursor(self.model_selection.count() - 1)
+        self.ui.treeview_selections.set_cursor(
+            self.model_selection.count() - 1)
         self.ui.action_selections_clear.set_sensitive(True)
 
     def on_treeview_selections_selection_changed(self, widget):

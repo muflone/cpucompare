@@ -32,8 +32,6 @@ from cpucompare.models.info_cpumodel import InfoCPUModel
 database = None
 
 
-import time
-
 class ModelsDB(object):
     def __init__(self):
         self.loader = None
@@ -60,7 +58,6 @@ class ModelsDB(object):
         sSQL = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu ' \
                'ORDER BY cpu_name'
         for row in self.database.execute(sSQL):
-            #time.sleep(0.001)
             # Cancel the running thread
             if self.loader.cancelled:
                 break
@@ -133,6 +130,4 @@ class ModelsDB(object):
           >  for 2+ CPU
           >= for 1+ CPU
         """
-        return { '1': '=',
-                 '2': '>',
-               }.get(str(cpu_quantity), '>=')
+        return {'1': '=', '2': '>'}.get(str(cpu_quantity), '>=')
