@@ -23,7 +23,6 @@ from gi.repository import Gdk
 from gi.repository import Gio
 
 from cpucompare.constants import APP_ID, DIR_SETTINGS
-from cpucompare.functions import get_ui_file
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 
 from cpucompare.ui.main import UIMain
@@ -55,7 +54,7 @@ class Application(Gtk.Application):
         action.connect("activate", self.on_app_quit_activate)
         self.add_action(action)
         # Add the app menu
-        builder_appmenu = GtkBuilderLoader(get_ui_file('appmenu.ui'))
+        builder_appmenu = GtkBuilderLoader('appmenu.ui')
         self.set_app_menu(builder_appmenu.app_menu)
 
     def activate(self, application):

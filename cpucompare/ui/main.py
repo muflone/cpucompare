@@ -25,7 +25,7 @@ from gi.repository import Gio
 from cpucompare.constants import (
     APP_NAME,
     FILE_SETTINGS, FILE_WINDOWS_POSITION)
-from cpucompare.functions import get_ui_file, get_treeview_selected_row
+from cpucompare.functions import get_treeview_selected_row
 from cpucompare.localize import text, _
 import cpucompare.settings as settings
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
@@ -75,7 +75,7 @@ class UIMain(object):
 
     def loadUI(self):
         """Load the interface UI"""
-        self.ui = GtkBuilderLoader(get_ui_file('main.ui'))
+        self.ui = GtkBuilderLoader('main.ui')
         self.ui.window_main.set_application(self.application)
         self.ui.window_main.set_title(APP_NAME)
 

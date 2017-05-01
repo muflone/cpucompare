@@ -22,7 +22,6 @@ from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
-from cpucompare.functions import get_ui_file
 from cpucompare.localize import text
 
 
@@ -30,7 +29,7 @@ class UIShortcuts(object):
     def __init__(self, parent):
         """Prepare the shortcuts dialog"""
         # Load the user interface
-        self.ui = GtkBuilderLoader(get_ui_file('shortcuts.ui'))
+        self.ui = GtkBuilderLoader('shortcuts.ui')
         self.ui.shortcuts.set_transient_for(parent)
         # Initialize groups
         for widget in self.ui.get_objects_by_type(Gtk.ShortcutsGroup):

@@ -18,7 +18,10 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
+import os.path
 from gi.repository import Gtk
+
+from cpucompare.constants import DIR_UI
 
 
 class GtkBuilderLoader(object):
@@ -26,7 +29,7 @@ class GtkBuilderLoader(object):
         """Load one or more ui files for GtkBuilder"""
         self.builder = Gtk.Builder()
         for ui_filename in ui_files:
-            self.builder.add_from_file(ui_filename)
+            self.builder.add_from_file(os.path.join(DIR_UI, ui_filename))
         self.__widgets = {}
 
     def __getattr__(self, key):

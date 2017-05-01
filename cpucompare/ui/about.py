@@ -27,7 +27,7 @@ from cpucompare.constants import (
     APP_AUTHOR, APP_AUTHOR_EMAIL,
     FILE_CONTRIBUTORS, FILE_LICENSE, FILE_TRANSLATORS, FILE_RESOURCES,
     FILE_ICON)
-from cpucompare.functions import readlines, get_ui_file
+from cpucompare.functions import readlines
 from cpucompare.localize import _
 
 
@@ -43,7 +43,7 @@ class UIAbout(object):
             if line not in translators:
                 translators.append(line)
         # Load the user interface
-        self.ui = GtkBuilderLoader(get_ui_file('about.ui'))
+        self.ui = GtkBuilderLoader('about.ui')
         # Set various properties
         self.ui.dialog_about.set_program_name(APP_NAME)
         self.ui.dialog_about.set_version(_('Version %s') % APP_VERSION)
