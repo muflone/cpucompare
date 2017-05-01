@@ -6,9 +6,9 @@ CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=
 
 **License:** GPL-2+
 
-Source code: https://github.com/muflone/cpucompare
+**Source code:** https://github.com/muflone/cpucompare
 
-Documentation: http://url.muflone.com/cpucompare
+**Documentation:** http://www.muflone.com/cpucompare/
 
 System Requirements
 -------------------
