@@ -30,6 +30,7 @@ from cpucompare.localize import text, _
 import cpucompare.settings as settings
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.database import ModelsDB
+from cpucompare.localize import strip_underline
 
 from cpucompare.ui.about import UIAbout
 from cpucompare.ui.shortcuts import UIShortcuts
@@ -104,9 +105,11 @@ class UIMain(object):
             for widget in self.ui.get_objects_by_type(gtk_type):
                 action = widget.get_related_action()
                 if action:
-                    widget.set_tooltip_text(action.get_label().replace('_', ''))
+                    widget.set_tooltip_text(
+                        strip_underline(action.get_label()))
                 else:
-                    widget.set_tooltip_text(widget.get_label().replace('_', ''))
+                    widget.set_tooltip_text(
+                        strip_underline(widget.get_label()))
         # Connect signals from the glade file to the module functions
         self.ui.connect_signals(self)
 

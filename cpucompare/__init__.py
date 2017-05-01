@@ -23,17 +23,9 @@ import locale
 
 import cpucompare.requires
 
-from cpucompare.localize import store_message, text, _
+from cpucompare.localize import (
+  store_message, strip_colon, strip_underline, text, _)
 from cpucompare.constants import DOMAIN_NAME, DIR_LOCALE
-
-def strip_colon(message):
-    """Remove the colons from the message"""
-    return message.replace(':', '')
-
-
-def strip_underline(message):
-    """Remove the underlines from the message"""
-    return message.replace('_', '')
 
 
 # Load domain for translation

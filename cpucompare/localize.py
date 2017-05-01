@@ -44,6 +44,16 @@ def store_message(message, translated):
     localized_messages[message] = translated
 
 
+def strip_colon(message):
+    """Remove the colons from the message"""
+    return message.replace(':', '')
+
+
+def strip_underline(message):
+    """Remove the underlines from the message"""
+    return message.replace('_', '')
+
+
 # This special alias is used to track localization requests to catch
 # by xgettext. The text() calls aren't tracked by xgettext
 _ = text
@@ -51,6 +61,8 @@ _ = text
 __all__ = [
     'text',
     'store_message',
+    'strip_colon',
+    'strip_underline',
     '_',
     'localized_messages',
 ]
