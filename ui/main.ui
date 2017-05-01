@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
+<interface>
+  <requires lib="gtk+" version="3.6"/>
+  <object class="GtkAccelGroup" id="accelerators"/>
+  <object class="GtkActionGroup" id="actions_application">
+    <property name="accel_group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_application_about">
+        <property name="label" comments="Use domain gtk30">_About</property>
+        <property name="icon_name">help-about</property>
+        <property name="always_show_image">True</property>
+        <signal name="activate" handler="on_action_application_about_activate" swapped="no"/>
+      </object>
+      <accelerator key="F1"/>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_application_quit">
+        <property name="label" comments="Use domain gtk30">_Quit</property>
+        <signal name="activate" handler="on_action_application_quit_activate" swapped="no"/>
+      </object>
+      <accelerator key="q" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+  </object>
+  <object class="GtkActionGroup" id="actions_selections">
+    <property name="accel_group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_selections_add">
+        <property name="label" comments="Use domain gtk30">_Add</property>
+        <property name="icon_name">list-add</property>
+        <signal name="activate" handler="on_action_selections_add_activate" swapped="no"/>
+      </object>
+      <accelerator key="KP_Add" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_selections_remove">
+        <property name="label" comments="Use domain gtk30">_Remove</property>
+        <property name="icon_name">list-remove</property>
+        <property name="sensitive">False</property>
+        <signal name="activate" handler="on_action_selections_remove_activate" swapped="no"/>
+      </object>
+      <accelerator key="KP_Subtract" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_selections_clear">
+        <property name="label" comments="Use domain gtk30">_Clear List</property>
+        <property name="icon_name">document-revert</property>
+        <property name="sensitive">False</property>
+        <signal name="activate" handler="on_action_selections_clear_activate" swapped="no"/>
+      </object>
+      <accelerator key="Delete" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+    </child>
+  </object>
+  <object class="GtkListStore" id="store_brands">
+    <columns>
+      <!-- column-name colBrandKey -->
+      <column type="gchararray"/>
+      <!-- column-name colBrandValue -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="store_models">
+    <columns>
+      <!-- column-name colModelKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelValue -->
+      <column type="gchararray"/>
+      <!-- column-name colModelQuantity -->
+      <column type="gint"/>
+      <!-- column-name colModelQuantityCPU -->
+      <column type="gchararray"/>
+      <!-- column-name colModelBrand -->
+      <column type="gchararray"/>
+      <!-- column-name colModelSeries -->
+      <column type="gchararray"/>
+      <!-- column-name colModelScore -->
+      <column type="gint"/>
+      <!-- column-name colModelScoreRelative -->
+      <column type="gfloat"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="store_models_all">
+    <columns>
+      <!-- column-name colModelKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelValue -->
+      <column type="gchararray"/>
+      <!-- column-name colModelQuantity -->
+      <column type="gint"/>
+      <!-- column-name colModelQuantityCPU -->
+      <column type="gchararray"/>
+      <!-- column-name colModelBrand -->
+      <column type="gchararray"/>
+      <!-- column-name colModelSeries -->
+      <column type="gchararray"/>
+      <!-- column-name colModelScore -->
+      <column type="gint"/>
+      <!-- column-name colModelScoreRelative -->
+      <column type="gfloat"/>
+    </columns>
+  </object>
+  <object class="GtkEntryCompletion" id="entrycompletion_search">
+    <property name="model">store_models_all</property>
+    <property name="text_column">0</property>
+    <signal name="match-selected" handler="on_entrycompletion_search_match_selected" swapped="no"/>
+    <child>
+      <object class="GtkCellRendererText" id="cell_completion_search_name"/>
+      <attributes>
+        <attribute name="text">1</attribute>
+      </attributes>
+    </child>
+    <child>
+      <object class="GtkCellRendererText" id="cell_completion_search_quantity">
+        <property name="xalign">1</property>
+      </object>
+      <attributes>
+        <attribute name="text">3</attribute>
+      </attributes>
+    </child>
+  </object>
+  <object class="GtkListStore" id="store_selections">
+    <columns>
+      <!-- column-name colModelKey -->
+      <column type="gchararray"/>
+      <!-- column-name colModelIndex -->
+      <column type="gint"/>
+      <!-- column-name colModelValue -->
+      <column type="gchararray"/>
+      <!-- column-name colModelQuantity -->
+      <column type="gint"/>
+      <!-- column-name colModelQuantityCPU -->
+      <column type="gchararray"/>
+      <!-- column-name colModelBrand -->
+      <column type="gchararray"/>
+      <!-- column-name colModelSeries -->
+      <column type="gchararray"/>
+      <!-- column-name colModelScore -->
+      <column type="gint"/>
+      <!-- column-name colModelScoreRelative -->
+      <column type="gfloat"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="store_series">
+    <columns>
+      <!-- column-name colSeriesKey -->
+      <column type="gchararray"/>
+      <!-- column-name colSeriesValue -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkWindow" id="window_main">
+    <property name="can_focus">False</property>
+    <property name="border_width">5</property>
+    <property name="default_width">700</property>
+    <property name="default_height">330</property>
+    <accel-groups>
+      <group name="accelerators"/>
+    </accel-groups>
+    <signal name="delete-event" handler="on_window_main_delete_event" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="box_main">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">5</property>
+        <child>
+          <object class="GtkGrid" id="grid_chooser">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="row_spacing">7</property>
+            <property name="column_spacing">7</property>
+            <property name="row_homogeneous">True</property>
+            <child>
+              <object class="GtkBox" id="box_cputype">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkRadioButton" id="option_cputype_single">
+                    <property name="label" translatable="yes" context="CPU types">_Single CPU</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_option_cputype_toggled" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkRadioButton" id="option_cputype_multiple">
+                    <property name="label" translatable="yes" context="CPU types">_Multiple CPU</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">option_cputype_single</property>
+                    <signal name="toggled" handler="on_option_cputype_toggled" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkRadioButton" id="option_cputype_all">
+                    <property name="label" translatable="yes" context="CPU types" comments="All of the CPU types">A_ll</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">option_cputype_single</property>
+                    <signal name="toggled" handler="on_option_cputype_toggled" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparator" id="separator1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entry_cputype_search">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
+                    <property name="primary_icon_stock">gtk-find</property>
+                    <property name="secondary_icon_stock">gtk-clear</property>
+                    <property name="primary_icon_activatable">False</property>
+                    <property name="placeholder_text" translatable="yes">Find a CPU model</property>
+                    <property name="completion">entrycompletion_search</property>
+                    <signal name="activate" handler="on_entry_cputype_search_activate" swapped="no"/>
+                    <signal name="icon-press" handler="on_entry_cputype_search_icon_press" swapped="no"/>
+                    <accelerator key="f" signal="grab-focus" modifiers="GDK_CONTROL_MASK"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_about">
+                    <property name="use_action_appearance">False</property>
+                    <property name="related_action">action_application_about</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="always_show_image">True</property>
+                    <child>
+                      <object class="GtkImage" id="image_about">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">help-about</property>
+                      </object>
+                    </child>
+                    <accelerator key="F1" signal="clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_brands">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">_Brand:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">combo_brands</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="combo_brands">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="model">store_brands</property>
+                <signal name="changed" handler="on_combo_brands_changed" swapped="no"/>
+                <child>
+                  <object class="GtkCellRendererText" id="cell_brands"/>
+                  <attributes>
+                    <attribute name="text">1</attribute>
+                  </attributes>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_series">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">S_eries:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">combo_series</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="combo_series">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="model">store_series</property>
+                <signal name="changed" handler="on_combo_series_changed" swapped="no"/>
+                <child>
+                  <object class="GtkCellRendererText" id="cell_series"/>
+                  <attributes>
+                    <attribute name="text">1</attribute>
+                  </attributes>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_models">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">M_odel:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">combo_models</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="combo_models">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="model">store_models</property>
+                <signal name="changed" handler="on_combo_models_changed" swapped="no"/>
+                <child>
+                  <object class="GtkCellRendererText" id="cell_model"/>
+                  <attributes>
+                    <attribute name="text">1</attribute>
+                  </attributes>
+                </child>
+                <child>
+                  <object class="GtkCellRendererText" id="cell_quantity">
+                    <property name="xalign">1</property>
+                  </object>
+                  <attributes>
+                    <attribute name="text">3</attribute>
+                  </attributes>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_cputype">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">Type:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_score">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Score:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_score_selections">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="label_score_value">
+                    <property name="width_request">90</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" comments="Score placeholder&#9;">SCORE nnn nnn nnn</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolbar" id="toolbar_selections">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkToolButton" id="toolbutton_selections_add">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">action_selections_add</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="is_important">True</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="homogeneous">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToolButton" id="toolbutton_selections_remove">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">action_selections_remove</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="is_important">True</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="homogeneous">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToolButton" id="toolbutton_selections_clear">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">action_selections_clear</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="is_important">True</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="homogeneous">True</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">4</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="scroll_selections">
+            <property name="height_request">100</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="vexpand">True</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="treeview_selections">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">store_selections</property>
+                <property name="headers_clickable">False</property>
+                <property name="show_expanders">False</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection" id="treeview_selections_selection">
+                    <signal name="changed" handler="on_treeview_selections_selection_changed" swapped="no"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_index">
+                    <property name="title" translatable="yes">Index</property>
+                    <property name="sort_column_id">1</property>
+                    <child>
+                      <object class="GtkCellRendererSpin" id="cell_selections_key"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_brand">
+                    <property name="resizable">True</property>
+                    <property name="title" comments="Use existing translation">Brand</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">5</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cell_selections_brand"/>
+                      <attributes>
+                        <attribute name="text">5</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_series">
+                    <property name="resizable">True</property>
+                    <property name="title" comments="Use existing translation">Series</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">6</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cell_selections_series"/>
+                      <attributes>
+                        <attribute name="text">6</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_model">
+                    <property name="resizable">True</property>
+                    <property name="title" comments="Use existing translation">Model</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">2</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cell_selections_model"/>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_quantity">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Quantity</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cell_selections_quantity"/>
+                      <attributes>
+                        <attribute name="text">4</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_selections_score">
+                    <property name="resizable">True</property>
+                    <property name="title" comments="Use existing translation">Score</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">7</property>
+                    <child>
+                      <object class="GtkCellRendererProgress" id="cell_selections_score"/>
+                      <attributes>
+                        <attribute name="text">7</attribute>
+                        <attribute name="value">8</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkProgressBar" id="progressbar_loading">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="show_text">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

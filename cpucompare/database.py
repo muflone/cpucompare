@@ -18,31 +18,121 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-import sqlite3
+import os.path
+from gi.repository import GObject
 
-class SQLite3Connection(object):
-  def __init__(self, sDatabase=None):
-    self.connection = None
-    # Automatically open the database if its file path was provided
-    if sDatabase:
-      self.open(sDatabase)
+from cpucompare.sqlite3_connection import SQLite3Connection
+from cpucompare.daemon_thread import DaemonThread
+from cpucompare.constants import DIR_DATA
 
-  def open(self, sDatabase):
-    # Open the database connection
-    self.connection = sqlite3.connect(sDatabase, check_same_thread = False)
-    self.connection.row_factory = sqlite3.Row
+from cpucompare.models.info_cpubrand import InfoCPUBrand
+from cpucompare.models.info_cpuseries import InfoCPUSeries
+from cpucompare.models.info_cpumodel import InfoCPUModel
 
-  def close(self):
-    # Close the database connection
-    self.connection.close()
-    self.connection = None
+database = None
 
-  def select(self, sSQL, *arguments):
-    # Execute an instruction and return its data
-    # print sSQL
-    cursor = self.connection.cursor()
-    if len(arguments) == 1 and arguments[0] is None:
-      cursor.execute(sSQL)
-    else:
-      cursor.execute(sSQL, arguments)
-    return cursor
+
+import time
+
+class ModelsDB(object):
+    def __init__(self):
+        self.loader = None
+        self.cb_add_row = None
+        self.database = SQLite3Connection()
+        self.database.open(os.path.join(DIR_DATA, 'cpucompare.db'))
+
+    def close(self):
+        """Close the database connection"""
+        if self.loader.isAlive():
+            # If the loader thread is alive, first cancel it
+            self.loader.cancel()
+            self.loader.join()
+        self.database.close()
+
+    def load(self, cb_add_row):
+        """Load the data from the database"""
+        self.cb_add_row = cb_add_row
+        self.loader = DaemonThread(self.__load_all_models)
+        self.loader.start()
+
+    def __load_all_models(self):
+        """Load all models"""
+        sSQL = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu ' \
+               'ORDER BY cpu_name'
+        for row in self.database.execute(sSQL):
+            #time.sleep(0.001)
+            # Cancel the running thread
+            if self.loader.cancelled:
+                break
+            # Add the row in a thread safe way
+            model = InfoCPUModel(row['cpu_name'],
+                                 row['score1'],
+                                 row['quantity'],
+                                 row['brand'],
+                                 row['model1'])
+            GObject.idle_add(self.cb_add_row, model)
+        return False
+
+    def get_models_count(self):
+        """Return the number of models in the database"""
+        sSQL = 'SELECT count(*) AS totals FROM cpu'
+        return self.database.execute(sSQL).fetchall()[0]['totals']
+
+    def get_max_score(self):
+        """Return the max score in the database"""
+        sSQL = 'SELECT max(score1) AS score FROM cpu'
+        return self.database.execute(sSQL).fetchall()[0]['score']
+
+    def get_brands(self, cpu_quantity):
+        """Return a list of InfoCPUBrand"""
+        sSQL = 'SELECT DISTINCT brand ' \
+               'FROM cpu ' \
+               'WHERE quantity %s 1 ' \
+               'ORDER BY brand' % self._get_quantity_sign(cpu_quantity)
+        result = []
+        for row in self.database.execute(sSQL):
+            result.append(InfoCPUBrand(row['brand'],
+                                       row['brand']))
+        return result
+
+    def get_series(self, cpu_quantity, brand_name):
+        """Return a list of InfoCPUSeries"""
+        sSQL = 'SELECT DISTINCT model1 ' \
+               'FROM cpu ' \
+               'WHERE quantity %s 1 ' \
+               'AND brand=? ' \
+               'ORDER BY model1' % self._get_quantity_sign(cpu_quantity)
+        result = []
+        for row in self.database.execute(sSQL, brand_name):
+            result.append(InfoCPUSeries(row['model1'],
+                                        row['model1']))
+        return result
+
+    def get_models(self, cpu_quantity, brand_name, series_name):
+        """Return a list of InfoCPUModel"""
+        sSQL = 'SELECT cpu_name, model1, quantity, score1 ' \
+               'FROM cpu ' \
+               'WHERE quantity %s 1 ' \
+               'AND brand=? ' \
+               'AND model1=? ' \
+               'ORDER BY cpu_name, ' \
+               '         quantity' % self._get_quantity_sign(cpu_quantity)
+        result = []
+        for row in self.database.execute(sSQL, brand_name, series_name):
+            result.append(InfoCPUModel(row['cpu_name'],
+                                       row['score1'],
+                                       row['quantity'],
+                                       brand_name,
+                                       series_name))
+        return result
+
+    def _get_quantity_sign(self, cpu_quantity):
+        """
+        Return the sign to check the CPU quantity:
+          =  for 1 CPU
+          >  for 2+ CPU
+          >= for 1+ CPU
+        """
+        return { '1': '=',
+                 '2': '>',
+               }.get(str(cpu_quantity), '>=')

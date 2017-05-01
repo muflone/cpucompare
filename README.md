@@ -14,10 +14,11 @@ System Requirements
 -------------------
 
 * Python 2.x (developed and tested for Python 2.7.5)
-* GTK+3.0 libraries for Python 2
-* GObject libraries for Python 2
-* SQLite3 library for Python 2 (usually shipped with Python distribution)
-* Distutils library for Python 2 (usually shipped with Python distribution)
+* GTK+ 3.0 libraries for Python 2.x
+* GObject libraries for Python 2.x
+* XDG library for Python 2.x
+* SQLite3 library for Python 2.x (usually shipped with Python distribution)
+* Distutils library for Python 2.x (usually shipped with Python distribution)
 
 Installation
 ------------

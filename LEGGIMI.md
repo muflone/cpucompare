@@ -14,10 +14,11 @@ Requisiti di sistema
 --------------------
 
 * Python 2.x (sviluppato e testato per Python 2.7.5)
-* Libreria GTK+3.0 per Python 2
-* Libreria GObject per Python 2
-* Libreria SQLite3 per Python 2 (generalmente fornita col pacchetto Python)
-* Libreria Distutils per Python 2 (generalmente fornita col pacchetto Python)
+* Libreria GTK+ 3.0 per Python 2.x
+* Libreria GObject per Python 2.x
+* Libreria XDG per Python 2.x
+* Libreria SQLite3 per Python 2.x (generalmente fornita col pacchetto Python)
+* Libreria Distutils per Python 2.x (generalmente fornita col pacchetto Python)
 
 Installazione
 -------------

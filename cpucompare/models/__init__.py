@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -18,10 +17,3 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
-
-from cpucompare.app import Application
-
-if __name__ == '__main__':
-    # Start the application
-    app = Application()
-    app.run(None)

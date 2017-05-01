@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -19,9 +18,24 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from cpucompare.app import Application
+from gi.repository import GLib
 
-if __name__ == '__main__':
-    # Start the application
-    app = Application()
-    app.run(None)
+from cpucompare.models.abstract import ModelAbstract
+
+
+class CPUBrands(ModelAbstract):
+    COL_BRAND = 1
+
+    def add_data(self, item):
+        """Add a new row to the model if it doesn't exists"""
+        super(self.__class__, self).add_data(item)
+        if item.name not in self.rows:
+            new_row = self.model.append((
+                item.name,
+                item.description))
+            self.rows[item.name] = new_row
+            return new_row
+
+    def get_brand(self, treeiter):
+        """Get the brand from a TreeIter"""
+        return self.model[treeiter][self.COL_BRAND]

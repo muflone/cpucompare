@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -19,9 +18,10 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from cpucompare.app import Application
+from gi.repository import GLib
 
-if __name__ == '__main__':
-    # Start the application
-    app = Application()
-    app.run(None)
+
+class InfoCPUSeries(object):
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description if description else 'Unknown'

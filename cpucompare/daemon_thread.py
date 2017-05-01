@@ -22,13 +22,14 @@ from gi.repository import Gdk
 from gi.repository import GObject
 from threading import Thread
 
-class DaemonThread(Thread):
-  def __init__(self, target):
-    GObject.threads_init()
-    Gdk.threads_init()
-    super(self.__class__, self).__init__(target=target)
-    self.daemon = True
-    self.cancelled = False
 
-  def cancel(self):
-    self.cancelled = True
+class DaemonThread(Thread):
+    def __init__(self, target):
+        GObject.threads_init()
+        Gdk.threads_init()
+        super(self.__class__, self).__init__(target=target)
+        self.daemon = True
+        self.cancelled = False
+
+    def cancel(self):
+        self.cancelled = True

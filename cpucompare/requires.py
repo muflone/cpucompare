@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -19,9 +18,9 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-from cpucompare.app import Application
+import gi
 
-if __name__ == '__main__':
-    # Start the application
-    app = Application()
-    app.run(None)
+if gi.require_version('Gtk', '3.0') is None:
+    from gi.repository import Gtk
+if gi.require_version('GdkPixbuf', '2.0') is None:
+    from gi.repository import GdkPixbuf

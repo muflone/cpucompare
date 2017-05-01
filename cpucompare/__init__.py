@@ -18,5 +18,42 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
-# Nothing interesting here
-# This is a package placeholder
+import gettext
+import locale
+
+import cpucompare.requires
+
+from cpucompare.localize import store_message, text, _
+from cpucompare.constants import DOMAIN_NAME, DIR_LOCALE
+
+def strip_colon(message):
+    """Remove the colons from the message"""
+    return message.replace(':', '')
+
+
+def strip_underline(message):
+    """Remove the underlines from the message"""
+    return message.replace('_', '')
+
+
+# Load domain for translation
+for module in (gettext, locale):
+    module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
+    module.textdomain(DOMAIN_NAME)
+
+# Import some translated messages from GTK+ domain
+for message in ('_Remove', '_Clear List', 'Properties'):
+    text(message=message, gtk30=True)
+
+# Import some variations
+store_message('Type:', '%s:' % text(message='Type', gtk30=True))
+for message in ('_Brand:', 'S_eries:', 'M_odel:', 'Score:'):
+    new_message = strip_colon(strip_underline(message))
+    store_message(new_message,
+                  strip_colon(strip_underline(text(message=message,
+                                                   gtk30=False))))
+
+# With domain context
+for message in ('_Quit', '_Add'):
+    text(message=message, gtk30=True, context='Stock label')
+store_message('Quit', text(message='_Quit', gtk30=True).replace('_', ''))
