@@ -1,4 +1,4 @@
-CPUCompare
+CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=master)](https://travis-ci.org/muflone/cpucompare)
 ==========
 **Descrizione:** Un'applicazione GTK per effettuare confronti tra modelli di CPU.
 
