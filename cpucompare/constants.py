@@ -32,7 +32,7 @@ def _(text):
 
 # Application constants
 APP_NAME = 'CPUCompare'
-APP_VERSION = '0.8.0'
+APP_VERSION = '0.7.0'
 APP_DESCRIPTION = _('A GTK+ application to make comparisons between '
                     'CPU models.')
 APP_ID = 'cpucompare.muflone.com'
