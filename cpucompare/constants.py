@@ -45,7 +45,7 @@ DOMAIN_NAME = 'cpucompare'
 VERBOSE_LEVEL_QUIET = 0
 VERBOSE_LEVEL_NORMAL = 1
 VERBOSE_LEVEL_MAX = 2
-DATABASE_VERSION = 20170425
+DATABASE_VERSION = 20130806
 
 # Paths constants
 # If there's a file data/cpucompare.png then the shared data
