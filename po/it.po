@@ -1,17 +1,17 @@
 # Italian translations for CPUCompare package
-# Copyright (C) 2017 Fabio Castelli
+# Copyright (C) 2022 Fabio Castelli
 # This file is distributed under the same license as the CPUCompare package.
-# Automatically generated, 2017.
+# Automatically generated, 2022.
 #
 # Translators:
-# Muflone <muflone(at)vbsimple.net>, 2013-2017
+# Muflone <muflone(at)muflone.com>, 2013-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare 0.7.0\n"
-"Report-Msgid-Bugs-To: muflone(at)vbsimple.net\n"
+"Report-Msgid-Bugs-To: muflone(at)muflone.com\n"
 "POT-Creation-Date: 2017-05-01 18:35+0200\n"
 "PO-Revision-Date: 2017-04-29 23:30+0200\n"
-"Last-Translator: Muflone <muflone(at)vbsimple.net>\n"
+"Last-Translator: Muflone <muflone@muflone.com>\n"
 "Language-Team: Italian (http://www.transifex.com/muflone/cpucompare/language/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"

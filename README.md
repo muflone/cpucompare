@@ -2,7 +2,7 @@ CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=
 ==========
 **Description:** A GTK+ application to make comparisons between CPU models.
 
-**Copyright:** 2013-2017 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
+**Copyright:** 2013-2022 Fabio Castelli (Muflone) <muflone@muflone.com>
 
 **License:** GPL-2+
 

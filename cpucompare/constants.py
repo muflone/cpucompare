@@ -1,8 +1,8 @@
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
-#      Author: Fabio Castelli <muflone@vbsimple.net>
-#   Copyright: 2013-2017 Fabio Castelli
+#      Author: Fabio Castelli <muflone@muflone.com>
+#   Copyright: 2013-2022 Fabio Castelli
 #     License: GPL-2+
 #  This program is free software; you can redistribute it and/or modify it
 #  under the terms of the GNU General Public License as published by the Free
@@ -38,8 +38,8 @@ APP_DESCRIPTION = _('A GTK+ application to make comparisons between '
 APP_ID = 'cpucompare.muflone.com'
 APP_URL = 'http://www.muflone.com/cpucompare/'
 APP_AUTHOR = 'Fabio Castelli'
-APP_AUTHOR_EMAIL = 'muflone@vbsimple.net'
-APP_COPYRIGHT = 'Copyright 2013-2017 %s' % APP_AUTHOR
+APP_AUTHOR_EMAIL = 'muflone@muflone.com'
+APP_COPYRIGHT = 'Copyright 2013-2022 %s' % APP_AUTHOR
 # Other constants
 DOMAIN_NAME = 'cpucompare'
 VERBOSE_LEVEL_QUIET = 0

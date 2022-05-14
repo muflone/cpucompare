@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare 0.7.0\n"
-"Report-Msgid-Bugs-To: muflone(at)vbsimple.net\n"
+"Report-Msgid-Bugs-To: muflone(at)muflone.com\n"
 "POT-Creation-Date: 2017-05-01 18:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
