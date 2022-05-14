@@ -4,7 +4,7 @@ CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=
 
 **Copyright:** 2013-2022 Fabio Castelli (Muflone) <muflone@muflone.com>
 
-**License:** GPL-2+
+**License:** GPL-3+
 
 **Source code:** https://github.com/muflone/cpucompare
 
