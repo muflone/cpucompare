@@ -41,7 +41,7 @@ class ModelsDB(object):
 
     def close(self):
         """Close the database connection"""
-        if self.loader.isAlive():
+        if self.loader.is_alive():
             # If the loader thread is alive, first cancel it
             self.loader.cancel()
             self.loader.join()
