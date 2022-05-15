@@ -1,5 +1,7 @@
-CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=master)](https://travis-ci.org/muflone/cpucompare)
-==========
+# CPUCompare
+
+[![Travis CI Build Status](https://img.shields.io/travis/com/muflone/cpucompare/master.svg)](https://www.travis-ci.com/github/muflone/cpucompare)
+
 **Description:** A GTK+ application to make comparisons between CPU models.
 
 **Copyright:** 2013-2022 Fabio Castelli (Muflone) <muflone@muflone.com>
@@ -10,16 +12,16 @@ CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=
 
 **Documentation:** https://www.muflone.com/cpucompare/
 
-System Requirements
--------------------
+**Translations:** https://www.transifex.com/muflone/cpucompare/
+
+# System Requirements
 
 * Python >= 3.6 (developed and tested for Python 3.9 and 3.10)
 * XDG library for Python 3 ( https://pypi.org/project/pyxdg/ )
 * GTK+ 3.0 libraries for Python 3
 * GObject libraries for Python 3 ( https://pypi.org/project/PyGObject/ )
 
-Installation
-------------
+# Installation
 
 A distutils installation script is available to install from the sources.
 
@@ -33,8 +35,7 @@ To install the files in another path instead of the standard /usr prefix use:
     cd /path/to/folder
     python3 setup.py install --root NEW_PATH
 
-Usage
------
+# Usage
 
 If the application is not installed please use:
 
