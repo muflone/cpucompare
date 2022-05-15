@@ -22,6 +22,18 @@ import os
 import os.path
 import fnmatch
 
+from cpucompare.constants import DIR_UI
+
+
+def get_treeview_selected_row(widget):
+    """Return the selected row in a GtkTreeView"""
+    return widget.get_selection().get_selected()[1]
+
+
+def get_ui_file(filename):
+    """Return the full path of a Glade/UI file"""
+    return str(DIR_UI / filename)
+
 
 def readlines(filename, empty_lines=False):
     """Read all the lines of a filename, optionally skipping empty lines"""
@@ -42,15 +54,3 @@ def recursive_glob(starting_path, pattern):
         for filename in fnmatch.filter(filenames, pattern):
             result.append(os.path.join(root, filename))
     return result
-
-
-def get_treeview_selected_row(widget):
-    """Return the selected row in a GtkTreeView"""
-    return widget.get_selection().get_selected()[1]
-
-
-__all__ = [
-    'readlines',
-    'recursive_glob',
-    'get_treeview_selected_row',
-]

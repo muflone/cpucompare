@@ -18,8 +18,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import pathlib
 import sys
-import os.path
 
 from xdg import BaseDirectory
 
@@ -27,12 +27,13 @@ from xdg import BaseDirectory
 # Application constants
 APP_NAME = 'CPUCompare'
 APP_VERSION = '0.8.0'
-APP_DESCRIPTION = 'A GTK+ application to make comparisons between CPU models.'
+APP_DESCRIPTION = 'Make comparisons between CPU models.'
 APP_ID = 'cpucompare.muflone.com'
 APP_URL = 'https://www.muflone.com/cpucompare/'
 APP_AUTHOR = 'Fabio Castelli'
 APP_AUTHOR_EMAIL = 'muflone@muflone.com'
 APP_COPYRIGHT = 'Copyright 2013-2022 %s' % APP_AUTHOR
+SOURCES_URL = 'https://github.com/muflone/cpucompare'
 # Other constants
 DOMAIN_NAME = 'cpucompare'
 VERBOSE_LEVEL_QUIET = 0
@@ -41,31 +42,44 @@ VERBOSE_LEVEL_MAX = 2
 DATABASE_VERSION = 20130806
 
 # Paths constants
-# If there's a file data/cpucompare.png then the shared data
-# are searched in relative paths, else the standard paths are used
-if os.path.isfile(os.path.join('data', 'cpucompare.png')):
-    DIR_PREFIX = '.'
-    DIR_LOCALE = os.path.join(DIR_PREFIX, 'locale')
-    DIR_DOCS = os.path.join(DIR_PREFIX, 'doc')
+path_xdg_data_home = pathlib.Path(BaseDirectory.xdg_data_home)
+if ((pathlib.Path('data') / 'cpucompare.png')).is_file():
+    # Use relative paths
+    DIR_PREFIX = pathlib.Path('data').parent.absolute()
+    DIR_LOCALE = DIR_PREFIX / 'locale'
+    DIR_DOCS = DIR_PREFIX / 'doc'
+elif (path_xdg_data_home / DOMAIN_NAME / 'data' / 'cpucompare.png').is_file():
+    # Use local user path
+    DIR_PREFIX = path_xdg_data_home / DOMAIN_NAME
+    DIR_LOCALE = path_xdg_data_home / 'locale'
+    DIR_DOCS = path_xdg_data_home / 'doc' / DOMAIN_NAME
+elif (pathlib.Path(__file__).parent.parent / 'share' / DOMAIN_NAME / 'data' /
+      'cpucompare.png').is_file():
+    # Use local user path in the local Python directory
+    DIR_PREFIX = pathlib.Path(__file__).parent.parent / 'share' / DOMAIN_NAME
+    DIR_LOCALE = DIR_PREFIX.parent / 'locale'
+    DIR_DOCS = DIR_PREFIX.parent / 'doc' / DOMAIN_NAME
 else:
-    DIR_PREFIX = os.path.join(sys.prefix, 'share', 'cpucompare')
-    DIR_LOCALE = os.path.join(sys.prefix, 'share', 'locale')
-    DIR_DOCS = os.path.join(sys.prefix, 'share', 'doc', 'cpucompare')
+    # Use system path
+    path_prefix = pathlib.Path(sys.prefix)
+    DIR_PREFIX = path_prefix / 'share' / DOMAIN_NAME
+    DIR_LOCALE = path_prefix / 'share' / 'locale'
+    DIR_DOCS = path_prefix / 'share' / 'doc' / DOMAIN_NAME
 # Set the paths for the folders
-DIR_DATA = os.path.join(DIR_PREFIX, 'data')
-DIR_UI = os.path.join(DIR_PREFIX, 'ui')
+DIR_DATA = DIR_PREFIX / 'data'
+DIR_UI = DIR_PREFIX / 'ui'
 try:
     # In read-only environments, the settings folder cannot be created
     # (eg in a Debian pbuilder fakeroot)
-    DIR_SETTINGS = BaseDirectory.save_config_path(DOMAIN_NAME)
+    DIR_SETTINGS = pathlib.Path(BaseDirectory.save_config_path(DOMAIN_NAME))
 except Exception:
     # Get the settings path without actually creating it
-    DIR_SETTINGS = os.path.join(BaseDirectory.xdg_config_home, DOMAIN_NAME)
+    DIR_SETTINGS = pathlib.Path(BaseDirectory.xdg_config_home) / DOMAIN_NAME
 # Set the paths for the data files
-FILE_ICON = os.path.join(DIR_DATA, 'cpucompare.png')
-FILE_TRANSLATORS = os.path.join(DIR_DOCS, 'translators')
-FILE_LICENSE = os.path.join(DIR_DOCS, 'license')
-FILE_RESOURCES = os.path.join(DIR_DOCS, 'resources')
+FILE_ICON = DIR_DATA / 'cpucompare.png'
+FILE_TRANSLATORS = DIR_DOCS / 'translators'
+FILE_LICENSE = DIR_DOCS / 'license'
+FILE_RESOURCES = DIR_DOCS / 'resources'
 # Set the paths for configuration files
-FILE_SETTINGS = os.path.join(DIR_SETTINGS, 'settings.conf')
-FILE_WINDOWS_POSITION = os.path.join(DIR_SETTINGS, 'windows.conf')
+FILE_SETTINGS = DIR_SETTINGS / 'settings.conf'
+FILE_WINDOWS_POSITION = DIR_SETTINGS / 'windows.conf'

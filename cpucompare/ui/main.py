@@ -21,14 +21,15 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 
-from cpucompare.constants import APP_NAME, FILE_SETTINGS, FILE_WINDOWS_POSITION
+from cpucompare.constants import (APP_NAME,
+                                  FILE_ICON,
+                                  FILE_SETTINGS,
+                                  FILE_WINDOWS_POSITION)
 from cpucompare.functions import get_treeview_selected_row
-from cpucompare.localize import text
 from cpucompare.settings import Settings
-from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.database import ModelsDB
-from cpucompare.localize import strip_underline
 from cpucompare.ui.about import UIAbout
+from cpucompare.ui.base import UIBase
 from cpucompare.ui.shortcuts import UIShortcuts
 from cpucompare.models.cpubrands import CPUBrands
 from cpucompare.models.cpuseries import CPUSeries
@@ -38,14 +39,17 @@ from cpucompare.models.cpuselections import CPUSelections
 SECTION_WINDOW_NAME = 'main'
 
 
-class UIMain(object):
-    def __init__(self, application):
+class UIMain(UIBase):
+    def __init__(self, application, options):
+        super().__init__(filename='main.ui')
         self.application = application
-        # Load settings
-        self.settings = Settings(FILE_SETTINGS, False)
-        self.positions = Settings(FILE_WINDOWS_POSITION, False)
         self.folders = {}
-        self.loadUI()
+        self.load_ui()
+        self.settings = Settings(FILE_SETTINGS, True)
+        self.positions = Settings(FILE_WINDOWS_POSITION, False)
+        self.options = options
+        self.positions.restore_window_position(window=self.ui.window_main,
+                                               section=SECTION_WINDOW_NAME)
         # Load the brands, series and models
         self.database = ModelsDB()
         self.ui.progressbar_loading.current_items = 0
@@ -65,46 +69,15 @@ class UIMain(object):
         self.ui.entrycompletion_search.set_match_func(
             self.entrycompletion_search_match_func,
             self.model_cpumodels_all)
-        # Restore the saved size and position
-        self.positions.restore_window_position(
-            self.ui.window_main, SECTION_WINDOW_NAME)
 
-    def loadUI(self):
+    def load_ui(self):
         """Load the interface UI"""
-        self.ui = GtkBuilderLoader('main.ui')
-        self.ui.window_main.set_application(self.application)
+        # Initialize titles and tooltips
+        self.set_titles()
+        # Set various properties
         self.ui.window_main.set_title(APP_NAME)
-
-        # FIXME: move this checks into functions
-        # Initialize actions
-        for widget in self.ui.get_objects_by_type(Gtk.Action):
-            # Connect the actions accelerators
-            widget.connect_accelerator()
-            # Set labels
-            label = widget.get_label()
-            if not label:
-                label = widget.get_short_label()
-            widget.set_label(text(label))
-            widget.set_short_label(label)
-        # Initialize labels
-        for widget in self.ui.get_objects_by_type(Gtk.Label):
-            widget.set_label(text(widget.get_label()))
-        # Initialize toolbuttons
-        for widget in self.ui.get_objects_by_type(Gtk.ToolButton):
-            widget.set_label(text(widget.get_label()))
-        # Initialize Gtk.TreeViewColumn
-        for widget in self.ui.get_objects_by_type(Gtk.TreeViewColumn):
-            widget.set_title(text(widget.get_title()))
-        # Initialize tooltips
-        for gtk_type in (Gtk.Button, Gtk.ToolButton):
-            for widget in self.ui.get_objects_by_type(gtk_type):
-                action = widget.get_related_action()
-                if action:
-                    widget.set_tooltip_text(
-                        strip_underline(action.get_label()))
-                else:
-                    widget.set_tooltip_text(
-                        strip_underline(widget.get_label()))
+        self.ui.window_main.set_icon_from_file(str(FILE_ICON))
+        self.ui.window_main.set_application(self.application)
         # Connect signals from the glade file to the module functions
         self.ui.connect_signals(self)
 

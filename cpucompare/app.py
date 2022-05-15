@@ -34,7 +34,7 @@ class Application(Gtk.Application):
 
     def startup(self, application):
         """Configure the application during the startup"""
-        self.ui = UIMain(self)
+        self.ui = UIMain(self, self.options)
 
     def activate(self, application):
         """Execute the application"""
