@@ -24,17 +24,10 @@ import os.path
 from xdg import BaseDirectory
 
 
-# This function is intended to let xgettext to extract the message but to
-# not translate it immediately
-def _(text):
-    return text
-
-
 # Application constants
 APP_NAME = 'CPUCompare'
 APP_VERSION = '0.8.0'
-APP_DESCRIPTION = _('A GTK+ application to make comparisons between '
-                    'CPU models.')
+APP_DESCRIPTION = 'A GTK+ application to make comparisons between CPU models.'
 APP_ID = 'cpucompare.muflone.com'
 APP_URL = 'https://www.muflone.com/cpucompare/'
 APP_AUTHOR = 'Fabio Castelli'

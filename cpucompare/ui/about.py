@@ -22,11 +22,18 @@ from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
-from cpucompare.constants import (
-    APP_NAME, APP_VERSION, APP_DESCRIPTION, APP_URL, APP_COPYRIGHT,
-    APP_AUTHOR, APP_AUTHOR_EMAIL, DATABASE_VERSION,
-    FILE_LICENSE, FILE_TRANSLATORS, FILE_RESOURCES,
-    FILE_ICON)
+from cpucompare.constants import (APP_NAME,
+                                  APP_VERSION,
+                                  APP_DESCRIPTION,
+                                  APP_URL,
+                                  APP_COPYRIGHT,
+                                  APP_AUTHOR,
+                                  APP_AUTHOR_EMAIL,
+                                  DATABASE_VERSION,
+                                  FILE_LICENSE,
+                                  FILE_TRANSLATORS,
+                                  FILE_RESOURCES,
+                                  FILE_ICON)
 from cpucompare.functions import readlines
 from cpucompare.localize import _
 

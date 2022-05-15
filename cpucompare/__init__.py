@@ -21,8 +21,7 @@
 import gettext
 import locale
 
-import cpucompare.requires
-
+import cpucompare.requires                                         # noqa: F401
 from cpucompare.localize import (store_message,
                                  strip_colon,
                                  strip_underline,

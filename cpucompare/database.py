@@ -21,10 +21,9 @@
 import os.path
 from gi.repository import GObject
 
-from cpucompare.sqlite3_connection import SQLite3Connection
-from cpucompare.daemon_thread import DaemonThread
 from cpucompare.constants import DIR_DATA
-
+from cpucompare.daemon_thread import DaemonThread
+from cpucompare.sqlite3_connection import SQLite3Connection
 from cpucompare.models.info_cpubrand import InfoCPUBrand
 from cpucompare.models.info_cpuseries import InfoCPUSeries
 from cpucompare.models.info_cpumodel import InfoCPUModel

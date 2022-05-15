@@ -41,8 +41,8 @@ class Settings(object):
 
     def get(self, section, option, default=None):
         """Get an option from a specific section"""
-        if self.config.has_section(section) and \
-                self.config.has_option(section, option):
+        if (self.config.has_section(section) and
+                self.config.has_option(section, option)):
             return self.config.get(section, option)
         else:
             return default
@@ -79,11 +79,9 @@ class Settings(object):
         """Get the specified setting with a fallback value"""
         section, option, option_type = setting
         if option_type is int:
-            return self.get_int(section, option,
-                                default and default or 0)
+            return self.get_int(section, option, default or 0)
         elif option_type is bool:
-            return self.get_boolean(section, option,
-                                    default if True else False)
+            return self.get_boolean(section, option, default or False)
         else:
             return self.get(section, option, default)
 
@@ -123,13 +121,13 @@ class Settings(object):
 
     def restore_window_position(self, window, section):
         """Restore the saved window size and position"""
-        if self.get_int(section, SIZE_WIDTH) and \
-                self.get_int(section, SIZE_HEIGHT):
+        if (self.get_int(section, SIZE_WIDTH) and
+                self.get_int(section, SIZE_HEIGHT)):
             window.set_default_size(
                 self.get_int(section, SIZE_WIDTH, -1),
                 self.get_int(section, SIZE_HEIGHT, -1))
-        if self.get_int(section, POSITION_LEFT) and \
-                self.get_int(section, POSITION_TOP):
+        if (self.get_int(section, POSITION_LEFT) and
+                self.get_int(section, POSITION_TOP)):
             window.move(
                 self.get_int(section, POSITION_LEFT),
                 self.get_int(section, POSITION_TOP))

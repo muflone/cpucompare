@@ -21,19 +21,15 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 
-from cpucompare.constants import (
-    APP_NAME,
-    FILE_SETTINGS, FILE_WINDOWS_POSITION)
+from cpucompare.constants import APP_NAME, FILE_SETTINGS, FILE_WINDOWS_POSITION
 from cpucompare.functions import get_treeview_selected_row
 from cpucompare.localize import text
-import cpucompare.settings as settings
+from cpucompare.settings import Settings
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.database import ModelsDB
 from cpucompare.localize import strip_underline
-
 from cpucompare.ui.about import UIAbout
 from cpucompare.ui.shortcuts import UIShortcuts
-
 from cpucompare.models.cpubrands import CPUBrands
 from cpucompare.models.cpuseries import CPUSeries
 from cpucompare.models.cpumodels import CPUModels
@@ -46,8 +42,8 @@ class UIMain(object):
     def __init__(self, application):
         self.application = application
         # Load settings
-        settings.settings = settings.Settings(FILE_SETTINGS, False)
-        settings.positions = settings.Settings(FILE_WINDOWS_POSITION, False)
+        self.settings = Settings(FILE_SETTINGS, False)
+        self.positions = Settings(FILE_WINDOWS_POSITION, False)
         self.folders = {}
         self.loadUI()
         # Load the brands, series and models
@@ -70,7 +66,7 @@ class UIMain(object):
             self.entrycompletion_search_match_func,
             self.model_cpumodels_all)
         # Restore the saved size and position
-        settings.positions.restore_window_position(
+        self.positions.restore_window_position(
             self.ui.window_main, SECTION_WINDOW_NAME)
 
     def loadUI(self):
@@ -121,10 +117,10 @@ class UIMain(object):
     def on_window_main_delete_event(self, widget, event):
         """Save the settings and close the application"""
         self.database.close()
-        settings.positions.save_window_position(
+        self.positions.save_window_position(
             self.ui.window_main, SECTION_WINDOW_NAME)
-        settings.positions.save()
-        settings.settings.save()
+        self.positions.save()
+        self.settings.save()
         self.application.quit()
 
     def on_action_application_about_activate(self, action):
