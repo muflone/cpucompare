@@ -7,9 +7,10 @@ virtualenv:
 addons:
   apt:
     packages:
-    - python-gi                               # GObject
-    - gir1.2-gtk-3.0                          # gi.repository.gtk
-    - python-xdg                              # PyXDG
+    - gir1.2-gtk-3.0
+    - gobject-introspection
+    - libgirepository1.0-dev
+    - gettext
 install:
   - pip install -r requirements_travis.txt
 script:
