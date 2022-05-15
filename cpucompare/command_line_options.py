@@ -1,8 +1,8 @@
 ##
-#     Project: BlueWho
-# Description: Information and notification of new discovered bluetooth devices
-#      Author: Fabio Castelli (Muflone) <muflone@muflone.com>
-#   Copyright: 2009-2022 Fabio Castelli
+#     Project: CPUCompare
+# Description: A GTK+ application to make comparisons between CPU models
+#      Author: Fabio Castelli <muflone@muflone.com>
+#   Copyright: 2013-2022 Fabio Castelli
 #     License: GPL-3+
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
