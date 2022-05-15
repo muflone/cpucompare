@@ -50,15 +50,14 @@ class UIAbout(UIBase):
             if line not in translators:
                 translators.append(line)
         # Set various properties
-        self.ui.dialog_about.set_program_name(APP_NAME)
-        self.ui.dialog_about.set_version(
+        self.ui.dialog.set_program_name(APP_NAME)
+        self.ui.dialog.set_version(
             _('Version {VERSION}\nDatabase version {DATABASE_VERSION}').format(
                 VERSION=APP_VERSION,
                 DATABASE_VERSION=DATABASE_VERSION))
-        self.ui.dialog_about.set_comments(
-            _('Make comparisons between CPU models.'))
-        self.ui.dialog_about.set_website(APP_URL)
-        self.ui.dialog_about.set_copyright(APP_COPYRIGHT)
+        self.ui.dialog.set_comments(_('Make comparisons between CPU models.'))
+        self.ui.dialog.set_website(APP_URL)
+        self.ui.dialog.set_copyright(APP_COPYRIGHT)
         # Prepare lists for authors and contributors
         authors = ['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]
         contributors = []
@@ -67,27 +66,26 @@ class UIAbout(UIBase):
         if len(contributors) > 0:
             contributors.insert(0, _('Contributors:'))
             authors.extend(contributors)
-        self.ui.dialog_about.set_authors(authors)
-        self.ui.dialog_about.set_license(
-            '\n'.join(readlines(FILE_LICENSE, True)))
-        self.ui.dialog_about.set_translator_credits('\n'.join(translators))
+        self.ui.dialog.set_authors(authors)
+        self.ui.dialog.set_license('\n'.join(readlines(FILE_LICENSE, True)))
+        self.ui.dialog.set_translator_credits('\n'.join(translators))
         # Retrieve the external resources links
         for line in readlines(FILE_RESOURCES, False):
             resource_type, resource_url = line.split(':', 1)
-            self.ui.dialog_about.add_credit_section(
+            self.ui.dialog.add_credit_section(
                 resource_type, (resource_url,))
         icon_logo = Pixbuf.new_from_file(str(FILE_ICON))
-        self.ui.dialog_about.set_logo(icon_logo)
-        self.ui.dialog_about.set_transient_for(parent)
+        self.ui.dialog.set_logo(icon_logo)
+        self.ui.dialog.set_transient_for(parent)
         # Connect signals from the UI file to the functions with the same name
         self.ui.connect_signals(self)
 
     def show(self):
         """Show the About dialog"""
-        self.ui.dialog_about.run()
-        self.ui.dialog_about.hide()
+        self.ui.dialog.run()
+        self.ui.dialog.hide()
 
     def destroy(self):
         """Destroy the About dialog"""
-        self.ui.dialog_about.destroy()
-        self.ui.dialog_about = None
+        self.ui.dialog.destroy()
+        self.ui.dialog = None
