@@ -28,9 +28,10 @@ from cpucompare.ui.main import UIMain
 
 
 class Application(Gtk.Application):
-    def __init__(self):
+    def __init__(self, settings):
         """Create the application object"""
         super(self.__class__, self).__init__(application_id=APP_ID)
+        self.settings = settings
         self.connect("activate", self.activate)
         self.connect('startup', self.startup)
 

@@ -19,9 +19,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from cpucompare.app import Application
+from cpucompare.main import main
 
 if __name__ == '__main__':
-    # Start the application
-    app = Application()
-    app.run(None)
+    main()

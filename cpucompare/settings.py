@@ -18,35 +18,17 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-import optparse
-import time
 import configparser
-
-from cpucompare.constants import (
-    VERBOSE_LEVEL_QUIET, VERBOSE_LEVEL_NORMAL, VERBOSE_LEVEL_MAX)
+import logging
 
 POSITION_LEFT = 'left'
 POSITION_TOP = 'top'
 SIZE_WIDTH = 'width'
 SIZE_HEIGHT = 'height'
 
-settings = None
-positions = None
-services = None
-
 
 class Settings(object):
     def __init__(self, filename, case_sensitive):
-        """Initialize settings and command line options"""
-        parser = optparse.OptionParser(usage='usage: %prog [options]')
-        parser.set_defaults(verbose_level=VERBOSE_LEVEL_NORMAL)
-        parser.add_option('-v', '--verbose', dest='verbose_level',
-                          action='store_const', const=VERBOSE_LEVEL_MAX,
-                          help='show error and information messages')
-        parser.add_option('-q', '--quiet', dest='verbose_level',
-                          action='store_const', const=VERBOSE_LEVEL_QUIET,
-                          help='hide error and information messages')
-        (self.options, self.arguments) = parser.parse_args()
         # Parse settings from the configuration file
         self.config = configparser.RawConfigParser()
         # Set case sensitiveness if requested
@@ -54,8 +36,7 @@ class Settings(object):
             self.config.optionxform = str
         # Determine which filename to use for settings
         self.filename = filename
-        self.logText('Loading settings from %s' % self.filename,
-                     VERBOSE_LEVEL_MAX)
+        logging.debug(f'Loading settings from {self.filename}')
         self.config.read(self.filename)
 
     def get(self, section, option, default=None):
@@ -119,8 +100,7 @@ class Settings(object):
     def save(self):
         """Save the whole configuration"""
         file_settings = open(self.filename, mode='w')
-        self.logText('Saving settings to %s' % self.filename,
-                     VERBOSE_LEVEL_MAX)
+        logging.debug(f'Saving settings to {self.filename}')
         self.config.write(file_settings)
         file_settings.close()
 
@@ -140,12 +120,6 @@ class Settings(object):
         """Remove every data in the settings"""
         for section in self.get_sections():
             self.config.remove_section(section)
-
-    def logText(self, text, verbose_level=VERBOSE_LEVEL_NORMAL):
-        """Print a text with current date and time based on the
-        verbose level"""
-        if verbose_level <= self.options.verbose_level:
-            print('[%s] %s' % (time.strftime('%Y/%m/%d %H:%M:%S'), text))
 
     def restore_window_position(self, window, section):
         """Restore the saved window size and position"""
