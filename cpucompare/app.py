@@ -19,10 +19,9 @@
 ##
 
 from gi.repository import Gtk
-from gi.repository import Gdk
 from gi.repository import Gio
 
-from cpucompare.constants import APP_ID, DIR_SETTINGS
+from cpucompare.constants import APP_ID
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 
 from cpucompare.ui.main import UIMain
@@ -37,7 +36,6 @@ class Application(Gtk.Application):
 
     def startup(self, application):
         """Configure the application during the startup"""
-        __pychecker__ = 'unusednames=application'
         self.ui = UIMain(self)
         # Add the about action to the app menu
         action = Gio.SimpleAction(name="about")
@@ -59,20 +57,16 @@ class Application(Gtk.Application):
 
     def activate(self, application):
         """Execute the application"""
-        __pychecker__ = 'unusednames=application'
         self.ui.run()
 
     def on_app_about_activate(self, action, data):
         """Show the about dialog from the app menu"""
-        __pychecker__ = 'unusednames=data'
         self.ui.on_action_application_about_activate(action)
 
     def on_app_shortcuts_activate(self, action, data):
         """Show the shortcuts dialog from the app menu"""
-        __pychecker__ = 'unusednames=data'
         self.ui.on_action_application_shortcuts_activate(action)
 
     def on_app_quit_activate(self, action, data):
         """Quit the application from the app menu"""
-        __pychecker__ = 'unusednames=data'
         self.ui.on_action_application_quit_activate(action)

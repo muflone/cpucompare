@@ -23,8 +23,10 @@ import locale
 
 import cpucompare.requires
 
-from cpucompare.localize import (
-  store_message, strip_colon, strip_underline, text, _)
+from cpucompare.localize import (store_message,
+                                 strip_colon,
+                                 strip_underline,
+                                 text)
 from cpucompare.constants import DOMAIN_NAME, DIR_LOCALE
 
 

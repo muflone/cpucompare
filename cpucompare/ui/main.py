@@ -20,13 +20,12 @@
 
 from gi.repository import Gtk
 from gi.repository import Gdk
-from gi.repository import Gio
 
 from cpucompare.constants import (
     APP_NAME,
     FILE_SETTINGS, FILE_WINDOWS_POSITION)
 from cpucompare.functions import get_treeview_selected_row
-from cpucompare.localize import text, _
+from cpucompare.localize import text
 import cpucompare.settings as settings
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.database import ModelsDB

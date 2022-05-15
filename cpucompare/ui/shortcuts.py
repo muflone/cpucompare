@@ -19,7 +19,6 @@
 ##
 
 from gi.repository import Gtk
-from gi.repository.GdkPixbuf import Pixbuf
 
 from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.localize import text

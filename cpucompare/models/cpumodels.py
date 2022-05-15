@@ -18,8 +18,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gi.repository import GLib
-
 from cpucompare.models.abstract import ModelAbstract
 from cpucompare.models.info_cpumodel import InfoCPUModel
 

@@ -18,9 +18,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gi.repository import GLib
-
-
 class InfoCPUSeries(object):
     def __init__(self, name, description):
         self.name = name
