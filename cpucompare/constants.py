@@ -36,7 +36,7 @@ APP_VERSION = '0.8.0'
 APP_DESCRIPTION = _('A GTK+ application to make comparisons between '
                     'CPU models.')
 APP_ID = 'cpucompare.muflone.com'
-APP_URL = 'http://www.muflone.com/cpucompare/'
+APP_URL = 'https://www.muflone.com/cpucompare/'
 APP_AUTHOR = 'Fabio Castelli'
 APP_AUTHOR_EMAIL = 'muflone@muflone.com'
 APP_COPYRIGHT = 'Copyright 2013-2022 %s' % APP_AUTHOR

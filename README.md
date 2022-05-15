@@ -8,7 +8,7 @@ CPUCompare [![Build Status](https://travis-ci.org/muflone/cpucompare.svg?branch=
 
 **Source code:** https://github.com/muflone/cpucompare
 
-**Documentation:** http://www.muflone.com/cpucompare/
+**Documentation:** https://www.muflone.com/cpucompare/
 
 System Requirements
 -------------------
