@@ -27,6 +27,7 @@ from cpucompare.constants import (APP_NAME,
                                   APP_AUTHOR,
                                   APP_AUTHOR_EMAIL,
                                   DATABASE_VERSION,
+                                  FILE_CONTRIBUTORS,
                                   FILE_LICENSE,
                                   FILE_TRANSLATORS,
                                   FILE_RESOURCES,
@@ -58,8 +59,14 @@ class UIAbout(UIBase):
             _('Make comparisons between CPU models.'))
         self.ui.dialog_about.set_website(APP_URL)
         self.ui.dialog_about.set_copyright(APP_COPYRIGHT)
-        # Prepare lists for authors
+        # Prepare lists for authors and contributors
         authors = ['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)]
+        contributors = []
+        for line in readlines(FILE_CONTRIBUTORS, False):
+            contributors.append(line)
+        if len(contributors) > 0:
+            contributors.insert(0, _('Contributors:'))
+            authors.extend(contributors)
         self.ui.dialog_about.set_authors(authors)
         self.ui.dialog_about.set_license(
             '\n'.join(readlines(FILE_LICENSE, True)))
