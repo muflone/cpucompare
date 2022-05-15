@@ -70,7 +70,6 @@ except Exception:
     DIR_SETTINGS = os.path.join(BaseDirectory.xdg_config_home, DOMAIN_NAME)
 # Set the paths for the data files
 FILE_ICON = os.path.join(DIR_DATA, 'cpucompare.png')
-FILE_CONTRIBUTORS = os.path.join(DIR_DOCS, 'contributors')
 FILE_TRANSLATORS = os.path.join(DIR_DOCS, 'translators')
 FILE_LICENSE = os.path.join(DIR_DOCS, 'license')
 FILE_RESOURCES = os.path.join(DIR_DOCS, 'resources')
