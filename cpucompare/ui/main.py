@@ -160,7 +160,7 @@ class UIMain(object):
                 new_iter = self.model_cpubrands.add_data(brand)
                 if brand.name == selected_brand:
                     treeiter = new_iter
-            if self.model_cpubrands.count() > 0:
+            if len(self.model_cpubrands) > 0:
                 if treeiter:
                     # Restore the previously selected brand
                     self.ui.combo_brands.set_active_iter(treeiter)
@@ -186,7 +186,7 @@ class UIMain(object):
                 new_iter = self.model_cpuseries.add_data(series)
                 if series.name == selected_series:
                     treeiter = new_iter
-            if self.model_cpuseries.count() > 0:
+            if len(self.model_cpuseries) > 0:
                 if treeiter:
                     # Restore the previously selected series
                     self.ui.combo_series.set_active_iter(treeiter)
@@ -221,7 +221,7 @@ class UIMain(object):
                 new_iter = self.model_cpumodels.add_data(model)
                 if (model.name == selected_model and not treeiter):
                     treeiter = new_iter
-            if self.model_cpumodels.count() > 0:
+            if len(self.model_cpumodels) > 0:
                 if treeiter:
                     # Restore the previously selected model
                     self.ui.combo_models.set_active_iter(treeiter)
@@ -313,7 +313,7 @@ class UIMain(object):
         """Add a the InfoCPUModel item to the compares list"""
         self.model_selection.add_data(item)
         self.ui.treeview_selections.set_cursor(
-            self.model_selection.count() - 1)
+            len(self.model_selection) - 1)
         self.ui.action_selections_clear.set_sensitive(True)
 
     def on_treeview_selections_selection_changed(self, widget):

@@ -43,10 +43,10 @@ class CPUSelections(ModelAbstract):
         """Add a new row to the model if it doesn't exists"""
         super(self.__class__, self).add_data(item)
         # Determine the new Index adding 1 to the last Index
-        if self.count() == 0:
+        if len(self) == 0:
             new_index = 1
         else:
-            new_index = int(self.get_key(self.count() - 1)) + 1
+            new_index = int(self.get_key(len(self) - 1)) + 1
         if str(new_index) not in self.rows:
             new_row = self.model.append((
                 '%05d' % new_index,
