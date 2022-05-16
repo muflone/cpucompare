@@ -1,0 +1,111 @@
+# CPUCompare
+# Make comparisons between CPU models.
+# Copyright (C) 2013-2022 Fabio Castelli (Muflone) <muflone(at)muflone.com>
+# Website: https://www.muflone.com/cpucompare/
+# This file is distributed under the same license of CPUCompare.
+# Dutch translation for CPUCompare
+# 
+# Translators:
+# Heimen Stoffels <vistausss(at)fastmail.com>, 2022
+msgid ""
+msgstr ""
+"Project-Id-Version: CPUCompare\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues\n"
+"POT-Creation-Date: 2022-05-17 01:17+0200\n"
+"PO-Revision-Date: 2017-05-01 16:25+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>, 2022\n"
+"Language-Team: Dutch (https://www.transifex.com/p/cpucompare/)\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cpucompare/models/cpuselections.py:54
+msgid "Unknown brand"
+msgstr "Onbekend merk"
+
+#: cpucompare/models/cpuselections.py:55
+msgid "Unknown series"
+msgstr "Onbekende modelreeks"
+
+#: cpucompare/ui/about.py:55
+#, python-brace-format
+msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
+msgstr "Versie {VERSION}\nDatabase versie {DATABASE_VERSION}"
+
+#: cpucompare/ui/about.py:58
+msgid "Make comparisons between CPU models."
+msgstr ""
+
+#: cpucompare/ui/about.py:67
+msgid "Contributors:"
+msgstr "Bijdragers:"
+
+#: ui/main.ui:115
+msgid "Find"
+msgstr "Zoek"
+
+#: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
+msgid "Open the options menu"
+msgstr "Open het optiesmenu"
+
+#: ui/main.ui:369 ui/shortcuts.ui:78
+msgid "Find a CPU model"
+msgstr "Zoek een cpu-model"
+
+#: ui/main.ui:394
+msgid "_Brand:"
+msgstr "_Merk:"
+
+#: ui/main.ui:427
+msgid "S_eries:"
+msgstr "R_eeks:"
+
+#: ui/main.ui:460
+msgid "M_odel:"
+msgstr "M_odel:"
+
+#: ui/main.ui:501
+msgid "Score:"
+msgstr "Score:"
+
+#: ui/main.ui:550
+msgid "Index"
+msgstr "Index"
+
+#: ui/main.ui:605
+msgid "Quantity"
+msgstr "Aantal"
+
+#: ui/shortcuts.ui:16
+msgid "General commands"
+msgstr "Algemene opdrachten"
+
+#: ui/shortcuts.ui:21
+msgid "Show the about dialog"
+msgstr "Toon het venster ‘Over’"
+
+#: ui/shortcuts.ui:35
+msgid "Show the shortcuts dialog"
+msgstr ""
+
+#: ui/shortcuts.ui:52
+msgid "Main window"
+msgstr "Hoofdvenster"
+
+#: ui/shortcuts.ui:57
+msgid "Insert the selected CPU model to the selections list"
+msgstr ""
+
+#: ui/shortcuts.ui:64
+msgid "Remove the currently selected CPU model from the list"
+msgstr ""
+
+#: ui/shortcuts.ui:71
+msgid "Clear the selection list"
+msgstr "Wis de lijst"
+
+#: ui/shortcuts.ui:85
+msgid "Close the search bar"
+msgstr ""
