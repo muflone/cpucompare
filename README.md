@@ -1,6 +1,7 @@
 # CPUCompare
 
 [![Travis CI Build Status](https://img.shields.io/travis/com/muflone/cpucompare/master.svg)](https://www.travis-ci.com/github/muflone/cpucompare)
+[![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/cpucompare/master.svg)](https://circleci.com/gh/muflone/cpucompare)
 
 **Description:** A GTK+ application to make comparisons between CPU models.
 
@@ -13,6 +14,16 @@
 **Documentation:** https://www.muflone.com/cpucompare/
 
 **Translations:** https://www.transifex.com/muflone/cpucompare/
+
+# Usage
+
+From the *CPUCompare* main window you can compare multiple CPU models.
+
+For each brand you'll find a list of the CPU series and for each series you'll
+get a list of the corresponding CPU models with a speed score for each one of
+them.
+
+![Main window](https://www.muflone.com/resources/cpucompare/archive/latest/english/main.png)
 
 # System Requirements
 
