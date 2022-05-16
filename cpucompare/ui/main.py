@@ -104,8 +104,6 @@ class UIMain(UIBase):
     def do_add_cpu_model_to_compares(self, item):
         """Add a InfoCPUModel item to the compares list"""
         self.model_selection.add_data(item)
-        self.ui.treeview_selections.set_cursor(
-            len(self.model_selection) - 1)
         self.ui.action_clear.set_sensitive(True)
 
     def on_window_delete_event(self, widget, event):
