@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -20,37 +19,41 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from distutils.core import setup, Command
-from distutils.command.install_scripts import install_scripts
-from distutils.command.install_data import install_data
-from distutils.log import info
-
-import os
-import os.path
-import shutil
+import itertools
+import pathlib
+import setuptools
+import setuptools.command.install_scripts
 import subprocess
-from itertools import chain
-from glob import glob
 
-from cpucompare.functions import recursive_glob
-from cpucompare.constants import (
-    APP_NAME, APP_VERSION, APP_DESCRIPTION,
-    APP_AUTHOR, APP_AUTHOR_EMAIL, APP_URL,
-    DOMAIN_NAME)
+# Importing distutils after setuptools uses the setuptools' distutils
+from distutils.command.install_data import install_data
+
+from cpucompare.constants import (APP_NAME,
+                                  APP_VERSION,
+                                  APP_DESCRIPTION,
+                                  APP_AUTHOR,
+                                  APP_AUTHOR_EMAIL,
+                                  APP_URL,
+                                  DOMAIN_NAME,
+                                  SOURCES_URL)
 
 
-class Install_Scripts(install_scripts):
+class Install_Scripts(setuptools.command.install_scripts.install_scripts):
     def run(self):
-        install_scripts.run(self)
+        setuptools.command.install_scripts.install_scripts.run(self)
         self.rename_python_scripts()
 
     def rename_python_scripts(self):
         "Rename main executable python script without .py extension"
         for script in self.get_outputs():
-            if script.endswith(".py"):
-                info('renaming the python script %s -> %s' % (
-                    script, script[:-3]))
-                shutil.move(script, script[:-3])
+            path_file_script = pathlib.Path(script)
+            path_destination = path_file_script.with_suffix(suffix='')
+            if path_file_script.suffix == '.py':
+                setuptools.distutils.log.info(
+                    'renaming the python script '
+                    f'{path_file_script.name} -> '
+                    f'{path_destination.stem}')
+                path_file_script.rename(path_destination)
 
 
 class Install_Data(install_data):
@@ -60,106 +63,80 @@ class Install_Data(install_data):
         install_data.run(self)
 
     def install_icons(self):
-        info('Installing icons...')
+        setuptools.distutils.log.info('Installing icons...')
         DIR_ICONS = 'icons'
-        for icon_format in os.listdir(DIR_ICONS):
-            icon_dir = os.path.join(DIR_ICONS, icon_format)
-            self.data_files.append((
-                os.path.join('share', 'icons', 'hicolor', icon_format, 'apps'),
-                glob(os.path.join(icon_dir, '*'))))
+        path_icons = pathlib.Path('share') / 'icons' / 'hicolor'
+        for path_format in pathlib.Path(DIR_ICONS).iterdir():
+            self.data_files.append((path_icons / path_format.name / 'apps',
+                                    list(map(str, path_format.glob('*')))))
 
     def install_translations(self):
-        info('Installing translations...')
-        for po in glob(os.path.join('po', '*.po')):
-            lang = os.path.basename(po[:-3])
-            mo = os.path.join('build', 'mo', lang, '%s.mo' % DOMAIN_NAME)
+        setuptools.distutils.log.info('Installing translations...')
+        path_base = pathlib.Path(__file__).parent.absolute()
+        # Find where to save the compiled translations
+        try:
+            # Use the install_data (when using "setup.py install --user")
+            path_install = pathlib.Path(self.install_data)
+        except AttributeError:
+            # Use the install_dir (when using "setup.py install")
+            path_install = pathlib.Path(self.install_dir)
+        path_locale = path_install / 'share' / 'locale'
+        for path_file_po in pathlib.Path('po').glob('*.po'):
+            path_destination = path_locale / path_file_po.stem / 'LC_MESSAGES'
+            path_file_mo = path_destination / f'{DOMAIN_NAME}.mo'
 
-            directory = os.path.dirname(mo)
-            if not os.path.exists(directory):
-                info('creating %s' % directory)
-                os.makedirs(directory)
+            if not path_destination.exists():
+                setuptools.distutils.log.info(f'creating {path_destination}')
+                path_destination.mkdir(parents=True)
 
-            cmd = 'msgfmt -o %s %s' % (mo, po)
-            info('compiling %s -> %s' % (po, mo))
-            if os.system(cmd) != 0:
-                raise SystemExit('Error while running msgfmt')
+            setuptools.distutils.log.info(f'compiling {path_file_po} -> '
+                                          f'{path_file_mo}')
+            subprocess.call(
+                args=('msgfmt',
+                      f'--output-file={path_file_mo}',
+                      path_file_po),
+                cwd=path_base)
 
-            dest = os.path.join('share', 'locale', lang, 'LC_MESSAGES')
-            self.data_files.append((dest, [mo]))
 
-
-class Command_CreatePOT(Command):
+class Command_CreatePOT(setuptools.Command):
     description = "create base POT file"
-    user_options = [
-        ('use-intltool-extract', None, 'Use intltool-extract'),
-        ('keep-headers', None, 'Do not delete header files'),
-        ]
-    boolean_options = ('use-intltool-extract')
+    user_options = []
 
     def initialize_options(self):
-        self.use_intltool_extract = False
-        self.keep_headers = False
+        pass
 
     def finalize_options(self):
-        self.dir_base = os.path.dirname(os.path.abspath(__file__))
-        self.dir_po = os.path.join(self.dir_base, 'po')
+        self.path_base = pathlib.Path(__file__).parent.absolute()
+        self.path_po = self.path_base / 'po'
 
     def run(self):
-        self.dir_ui = os.path.join(self.dir_base, 'ui')
-        file_pot = '%s.pot' % os.path.join(self.dir_po, DOMAIN_NAME)
+        path_ui = self.path_base / 'ui'
+        path_pot = self.path_po / f'{DOMAIN_NAME}.pot'
         list_files_process = []
-        list_files_remove = []
-        if self.use_intltool_extract:
-            # Scan *.ui files to extract messages
-            for filename in glob(os.path.join(self.dir_ui, '*.ui')):
-                header_file = '%s.h' % filename
-                # Clear previous existing files
-                if os.path.isfile(header_file):
-                    os.unlink(header_file)
-                # Extract data from the interface files
-                subprocess.call(args=('intltool-extract',
-                                      '--quiet',
-                                      '--type=gettext/glade',
-                                      os.path.basename(filename)),
-                                cwd=os.path.dirname(filename))
-                if os.path.getsize(header_file) > 0:
-                    # Add the header files to the list of the files to process
-                    list_files_process.append(os.path.relpath(header_file,
-                                                              self.dir_base))
-                # All the header files must be removed after the process
-                list_files_remove.append(header_file)
-        else:
-            # Add *.ui files to list of files to process
-            for filename in glob(os.path.join(self.dir_ui, '*.ui')):
-                list_files_process.append(os.path.relpath(filename,
-                                                          self.dir_base))
+        # Add *.ui files to list of files to process
+        for filename in path_ui.glob('*.ui'):
+            list_files_process.append(filename.relative_to(self.path_base))
         # Add *.py files to list of files to process
-        for filename in recursive_glob(self.dir_base, '*.py'):
-            list_files_process.append(os.path.relpath(filename,
-                                                      self.dir_base))
+        for filename in self.path_base.rglob('*.py'):
+            list_files_process.append(filename.relative_to(self.path_base))
         # Sort the files to process them always in the same order (hopefully)
         list_files_process.sort()
         # Extract messages from the files to process
         subprocess.call(
-            args=chain(('xgettext',
-                        '--keyword=_',
-                        '--keyword=N_',
-                        '--output=%s' % file_pot,
-                        '--add-location',
-                        '--package-name=%s' % APP_NAME,
-                        '--package-version=%s' % APP_VERSION,
-                        '--copyright-holder=%s' % APP_AUTHOR,
-                        '--msgid-bugs-address=%s' % APP_AUTHOR_EMAIL),
-                       list_files_process),
-            cwd=self.dir_base)
-        # Remove uneeded files if requested
-        if not self.keep_headers:
-            for filename in list_files_remove:
-                if os.path.isfile(filename):
-                    os.unlink(filename)
+            args=itertools.chain((
+                'xgettext',
+                '--keyword=_',
+                '--keyword=N_',
+                f'--output={path_pot}',
+                '--add-location',
+                f'--package-name={APP_NAME}',
+                f'--copyright-holder={APP_AUTHOR}',
+                f'--msgid-bugs-address={SOURCES_URL}/issues'),
+                list_files_process),
+            cwd=self.path_base)
 
 
-class Command_CreatePO(Command):
+class Command_CreatePO(setuptools.Command):
     description = "create translation PO file"
     user_options = [
         ('locale=', None, 'Define locale'),
@@ -171,26 +148,25 @@ class Command_CreatePO(Command):
         self.output = None
 
     def finalize_options(self):
-        self.dir_base = os.path.dirname(os.path.abspath(__file__))
-        self.dir_po = os.path.join(self.dir_base, 'po')
+        self.path_base = pathlib.Path(__file__).parent.absolute()
+        self.path_po = self.path_base / 'po'
         assert (self.locale), 'Missing locale'
         assert (self.output), 'Missing output file'
 
     def run(self):
-        self.dir_ui = os.path.join(self.dir_base, 'ui')
-        file_pot = '%s.pot' % os.path.join(self.dir_po, DOMAIN_NAME)
-        file_po = '%s.po' % os.path.join(self.dir_po, self.output)
+        path_file_pot = self.path_po / f'{DOMAIN_NAME}.pot'
+        path_file_po = self.path_po / f'{self.output}.po'
         # Create PO file
         subprocess.call(
             args=('msginit',
-                  '--input=%s' % file_pot,
+                  f'--input={path_file_pot}',
                   '--no-translator',
-                  '--output-file=%s' % file_po,
-                  '--locale=%s' % self.locale),
-            cwd=self.dir_base)
+                  f'--output-file={path_file_po}',
+                  f'--locale={self.locale}'),
+            cwd=self.path_base)
 
 
-class Command_Translations(Command):
+class Command_Translations(setuptools.Command):
     description = "build translations"
     user_options = []
 
@@ -198,25 +174,29 @@ class Command_Translations(Command):
         pass
 
     def finalize_options(self):
-        self.dir_base = os.path.dirname(os.path.abspath(__file__))
-        self.dir_po = os.path.join(self.dir_base, 'po')
-        self.dir_mo = os.path.join(self.dir_base, 'locale')
+        self.path_base = pathlib.Path(__file__).parent.absolute()
+        self.path_po = self.path_base / 'po'
+        self.path_mo = self.path_base / 'locale'
 
     def run(self):
-        file_pot = '%s.pot' % os.path.join(self.dir_po, DOMAIN_NAME)
-        for file_po in glob(os.path.join(self.dir_po, '*.po')):
-            subprocess.call(('msgmerge', '--update', '--backup=off',
-                             file_po, file_pot))
-            lang = os.path.basename(file_po[:-3])
-            file_mo = os.path.join(self.dir_mo, lang, 'LC_MESSAGES',
-                                   '%s.mo' % DOMAIN_NAME)
-            dir_lang = os.path.dirname(file_mo)
-            if not os.path.exists(dir_lang):
-                os.makedirs(dir_lang)
-            subprocess.call(('msgfmt', '--output-file', file_mo, file_po))
+        path_pot = self.path_po / f'{DOMAIN_NAME}.pot'
+        for file_po in self.path_po.glob('*.po'):
+            subprocess.call(('msgmerge',
+                             '--update',
+                             '--backup=off',
+                             file_po,
+                             path_pot))
+            path_directory = self.path_mo / file_po.stem / 'LC_MESSAGES'
+            file_mo = path_directory / f'{DOMAIN_NAME}.mo'
+            if not path_directory.exists():
+                path_directory.mkdir(parents=True)
+            subprocess.call(('msgfmt',
+                             '--output-file',
+                             file_mo,
+                             file_po))
 
 
-setup(
+setuptools.setup(
     name=APP_NAME,
     version=APP_VERSION,
     author=APP_AUTHOR,
@@ -225,19 +205,26 @@ setup(
     maintainer_email=APP_AUTHOR_EMAIL,
     url=APP_URL,
     description=APP_DESCRIPTION,
-    license='GPL v2',
+    license='GPL v3',
     scripts=['cpucompare.py'],
-    packages=['cpucompare', 'cpucompare.models',
+    packages=['cpucompare',
+              'cpucompare.models',
               'cpucompare.ui'],
     data_files=[
-        ('share/cpucompare/data',
+        (f'share/{DOMAIN_NAME}/data',
             ['data/cpucompare.png', 'data/cpucompare.db']),
         ('share/applications',
             ['data/cpucompare.desktop']),
-        ('share/doc/cpucompare',
-            list(chain(glob('doc/*'), glob('*.md')))),
-        ('share/cpucompare/ui',
-            glob('ui/*')),
+        (f'share/doc/{DOMAIN_NAME}',
+         list(itertools.chain(
+             list(map(str, pathlib.Path('doc').glob('*'))),
+             list(map(str, pathlib.Path('.').glob('*.md')))))),
+        (f'share/{DOMAIN_NAME}/ui', [str(file)
+                                     for file
+                                     in pathlib.Path('ui').glob('*')
+                                     if not file.name.endswith('~')]),
+        ('share/metainfo',
+         ['data/com.muflone.cpucompare.metainfo.xml']),
     ],
     cmdclass={
         'install_scripts': Install_Scripts,
