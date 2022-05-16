@@ -78,6 +78,7 @@ class UIMain(UIBase):
         self.set_buttons_icons(buttons=[self.ui.button_add,
                                         self.ui.button_remove,
                                         self.ui.button_clear,
+                                        self.ui.button_find,
                                         self.ui.button_about,
                                         self.ui.button_options])
         # Set buttons with always show image
@@ -155,6 +156,21 @@ class UIMain(UIBase):
         """Clear the selections list"""
         self.model_selection.clear()
         self.ui.action_clear.set_sensitive(False)
+
+    def on_action_find_toggled(self, action):
+        """Show and hide the search entry"""
+        status = self.ui.action_find.get_active()
+        self.ui.revealer_find.set_reveal_child(status)
+        if status:
+            # Grab focus when search is enabled
+            self.ui.entry_cputype_search.grab_focus()
+        elif self.ui.window.get_focus() is self.ui.entry_cputype_search:
+            # Set focus on the next widget if the focus was on the search entry
+            self.ui.combo_brands.grab_focus()
+
+    def on_action_find_close_activate(self, action):
+        """Close the search"""
+        self.ui.action_find.set_active(False)
 
     def on_combo_brands_changed(self, widget):
         """Change the CPU brand and reload the CPU series list"""

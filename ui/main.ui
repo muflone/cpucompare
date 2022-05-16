@@ -58,6 +58,21 @@
       </object>
       <accelerator key="Delete" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
     </child>
+    <child>
+      <object class="GtkToggleAction" id="action_find">
+        <property name="label">Find</property>
+        <property name="icon-name">edit-find</property>
+        <signal name="toggled" handler="on_action_find_toggled" swapped="no"/>
+      </object>
+      <accelerator key="F" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_find_close">
+        <property name="label">Close find</property>
+        <signal name="activate" handler="on_action_find_close_activate" swapped="no"/>
+      </object>
+      <accelerator key="Escape"/>
+    </child>
   </object>
   <object class="GtkMenu" id="menu_options">
     <property name="visible">True</property>
@@ -90,6 +105,14 @@
       <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="menuitem_find">
+        <property name="related-action">action_find</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Find</property>
       </object>
     </child>
     <child>
@@ -205,6 +228,20 @@
         <property name="position">4</property>
       </packing>
     </child>
+    <child>
+      <object class="GtkToggleButton" id="button_find">
+        <property name="label">Find</property>
+        <property name="related-action">action_find</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="relief">none</property>
+      </object>
+      <packing>
+        <property name="pack-type">end</property>
+        <property name="position">5</property>
+      </packing>
+    </child>
   </object>
   <object class="GtkListStore" id="model_brands">
     <columns>
@@ -318,6 +355,32 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">5</property>
+        <child>
+          <object class="GtkRevealer" id="revealer_find">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkEntry" id="entry_cputype_search">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="invisible-char">●</property>
+                <property name="primary-icon-name">edit-find</property>
+                <property name="secondary-icon-name">edit-clear</property>
+                <property name="primary-icon-activatable">False</property>
+                <property name="placeholder-text" translatable="yes">Find a CPU model</property>
+                <property name="completion">entrycompletion_search</property>
+                <signal name="activate" handler="on_entry_cputype_search_activate" swapped="no"/>
+                <signal name="icon-press" handler="on_entry_cputype_search_icon_press" swapped="no"/>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
         <child>
           <!-- n-columns=2 n-rows=4 -->
           <object class="GtkGrid" id="grid_chooser">
