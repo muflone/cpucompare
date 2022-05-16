@@ -54,14 +54,14 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;KP_Add</property>
-                <property name="title" translatable="yes">Insert the selected CPU to the selections list</property>
+                <property name="title" translatable="yes">Insert the selected CPU model to the selections list</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;KP_Subtract</property>
-                <property name="title" translatable="yes">Remove the currently selected CPU from the list</property>
+                <property name="title" translatable="yes">Remove the currently selected CPU model from the list</property>
               </object>
             </child>
             <child>

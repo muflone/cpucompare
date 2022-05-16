@@ -139,14 +139,12 @@
     <child>
       <object class="GtkAction" id="action_options">
         <property name="label" translatable="yes">Open the options menu</property>
-        <property name="short-label" translatable="yes">Open the options menu</property>
         <property name="icon-name">open-menu-symbolic</property>
       </object>
     </child>
     <child>
       <object class="GtkAction" id="action_options_menu">
         <property name="label" translatable="yes">Open the options menu</property>
-        <property name="short-label" translatable="yes">Open the options menu</property>
         <signal name="activate" handler="on_action_options_menu_activate" swapped="no"/>
       </object>
       <accelerator key="F10"/>

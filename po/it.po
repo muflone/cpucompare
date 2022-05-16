@@ -1,99 +1,80 @@
-# Italian translations for CPUCompare package
-# Copyright (C) 2022 Fabio Castelli
-# This file is distributed under the same license as the CPUCompare package.
-# Automatically generated, 2022.
+# CPUCompare
+# Make comparisons between CPU models.
+# Copyright (C) 2013-2022 Fabio Castelli (Muflone) <muflone(at)muflone.com>
+# Website: https://www.muflone.com/cpucompare/
+# This file is distributed under the same license of CPUCompare.
+# Italian translation for CPUCompare
 #
 # Translators:
-# Muflone <muflone(at)muflone.com>, 2013-2022
+# Fabio Castelli (Muflone) <muflone(at)muflone.com>, 2013-2022
 msgid ""
 msgstr ""
-"Project-Id-Version: CPUCompare 0.7.0\n"
-"Report-Msgid-Bugs-To: muflone(at)muflone.com\n"
-"POT-Creation-Date: 2017-05-01 18:35+0200\n"
+"Project-Id-Version: CPUCompare\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues\n"
+"POT-Creation-Date: 2022-05-17 01:17+0200\n"
 "PO-Revision-Date: 2017-04-29 23:30+0200\n"
-"Last-Translator: Muflone <muflone@muflone.com>\n"
-"Language-Team: Italian (https://www.transifex.com/muflone/cpucompare/language/it/)\n"
+"Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
+"Language-Team: Italian (https://www.transifex.com/p/cpucompare/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cpucompare/constants.py:36
-msgid "A GTK+ application to make comparisons between CPU models."
-msgstr "Un'applicazione GTK+ per effettuare confronti tra modelli di CPU."
-
-#: cpucompare/models/cpuselections.py:57
+#: cpucompare/models/cpuselections.py:54
 msgid "Unknown brand"
 msgstr "Marca sconosciuta"
 
-#: cpucompare/models/cpuselections.py:58
+#: cpucompare/models/cpuselections.py:55
 msgid "Unknown series"
 msgstr "Serie sconosciuta"
 
-#: cpucompare/ui/about.py:49
-#, python-format
-msgid "Version %s"
-msgstr "Versione %s"
+#: cpucompare/ui/about.py:55
+#, python-brace-format
+msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
+msgstr "Versione {VERSION}\nVersione del database {DATABASE_VERSION}"
 
-#: cpucompare/ui/about.py:52
-#, python-format
-msgid "Database version: %s"
-msgstr "Versione del database %s"
+#: cpucompare/ui/about.py:58
+msgid "Make comparisons between CPU models."
+msgstr "Effettua confronti tra modelli di CPU."
 
-#: cpucompare/ui/about.py:61
+#: cpucompare/ui/about.py:67
 msgid "Contributors:"
 msgstr "Contributi:"
 
-#: ui/appmenu.ui:6
-msgid "_About"
-msgstr "_Informazioni"
+#: ui/main.ui:115
+msgid "Find"
+msgstr "Trova"
 
-#: ui/appmenu.ui:11
-msgid "Show keyboard _shortcuts"
-msgstr "Mostra _scorciatoie di tastiera"
+#: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
+msgid "Open the options menu"
+msgstr "Apre il menu opzioni"
 
-#: ui/main.ui:180
-msgctxt "CPU types"
-msgid "_Single CPU"
-msgstr "CPU _Singola"
-
-#: ui/main.ui:197
-msgctxt "CPU types"
-msgid "_Multiple CPU"
-msgstr "CPU _Multiple"
-
-#. All of the CPU types
-#: ui/main.ui:215
-msgctxt "CPU types"
-msgid "A_ll"
-msgstr "T_utte"
-
-#: ui/main.ui:252 ui/shortcuts.ui:71
+#: ui/main.ui:369 ui/shortcuts.ui:78
 msgid "Find a CPU model"
 msgstr "Trova un modello di CPU"
 
-#: ui/main.ui:298
+#: ui/main.ui:394
 msgid "_Brand:"
 msgstr "M_arca:"
 
-#: ui/main.ui:331
+#: ui/main.ui:427
 msgid "S_eries:"
 msgstr "S_erie:"
 
-#: ui/main.ui:364
+#: ui/main.ui:460
 msgid "M_odel:"
 msgstr "M_odello:"
 
-#: ui/main.ui:417
+#: ui/main.ui:501
 msgid "Score:"
 msgstr "Punteggio:"
 
-#: ui/main.ui:530
+#: ui/main.ui:550
 msgid "Index"
 msgstr "Indice"
 
-#: ui/main.ui:585
+#: ui/main.ui:605
 msgid "Quantity"
 msgstr "Quantità"
 
@@ -105,22 +86,26 @@ msgstr "Comandi generali"
 msgid "Show the about dialog"
 msgstr "Mostra la finestra informazioni"
 
-#: ui/shortcuts.ui:28
-msgid "Show the keyboard shortcuts window"
-msgstr "Mostra la finestra scorciatoie di tastiera"
+#: ui/shortcuts.ui:35
+msgid "Show the shortcuts dialog"
+msgstr "Mostra la finestra delle scorciatoie"
 
-#: ui/shortcuts.ui:45
+#: ui/shortcuts.ui:52
 msgid "Main window"
 msgstr "Finestra principale"
 
-#: ui/shortcuts.ui:50
-msgid "Insert the selected model to the selections list"
-msgstr "Inserisce il modello scelto all'elenco delle selezioni"
-
 #: ui/shortcuts.ui:57
-msgid "Remove the currently selected model from the list"
-msgstr "Rimuove dall'elenco il modello attualmente selezionato"
+msgid "Insert the selected CPU model to the selections list"
+msgstr "Inserisce il modello di CPU selezionata all'elenco delle selezioni"
 
 #: ui/shortcuts.ui:64
+msgid "Remove the currently selected CPU model from the list"
+msgstr "Rimuove dall'elenco il modello di CPU attualmente selezionata"
+
+#: ui/shortcuts.ui:71
 msgid "Clear the selection list"
 msgstr "Svuota l'elenco delle selezioni"
+
+#: ui/shortcuts.ui:85
+msgid "Close the search bar"
+msgstr "Chiude la barra di ricerca"
