@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.muflone.cpucompare</id>
+
+  <name>CPUCompare</name>
+  <summary>Make comparisons between CPU models</summary>
+  <description>
+    <p>
+      A free GTK+ application to make comparisons between CPU models
+    </p>
+  </description>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <content_rating type="oars-1.0" />
+  <categories>
+    <category>System</category>
+  </categories>
+  <url type="homepage">https://github.com/muflone/cpucompare</url>
+  <url type="help">https://www.muflone.com/cpucompare</url>
+  <url type="translate">https://www.transifex.com/projects/p/cpucompare/</url>
+  <url type="bugtracker">https://github.com/muflone/cpucompare/issues</url>
+  <url type="contact">https://www.muflone.com/contacts/</url>
+
+  <launchable type="desktop-id">cpucompare.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.muflone.com/resources/cpucompare/archive/latest/english/main.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.muflone.com/resources/cpucompare/archive/latest/english/about.png</image>
+    </screenshot>
+  </screenshots>
+</component>
