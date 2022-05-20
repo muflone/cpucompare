@@ -32,11 +32,11 @@ msgstr "Onbekende modelreeks"
 #: cpucompare/ui/about.py:55
 #, python-brace-format
 msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
-msgstr "Versie {VERSION}\nDatabase versie {DATABASE_VERSION}"
+msgstr "Versie {VERSION}\nDatabankversie {DATABASE_VERSION}"
 
 #: cpucompare/ui/about.py:58
 msgid "Make comparisons between CPU models."
-msgstr ""
+msgstr "Vergelijk cpu-modellen nauwkeurig."
 
 #: cpucompare/ui/about.py:67
 msgid "Contributors:"
@@ -44,7 +44,7 @@ msgstr "Bijdragers:"
 
 #: ui/main.ui:115
 msgid "Find"
-msgstr "Zoek"
+msgstr "Zoeken"
 
 #: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
 msgid "Open the options menu"
@@ -88,7 +88,7 @@ msgstr "Toon het venster ‘Over’"
 
 #: ui/shortcuts.ui:35
 msgid "Show the shortcuts dialog"
-msgstr ""
+msgstr "Toon het sneltoetsvenster"
 
 #: ui/shortcuts.ui:52
 msgid "Main window"
@@ -96,11 +96,11 @@ msgstr "Hoofdvenster"
 
 #: ui/shortcuts.ui:57
 msgid "Insert the selected CPU model to the selections list"
-msgstr ""
+msgstr "Voeg het gekozen model toe aan de lijst"
 
 #: ui/shortcuts.ui:64
 msgid "Remove the currently selected CPU model from the list"
-msgstr ""
+msgstr "Verwijder het gekozen model van de lijst"
 
 #: ui/shortcuts.ui:71
 msgid "Clear the selection list"
@@ -108,4 +108,4 @@ msgstr "Wis de lijst"
 
 #: ui/shortcuts.ui:85
 msgid "Close the search bar"
-msgstr ""
+msgstr "Sluit het zoekvak"
