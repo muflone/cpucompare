@@ -15,7 +15,7 @@
 
 **Translations:** https://explore.transifex.com/muflone/cpucompare/
 
-# Usage
+# Description
 
 From the *CPUCompare* main window you can compare multiple CPU models.
 
