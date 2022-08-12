@@ -13,7 +13,7 @@
 
 **Documentation:** https://www.muflone.com/cpucompare/
 
-**Translations:** https://www.transifex.com/muflone/cpucompare/
+**Translations:** https://explore.transifex.com/muflone/cpucompare/
 
 # Usage
 
