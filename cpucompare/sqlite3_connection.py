@@ -22,16 +22,16 @@ import sqlite3
 
 
 class SQLite3Connection(object):
-    def __init__(self, sDatabase=None):
+    def __init__(self, database=None):
         """Initialize a SQLite3 database"""
         self.connection = None
         # Automatically open the database if its file path was provided
-        if sDatabase:
-            self.open(sDatabase)
+        if database:
+            self.open(database)
 
-    def open(self, sDatabase):
+    def open(self, database):
         """Open the database connection"""
-        self.connection = sqlite3.connect(sDatabase, check_same_thread=False)
+        self.connection = sqlite3.connect(database, check_same_thread=False)
         self.connection.row_factory = sqlite3.Row
 
     def close(self):
@@ -39,11 +39,11 @@ class SQLite3Connection(object):
         self.connection.close()
         self.connection = None
 
-    def execute(self, sSQL, *arguments):
+    def execute(self, sql, *arguments):
         """Execute an instruction and return its data"""
         cursor = self.connection.cursor()
         if len(arguments) == 1 and arguments[0] is None:
-            cursor.execute(sSQL)
+            cursor.execute(sql)
         else:
-            cursor.execute(sSQL, arguments)
+            cursor.execute(sql, arguments)
         return cursor

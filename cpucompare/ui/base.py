@@ -18,12 +18,14 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import pathlib
 from typing import Iterable
 
 from gi.repository import Gtk
 
-from cpucompare.gtkbuilder_loader import GtkBuilderLoader
+from cpucompare.constants import DIR_ICONS
 from cpucompare.functions import get_ui_file
+from cpucompare.gtkbuilder_loader import GtkBuilderLoader
 from cpucompare.localize import text
 
 
@@ -34,6 +36,7 @@ class UIBase(object):
     def set_buttons_icons(self, buttons: Iterable) -> None:
         """
         Set icons for buttons
+
         :param buttons: tuple or list of buttons to customize
         :return: None
         """
@@ -64,16 +67,40 @@ class UIBase(object):
         # Set Labels captions
         for widget in self.ui.get_objects_by_type(Gtk.Label):
             widget.set_label(text(widget.get_label()))
-        # Set TreeViewColumn titles
-        for widget in self.ui.get_objects_by_type(Gtk.TreeViewColumn):
-            widget.set_title(text(widget.get_title()))
         # Initialize tooltips
         for widget in self.ui.get_objects_by_type(Gtk.Button):
             action = widget.get_related_action()
             if action:
                 widget.set_tooltip_text(action.get_label().replace('_', ''))
 
+    def load_image_file(self, image: Gtk.Image) -> bool:
+        """
+        Load an icon from filesystem if existing
+        """
+        icon_name, _ = image.get_icon_name()
+        icon_path = pathlib.Path(DIR_ICONS / f'{icon_name}.png')
+        if icon_path.is_file():
+            image.set_from_file(str(icon_path))
+        return icon_path.is_file()
+
     def set_buttons_style_suggested_action(self, buttons: Iterable):
         """Add the suggested-action style to a widget"""
         for button in buttons:
             button.get_style_context().add_class('suggested-action')
+
+    def set_buttons_style_destructive_action(self, buttons: Iterable):
+        """Add the destructive-action style to a widget"""
+        for button in buttons:
+            button.get_style_context().add_class('destructive-action')
+
+    def show_popup_menu(self, menu: Gtk.Menu):
+        """Show a popup menu at the current position"""
+        if not Gtk.check_version(3, 22, 0):
+            menu.popup_at_pointer(trigger_event=None)
+        else:
+            menu.popup(parent_menu_shell=None,
+                       parent_menu_item=None,
+                       func=None,
+                       data=0,
+                       button=0,
+                       activate_time=Gtk.get_current_event_time())

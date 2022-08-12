@@ -3,7 +3,7 @@
 [![Travis CI Build Status](https://img.shields.io/travis/com/muflone/cpucompare/master.svg)](https://www.travis-ci.com/github/muflone/cpucompare)
 [![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/cpucompare/master.svg)](https://circleci.com/gh/muflone/cpucompare)
 
-**Description:** A GTK+ application to make comparisons between CPU models.
+**Description:** A GTK+ application to make comparisons between CPU models
 
 **Copyright:** 2013-2022 Fabio Castelli (Muflone) <muflone@muflone.com>
 

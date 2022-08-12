@@ -4,14 +4,14 @@
 # Website: https://www.muflone.com/cpucompare/
 # This file is distributed under the same license of CPUCompare.
 # Dutch translation for CPUCompare
-# 
+#
 # Translators:
 # Heimen Stoffels <vistausss(at)fastmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues\n"
-"POT-Creation-Date: 2022-05-17 01:17+0200\n"
+"POT-Creation-Date: 2022-08-15 23:56+0200\n"
 "PO-Revision-Date: 2017-05-01 16:25+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>, 2022\n"
 "Language-Team: Dutch\n"
@@ -29,52 +29,56 @@ msgstr "Onbekend merk"
 msgid "Unknown series"
 msgstr "Onbekende modelreeks"
 
-#: cpucompare/ui/about.py:55
+#: cpucompare/ui/about.py:61
 #, python-brace-format
 msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
 msgstr "Versie {VERSION}\nDatabankversie {DATABASE_VERSION}"
 
-#: cpucompare/ui/about.py:58
-msgid "Make comparisons between CPU models."
-msgstr "Vergelijk cpu-modellen nauwkeurig."
+#: cpucompare/ui/about.py:65
+msgid "Make comparisons between CPU models"
+msgstr "Vergelijk cpu-modellen nauwkeurig"
 
-#: cpucompare/ui/about.py:67
+#: cpucompare/ui/about.py:74
 msgid "Contributors:"
 msgstr "Bijdragers:"
 
-#: ui/main.ui:115
+#: ui/main.ui:25 ui/shortcuts.ui:35
+msgid "Keyboard shortcuts"
+msgstr "Sneltoetsen"
+
+#: ui/main.ui:63
 msgid "Find"
 msgstr "Zoeken"
 
-#: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
+#: ui/main.ui:135 ui/main.ui:141 ui/shortcuts.ui:28
 msgid "Open the options menu"
 msgstr "Open het optiesmenu"
 
-#: ui/main.ui:369 ui/shortcuts.ui:78
+#: ui/main.ui:363 ui/shortcuts.ui:78
 msgid "Find a CPU model"
 msgstr "Zoek een cpu-model"
 
-#: ui/main.ui:394
+#: ui/main.ui:388
 msgid "_Brand:"
 msgstr "_Merk:"
 
-#: ui/main.ui:427
+#: ui/main.ui:421
 msgid "S_eries:"
 msgstr "R_eeks:"
 
-#: ui/main.ui:460
+#: ui/main.ui:454
 msgid "M_odel:"
 msgstr "M_odel:"
 
-#: ui/main.ui:501
+#: ui/main.ui:495
 msgid "Score:"
 msgstr "Score:"
 
-#: ui/main.ui:550
+#: ui/main.ui:544
 msgid "Index"
 msgstr "Index"
 
-#: ui/main.ui:605
+#: ui/main.ui:599
 msgid "Quantity"
 msgstr "Aantal"
 
@@ -85,10 +89,6 @@ msgstr "Algemene opdrachten"
 #: ui/shortcuts.ui:21
 msgid "Show the about dialog"
 msgstr "Toon het venster ‘Over’"
-
-#: ui/shortcuts.ui:35
-msgid "Show the shortcuts dialog"
-msgstr "Toon het sneltoetsvenster"
 
 #: ui/shortcuts.ui:52
 msgid "Main window"

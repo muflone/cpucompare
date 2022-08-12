@@ -32,7 +32,7 @@ class CPUModels(ModelAbstract):
     COL_SCORE_RELATIVE = 7
 
     def add_data(self, item):
-        """Add a new row to the model if it doesn't exists"""
+        """Add a new row to the model if it doesn't exist"""
         super(self.__class__, self).add_data(item)
         if '%s_%d' % (item.name, item.quantity) not in self.rows:
             new_row = self.model.append((

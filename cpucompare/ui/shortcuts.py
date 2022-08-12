@@ -18,6 +18,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import logging
+
 from gi.repository import Gtk
 
 from cpucompare.localize import text
@@ -25,9 +27,14 @@ from cpucompare.ui.base import UIBase
 
 
 class UIShortcuts(UIBase):
-    def __init__(self, parent):
+    def __init__(self, parent, settings, options):
         """Prepare the shortcuts dialog"""
+        logging.debug(f'{self.__class__.__name__} init')
         super().__init__(filename='shortcuts.ui')
+        # Initialize members
+        self.settings = settings
+        self.options = options
+        # Load the user interface
         self.ui.shortcuts.set_transient_for(parent)
         # Initialize groups
         for widget in self.ui.get_objects_by_type(Gtk.ShortcutsGroup):
@@ -38,9 +45,11 @@ class UIShortcuts(UIBase):
 
     def show(self):
         """Show the shortcuts dialog"""
+        logging.debug(f'{self.__class__.__name__} show')
         self.ui.shortcuts.show()
 
     def destroy(self):
         """Destroy the shortcuts dialog"""
+        logging.debug(f'{self.__class__.__name__} destroy')
         self.ui.shortcuts.destroy()
         self.ui.shortcuts = None

@@ -18,12 +18,13 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import logging
+
 from gi.repository import Gtk
 
 from cpucompare.constants import (APP_NAME,
                                   FILE_ICON,
-                                  FILE_SETTINGS,
-                                  FILE_WINDOWS_POSITION)
+                                  FILE_SETTINGS)
 from cpucompare.functions import get_treeview_selected_row
 from cpucompare.localize import text_gtk30
 from cpucompare.settings import Settings
@@ -41,16 +42,20 @@ SECTION_WINDOW_NAME = 'main'
 
 class UIMain(UIBase):
     def __init__(self, application, options):
+        """Prepare the main window"""
+        logging.debug(f'{self.__class__.__name__} init')
         super().__init__(filename='main.ui')
+        # Initialize members
         self.application = application
-        self.folders = {}
-        self.load_ui()
-        self.settings = Settings(FILE_SETTINGS, True)
-        self.positions = Settings(FILE_WINDOWS_POSITION, False)
         self.options = options
-        self.positions.restore_window_position(window=self.ui.window,
-                                               section=SECTION_WINDOW_NAME)
-        # Load the brands, series and models
+        # Load settings
+        self.settings = Settings(filename=FILE_SETTINGS,
+                                 case_sensitive=True)
+        self.settings.load_preferences()
+        self.settings_map = {}
+        # Load UI
+        self.load_ui()
+        # Prepare the models
         self.database = ModelsDB()
         self.model_cpubrands = CPUBrands(self.ui.model_brands)
         self.model_cpuseries = CPUSeries(self.ui.model_series)
@@ -58,18 +63,19 @@ class UIMain(UIBase):
         self.model_cpumodels_all = CPUModels(self.ui.model_models_all)
         self.model_selection = CPUSelections(self.ui.model_selections,
                                              self.database.get_max_score())
-        self.database.load(self.model_cpumodels_all.add_data)
         # Add a match function to find the input text in the whole text instead
         # of matching only the models starting with the input key
         self.ui.entrycompletion_search.set_match_func(
-            self.entrycompletion_search_match_func,
+            self.do_entrycompletion_search_match,
             self.model_cpumodels_all)
+        # Complete initialization
+        self.startup()
 
     def load_ui(self):
         """Load the interface UI"""
+        logging.debug(f'{self.__class__.__name__} load UI')
         # Initialize translations
         self.ui.action_about.set_label(text_gtk30('About'))
-        self.ui.action_shortcuts.set_label(text_gtk30('Shortcuts'))
         # Initialize titles and tooltips
         self.set_titles()
         # Initialize Gtk.HeaderBar
@@ -82,18 +88,33 @@ class UIMain(UIBase):
                                         self.ui.button_about,
                                         self.ui.button_options])
         # Set buttons with always show image
-        for button in (self.ui.button_add, ):
+        for button in [self.ui.button_add]:
             button.set_always_show_image(True)
-        self.set_buttons_style_suggested_action(buttons=[self.ui.button_add])
+        # Set buttons as suggested
+        self.set_buttons_style_suggested_action(
+            buttons=[self.ui.button_add])
         # Set various properties
         self.ui.window.set_title(APP_NAME)
         self.ui.window.set_icon_from_file(str(FILE_ICON))
         self.ui.window.set_application(self.application)
-        # Connect signals from the glade file to the module functions
+        # Connect signals from the UI file to the functions with the same name
         self.ui.connect_signals(self)
+
+    def startup(self):
+        """Complete initialization"""
+        logging.debug(f'{self.__class__.__name__} startup')
+        self.database.load(cb_add_row=self.model_cpumodels_all.add_data)
+        # Load settings
+        for setting_name, action in self.settings_map.items():
+            action.set_active(self.settings.get_preference(
+                option=setting_name))
+        # Restore the saved size and position
+        self.settings.restore_window_position(window=self.ui.window,
+                                              section=SECTION_WINDOW_NAME)
 
     def run(self):
         """Show the UI"""
+        logging.debug(f'{self.__class__.__name__} run')
         self.ui.window.show_all()
         for brand in self.database.get_brands(cpu_quantity=1):
             self.model_cpubrands.add_data(brand)
@@ -106,36 +127,42 @@ class UIMain(UIBase):
         self.model_selection.add_data(item)
         self.ui.action_clear.set_sensitive(True)
 
-    def on_window_delete_event(self, widget, event):
-        """Close the application by closing the main window"""
-        self.ui.action_quit.emit('activate')
+    def do_entrycompletion_search_match(self, widget, key, treeiter, model):
+        """Search the item using the input text, regardless of the text case
+        This will find all the items which contains the input key, not only
+        those which begins with such text"""
+        return key in model.get_key(treeiter).lower()
 
-    def on_action_about_activate(self, action):
-        """Show the about dialog"""
-        dialog = UIAbout(self.ui.window)
+    def on_action_about_activate(self, widget):
+        """Show the information dialog"""
+        dialog = UIAbout(parent=self.ui.window,
+                         settings=self.settings,
+                         options=self.options)
         dialog.show()
         dialog.destroy()
 
-    def on_action_shortcuts_activate(self, action):
+    def on_action_shortcuts_activate(self, widget):
         """Show the shortcuts dialog"""
-        dialog = UIShortcuts(self.ui.window)
+        dialog = UIShortcuts(parent=self.ui.window,
+                             settings=self.settings,
+                             options=self.options)
         dialog.show()
 
-    def on_action_quit_activate(self, action):
+    def on_action_quit_activate(self, widget):
         """Save the settings and close the application"""
-        self.database.close()
-        self.positions.save_window_position(
-            self.ui.window, SECTION_WINDOW_NAME)
-        self.positions.save()
+        logging.debug(f'{self.__class__.__name__} quit')
+        self.settings.save_window_position(window=self.ui.window,
+                                           section=SECTION_WINDOW_NAME)
         self.settings.save()
         self.ui.window.destroy()
+        self.database.close()
         self.application.quit()
 
     def on_action_options_menu_activate(self, widget):
         """Open the options menu"""
-        self.ui.button_options.emit('clicked')
+        self.ui.button_options.clicked()
 
-    def on_action_add_activate(self, action):
+    def on_action_add_activate(self, widget):
         """Add the selected CPUModel to the selections list"""
         treeiter = self.ui.combo_models.get_active_iter()
         if treeiter:
@@ -144,18 +171,18 @@ class UIMain(UIBase):
                 quantity=self.model_cpumodels.get_quantity(treeiter))
             self.do_add_cpu_model_to_compares(item)
 
-    def on_action_remove_activate(self, action):
+    def on_action_remove_activate(self, widget):
         """Remove the selected CPUModel from the selections list"""
         treeiter = get_treeview_selected_row(self.ui.treeview_selections)
         if treeiter:
             self.model_selection.remove(treeiter)
 
-    def on_action_clear_activate(self, action):
+    def on_action_clear_activate(self, widget):
         """Clear the selections list"""
         self.model_selection.clear()
         self.ui.action_clear.set_sensitive(False)
 
-    def on_action_find_toggled(self, action):
+    def on_action_find_toggled(self, widget):
         """Show and hide the search entry"""
         status = self.ui.action_find.get_active()
         self.ui.revealer_find.set_reveal_child(status)
@@ -166,7 +193,7 @@ class UIMain(UIBase):
             # Set focus on the next widget if the focus was on the search entry
             self.ui.combo_brands.grab_focus()
 
-    def on_action_find_close_activate(self, action):
+    def on_action_find_close_activate(self, widget):
         """Close the search"""
         self.ui.action_find.set_active(False)
 
@@ -202,18 +229,19 @@ class UIMain(UIBase):
         if treeiter:
             # Save currently selected brand
             treeiter = self.ui.combo_brands.get_active_iter()
-            if treeiter:
-                selected_brand = self.model_cpubrands.get_key(treeiter)
+            selected_brand = (self.model_cpubrands.get_key(treeiter)
+                              if treeiter
+                              else None)
             # Save currently selected series
-            selected_series = None
             treeiter = self.ui.combo_series.get_active_iter()
-            if treeiter:
-                selected_series = self.model_cpuseries.get_key(treeiter)
+            selected_series = (self.model_cpuseries.get_key(treeiter)
+                               if treeiter
+                               else None)
             # Save currently selected model
-            selected_model = None
             treeiter = self.ui.combo_models.get_active_iter()
-            if treeiter:
-                selected_model = self.model_cpumodels.get_key(treeiter)
+            selected_model = (self.model_cpumodels.get_key(treeiter)
+                              if treeiter
+                              else None)
             # Clear previous series
             treeiter = None
             self.model_cpumodels.clear()
@@ -221,7 +249,7 @@ class UIMain(UIBase):
                                                   brand_name=selected_brand,
                                                   series_name=selected_series):
                 new_iter = self.model_cpumodels.add_data(model)
-                if (model.name == selected_model and not treeiter):
+                if model.name == selected_model and not treeiter:
                     treeiter = new_iter
             if len(self.model_cpumodels) > 0:
                 if treeiter:
@@ -258,14 +286,12 @@ class UIMain(UIBase):
         self.ui.entry_cputype_search.activate()
         return True
 
-    def entrycompletion_search_match_func(self, widget, key, treeiter, model):
-        """Search the item using the input text, regardless of the text case
-        This will find all the items which contains the input key, not only
-        those which begins with such text"""
-        return key in model.get_key(treeiter).lower()
-
     def on_treeview_selections_selection_changed(self, widget):
         """Enable or disable the buttons when a selection is changed"""
         self.ui.action_remove.set_sensitive(
             get_treeview_selected_row(self.ui.treeview_selections) is not None)
         self.ui.action_clear.set_sensitive(len(self.model_selection) > 0)
+
+    def on_window_delete_event(self, widget, event):
+        """Close the application by closing the main window"""
+        self.ui.action_quit.activate()

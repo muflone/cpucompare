@@ -54,9 +54,9 @@ class ModelsDB(object):
 
     def __load_all_models(self):
         """Load all models"""
-        sSQL = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu ' \
-               'ORDER BY cpu_name'
-        for row in self.database.execute(sSQL):
+        sql = 'SELECT cpu_name, score1, quantity, brand, model1 FROM cpu ' \
+              'ORDER BY cpu_name'
+        for row in self.database.execute(sql):
             # Cancel the running thread
             if self.loader.cancelled:
                 break
@@ -71,50 +71,50 @@ class ModelsDB(object):
 
     def get_models_count(self):
         """Return the number of models in the database"""
-        sSQL = 'SELECT count(*) AS totals FROM cpu'
-        return self.database.execute(sSQL).fetchall()[0]['totals']
+        sql = 'SELECT count(*) AS totals FROM cpu'
+        return self.database.execute(sql).fetchall()[0]['totals']
 
     def get_max_score(self):
         """Return the max score in the database"""
-        sSQL = 'SELECT max(score1) AS score FROM cpu'
-        return self.database.execute(sSQL).fetchall()[0]['score']
+        sql = 'SELECT max(score1) AS score FROM cpu'
+        return self.database.execute(sql).fetchall()[0]['score']
 
     def get_brands(self, cpu_quantity):
         """Return a list of InfoCPUBrand"""
-        sSQL = 'SELECT DISTINCT brand ' \
-               'FROM cpu ' \
-               'WHERE quantity %s 1 ' \
-               'ORDER BY brand' % self._get_quantity_sign(cpu_quantity)
+        sql = 'SELECT DISTINCT brand ' \
+              'FROM cpu ' \
+              'WHERE quantity %s 1 ' \
+              'ORDER BY brand' % self._get_quantity_sign(cpu_quantity)
         result = []
-        for row in self.database.execute(sSQL):
+        for row in self.database.execute(sql):
             result.append(InfoCPUBrand(row['brand'],
                                        row['brand']))
         return result
 
     def get_series(self, cpu_quantity, brand_name):
         """Return a list of InfoCPUSeries"""
-        sSQL = 'SELECT DISTINCT model1 ' \
-               'FROM cpu ' \
-               'WHERE quantity %s 1 ' \
-               'AND brand=? ' \
-               'ORDER BY model1' % self._get_quantity_sign(cpu_quantity)
+        sql = 'SELECT DISTINCT model1 ' \
+              'FROM cpu ' \
+              'WHERE quantity %s 1 ' \
+              'AND brand=? ' \
+              'ORDER BY model1' % self._get_quantity_sign(cpu_quantity)
         result = []
-        for row in self.database.execute(sSQL, brand_name):
+        for row in self.database.execute(sql, brand_name):
             result.append(InfoCPUSeries(row['model1'],
                                         row['model1']))
         return result
 
     def get_models(self, cpu_quantity, brand_name, series_name):
         """Return a list of InfoCPUModel"""
-        sSQL = 'SELECT cpu_name, model1, quantity, score1 ' \
-               'FROM cpu ' \
-               'WHERE quantity %s 1 ' \
-               'AND brand=? ' \
-               'AND model1=? ' \
-               'ORDER BY cpu_name, ' \
-               '         quantity' % self._get_quantity_sign(cpu_quantity)
+        sql = 'SELECT cpu_name, model1, quantity, score1 ' \
+              'FROM cpu ' \
+              'WHERE quantity %s 1 ' \
+              'AND brand=? ' \
+              'AND model1=? ' \
+              'ORDER BY cpu_name, ' \
+              '         quantity' % self._get_quantity_sign(cpu_quantity)
         result = []
-        for row in self.database.execute(sSQL, brand_name, series_name):
+        for row in self.database.execute(sql, brand_name, series_name):
             result.append(InfoCPUModel(row['cpu_name'],
                                        row['score1'],
                                        row['quantity'],

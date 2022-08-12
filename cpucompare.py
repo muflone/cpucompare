@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
@@ -20,6 +20,7 @@
 ##
 
 from cpucompare.main import main
+
 
 if __name__ == '__main__':
     main()
