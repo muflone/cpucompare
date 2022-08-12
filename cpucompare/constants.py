@@ -26,7 +26,7 @@ from xdg import BaseDirectory
 
 # Application constants
 APP_NAME = 'CPUCompare'
-APP_VERSION = '0.8.0'
+APP_VERSION = '0.8.1'
 APP_DESCRIPTION = 'Make comparisons between CPU models.'
 APP_ID = 'cpucompare.muflone.com'
 APP_URL = 'https://www.muflone.com/cpucompare/'
