@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
-"Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
 "POT-Creation-Date: 2022-08-15 23:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"

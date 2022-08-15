@@ -9,7 +9,7 @@
 
 **License:** GPL-3+
 
-**Source code:** https://github.com/muflone/cpucompare
+**Source code:** https://github.com/muflone/cpucompare/
 
 **Documentation:** https://www.muflone.com/cpucompare/
 
