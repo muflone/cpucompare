@@ -32,7 +32,7 @@ APP_ID = 'cpucompare.muflone.com'
 APP_URL = 'https://www.muflone.com/cpucompare/'
 APP_AUTHOR = 'Fabio Castelli'
 APP_AUTHOR_EMAIL = 'muflone@muflone.com'
-APP_COPYRIGHT = 'Copyright 2013-2022 %s' % APP_AUTHOR
+APP_COPYRIGHT = f'Copyright 2013-2022 {APP_AUTHOR}'
 URL_SOURCES = 'https://github.com/muflone/cpucompare/'
 # Other constants
 DOMAIN_NAME = 'cpucompare'

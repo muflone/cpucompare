@@ -34,18 +34,18 @@ class CPUModels(ModelAbstract):
     def add_data(self, item):
         """Add a new row to the model if it doesn't exist"""
         super(self.__class__, self).add_data(item)
-        if '%s_%d' % (item.name, item.quantity) not in self.rows:
+        if f'{item.name}_{item.quantity}' not in self.rows:
             new_row = self.model.append((
                 item.name,
                 item.name,
                 item.quantity,
-                '%d CPU' % item.quantity,
+                f'{item.quantity} CPU',
                 item.brand,
                 item.series,
                 item.score,
                 0.0,
             ))
-            self.rows['%s_%d' % (item.name, item.quantity)] = new_row
+            self.rows[f'{item.name}_{item.quantity}'] = new_row
             return new_row
 
     def get_model(self, treeiter):
@@ -69,7 +69,7 @@ class CPUModels(ModelAbstract):
         return self.model[treeiter][self.COL_QUANTITY]
 
     def get_info_cpumodel(self, name, quantity):
-        treeiter = self.get_iter('%s_%d' % (name, quantity))
+        treeiter = self.get_iter(f'{name}_{quantity}')
         result = InfoCPUModel(name,
                               self.get_score(treeiter),
                               quantity,

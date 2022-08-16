@@ -83,8 +83,8 @@ class ModelsDB(object):
         """Return a list of InfoCPUBrand"""
         sql = 'SELECT DISTINCT brand ' \
               'FROM cpu ' \
-              'WHERE quantity %s 1 ' \
-              'ORDER BY brand' % self._get_quantity_sign(cpu_quantity)
+              f'WHERE quantity {self._get_quantity_sign(cpu_quantity)} 1 ' \
+              'ORDER BY brand'
         result = []
         for row in self.database.execute(sql):
             result.append(InfoCPUBrand(row['brand'],
@@ -95,9 +95,9 @@ class ModelsDB(object):
         """Return a list of InfoCPUSeries"""
         sql = 'SELECT DISTINCT model1 ' \
               'FROM cpu ' \
-              'WHERE quantity %s 1 ' \
+              f'WHERE quantity {self._get_quantity_sign(cpu_quantity)} 1 ' \
               'AND brand=? ' \
-              'ORDER BY model1' % self._get_quantity_sign(cpu_quantity)
+              'ORDER BY model1'
         result = []
         for row in self.database.execute(sql, brand_name):
             result.append(InfoCPUSeries(row['model1'],
@@ -108,11 +108,11 @@ class ModelsDB(object):
         """Return a list of InfoCPUModel"""
         sql = 'SELECT cpu_name, model1, quantity, score1 ' \
               'FROM cpu ' \
-              'WHERE quantity %s 1 ' \
+              f'WHERE quantity {self._get_quantity_sign(cpu_quantity)} 1 ' \
               'AND brand=? ' \
               'AND model1=? ' \
               'ORDER BY cpu_name, ' \
-              '         quantity' % self._get_quantity_sign(cpu_quantity)
+              '         quantity'
         result = []
         for row in self.database.execute(sql, brand_name, series_name):
             result.append(InfoCPUModel(row['cpu_name'],

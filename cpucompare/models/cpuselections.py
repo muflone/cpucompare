@@ -46,15 +46,15 @@ class CPUSelections(ModelAbstract):
             new_index = int(self.get_key(len(self) - 1)) + 1
         if str(new_index) not in self.rows:
             new_row = self.model.append((
-                '%05d' % new_index,
+                f'{new_index:05}',
                 new_index,
                 item.name,
                 item.quantity,
-                '%d CPU' % item.quantity,
+                f'{item.quantity} CPU',
                 item.brand if item.brand else _('Unknown brand'),
                 item.series if item.series else _('Unknown series'),
                 item.score,
                 item.score * 100 / self.max_score,
             ))
-            self.rows['%05d' % new_index] = new_row
+            self.rows[f'{new_index:05}'] = new_row
             return new_row
