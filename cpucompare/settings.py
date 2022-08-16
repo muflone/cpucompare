@@ -1,7 +1,7 @@
 ##
 #     Project: CPUCompare
 # Description: A GTK+ application to make comparisons between CPU models
-#      Author: Fabio Castelli <muflone@muflone.com>
+#      Author: Fabio Castelli (Muflone) <muflone@muflone.com>
 #   Copyright: 2013-2022 Fabio Castelli
 #     License: GPL-3+
 #  This program is free software: you can redistribute it and/or modify
