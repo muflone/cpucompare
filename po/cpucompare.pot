@@ -1,6 +1,6 @@
 # CPUCompare
 # Make comparisons between CPU models
-# Copyright (C) 2013-2022 Fabio Castelli (Muflone) <muflone(at)muflone.com>
+# Copyright (C) 2013-2022 Fabio Castelli (Muflone) <muflone@muflone.com>
 # Website: https://www.muflone.com/cpucompare/
 # This file is distributed under the same license of CPUCompare.
 # X translation for CPUCompare
