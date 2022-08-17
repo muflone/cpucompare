@@ -50,14 +50,9 @@ class ModelAbstract(object):
         """Get informaion from a TreeIter column"""
         return self.get_model_row(treeiter)[column]
 
-    def set_data(self, treeiter, item):
+    def set_data(self, treeiter, column, value):
         """Update an existing TreeIter"""
-        old_key = self.get_key(treeiter)
-        # If the new name differs from the old name then update the
-        # TreeIters map in self.rows
-        if old_key != item.name:
-            self.rows.pop(old_key)
-            self.rows[item.name] = treeiter
+        self.get_model_row(treeiter)[column] = value
 
     def get_key(self, treeiter):
         """Get the name from a TreeIter"""
