@@ -19,8 +19,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from cpucompare.main import main
+import cpucompare.main
 
 
 if __name__ == '__main__':
-    main()
+    cpucompare.main.main()
