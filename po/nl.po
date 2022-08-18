@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
-"POT-Creation-Date: 2022-08-15 23:56+0200\n"
+"POT-Creation-Date: 2022-08-19 01:32+0200\n"
 "PO-Revision-Date: 2017-05-01 16:25+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>, 2022\n"
 "Language-Team: Dutch\n"
@@ -29,18 +29,38 @@ msgstr "Onbekend merk"
 msgid "Unknown series"
 msgstr "Onbekende modelreeks"
 
-#: cpucompare/ui/about.py:61
+#: cpucompare/ui/about.py:67
 #, python-brace-format
 msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
 msgstr "Versie {VERSION}\nDatabankversie {DATABASE_VERSION}"
 
-#: cpucompare/ui/about.py:65
+#: cpucompare/ui/about.py:71
 msgid "Make comparisons between CPU models"
 msgstr "Vergelijk cpu-modellen nauwkeurig"
 
-#: cpucompare/ui/about.py:74
+#: cpucompare/ui/about.py:80
 msgid "Contributors:"
 msgstr "Bijdragers:"
+
+#: cpucompare/ui/about.py:87
+msgid "Project home page"
+msgstr "Website"
+
+#: cpucompare/ui/about.py:88
+msgid "Source code"
+msgstr "Broncode"
+
+#: cpucompare/ui/about.py:89
+msgid "Author information"
+msgstr "Informatie over de maker"
+
+#: cpucompare/ui/about.py:90
+msgid "Issues and bugs tracking"
+msgstr "Problemen en bugs"
+
+#: cpucompare/ui/about.py:91
+msgid "Translations"
+msgstr "Vertalingen"
 
 #: ui/main.ui:25 ui/shortcuts.ui:35
 msgid "Keyboard shortcuts"

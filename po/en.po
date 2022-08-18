@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
-"POT-Creation-Date: 2022-08-15 23:56+0200\n"
+"POT-Creation-Date: 2022-08-19 01:32+0200\n"
 "PO-Revision-Date: 2022-05-17 01:08+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
 "Language-Team: English\n"
@@ -29,18 +29,38 @@ msgstr "Unknown brand"
 msgid "Unknown series"
 msgstr "Unknown series"
 
-#: cpucompare/ui/about.py:61
+#: cpucompare/ui/about.py:67
 #, python-brace-format
 msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
 msgstr "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
 
-#: cpucompare/ui/about.py:65
+#: cpucompare/ui/about.py:71
 msgid "Make comparisons between CPU models"
 msgstr "Make comparisons between CPU models"
 
-#: cpucompare/ui/about.py:74
+#: cpucompare/ui/about.py:80
 msgid "Contributors:"
 msgstr "Contributors:"
+
+#: cpucompare/ui/about.py:87
+msgid "Project home page"
+msgstr "Project home page"
+
+#: cpucompare/ui/about.py:88
+msgid "Source code"
+msgstr "Source code"
+
+#: cpucompare/ui/about.py:89
+msgid "Author information"
+msgstr "Author information"
+
+#: cpucompare/ui/about.py:90
+msgid "Issues and bugs tracking"
+msgstr "Issues and bugs tracking"
+
+#: cpucompare/ui/about.py:91
+msgid "Translations"
+msgstr "Translations"
 
 #: ui/main.ui:25 ui/shortcuts.ui:35
 msgid "Keyboard shortcuts"
