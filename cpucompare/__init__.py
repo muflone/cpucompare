@@ -17,36 +17,3 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
-
-import gettext
-import locale
-
-import cpucompare.requires                                         # noqa: F401
-from cpucompare.localize import (store_message,
-                                 strip_colon,
-                                 strip_underline,
-                                 text)
-from cpucompare.constants import DOMAIN_NAME, DIR_LOCALE
-
-
-# Load domain for translation
-for module in (gettext, locale):
-    module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
-    module.textdomain(DOMAIN_NAME)
-
-# Import some translated messages from GTK+ domain
-for message in ('_Remove', '_Clear List', 'Properties'):
-    text(message=message, gtk30=True)
-
-# Import some variations
-store_message('Type:', '%s:' % text(message='Type', gtk30=True))
-for message in ('_Brand:', 'S_eries:', 'M_odel:', 'Score:'):
-    new_message = strip_colon(strip_underline(message))
-    store_message(new_message,
-                  strip_colon(strip_underline(text(message=message,
-                                                   gtk30=False))))
-
-# With domain context
-for message in ('_Quit', '_Add'):
-    text(message=message, gtk30=True, context='Stock label')
-store_message('Quit', text(message='_Quit', gtk30=True).replace('_', ''))

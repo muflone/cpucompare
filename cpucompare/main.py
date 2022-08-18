@@ -20,6 +20,7 @@
 
 import logging
 
+import cpucompare.requires                                         # noqa: F401
 from cpucompare.app import Application
 from cpucompare.command_line_options import CommandLineOptions
 from cpucompare.constants import (DIR_DATA,
@@ -28,6 +29,7 @@ from cpucompare.constants import (DIR_DATA,
                                   DIR_PREFIX,
                                   DIR_SETTINGS,
                                   DIR_UI)
+import cpucompare.translations                                     # noqa: F401
 
 
 def main():
