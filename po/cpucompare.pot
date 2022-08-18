@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
-"POT-Creation-Date: 2022-08-15 23:56+0200\n"
+"POT-Creation-Date: 2022-08-18 22:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,17 +27,37 @@ msgstr ""
 msgid "Unknown series"
 msgstr ""
 
-#: cpucompare/ui/about.py:61
+#: cpucompare/ui/about.py:67
 #, python-brace-format
 msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
 msgstr ""
 
-#: cpucompare/ui/about.py:65
+#: cpucompare/ui/about.py:71
 msgid "Make comparisons between CPU models"
 msgstr ""
 
-#: cpucompare/ui/about.py:74
+#: cpucompare/ui/about.py:80
 msgid "Contributors:"
+msgstr ""
+
+#: cpucompare/ui/about.py:87
+msgid "Project home page"
+msgstr ""
+
+#: cpucompare/ui/about.py:88
+msgid "Source code"
+msgstr ""
+
+#: cpucompare/ui/about.py:89
+msgid "Author information"
+msgstr ""
+
+#: cpucompare/ui/about.py:90
+msgid "Issues and bugs tracking"
+msgstr ""
+
+#: cpucompare/ui/about.py:91
+msgid "Translations"
 msgstr ""
 
 #: ui/main.ui:25 ui/shortcuts.ui:35

@@ -25,13 +25,13 @@ from cpucompare.localize import (store_message,
                                  strip_colon,
                                  strip_underline,
                                  text)
-from cpucompare.constants import DOMAIN_NAME, DIR_LOCALE
+from cpucompare.constants import APP_DOMAIN, DIR_LOCALE
 
 
 # Load domain for translation
 for module in (gettext, locale):
-    module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
-    module.textdomain(DOMAIN_NAME)
+    module.bindtextdomain(APP_DOMAIN, DIR_LOCALE)
+    module.textdomain(APP_DOMAIN)
 
 # Import some translated messages from GTK+ domain
 for message in ('_Remove', '_Clear List', 'Properties'):
