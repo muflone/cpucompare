@@ -4,8 +4,6 @@
 # Website: https://www.muflone.com/cpucompare/
 # This file is distributed under the same license of CPUCompare.
 # X translation for CPUCompare
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
