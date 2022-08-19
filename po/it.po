@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
-"POT-Creation-Date: 2022-08-19 01:32+0200\n"
+"POT-Creation-Date: 2022-08-20 16:59+0200\n"
 "PO-Revision-Date: 2022-05-17 01:32+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
 "Language-Team: Italian\n"
@@ -31,8 +31,12 @@ msgstr "Serie sconosciuta"
 
 #: cpucompare/ui/about.py:67
 #, python-brace-format
-msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
-msgstr "Versione {VERSION}\nVersione del database {DATABASE_VERSION}"
+msgid ""
+"Version {VERSION}\n"
+"Database version {DATABASE_VERSION}"
+msgstr ""
+"Versione {VERSION}\n"
+"Versione del database {DATABASE_VERSION}"
 
 #: cpucompare/ui/about.py:71
 msgid "Make comparisons between CPU models"
@@ -66,45 +70,37 @@ msgstr "Traduzioni"
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: ui/main.ui:63
-msgid "Find"
-msgstr "Trova"
-
-#: ui/main.ui:135 ui/main.ui:141 ui/shortcuts.ui:28
+#: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
 msgid "Open the options menu"
 msgstr "Apri il menu opzioni"
 
-#: ui/main.ui:363 ui/shortcuts.ui:78
+#: ui/main.ui:364 ui/main.ui:371 ui/shortcuts.ui:78
 msgid "Find a CPU model"
 msgstr "Trova un modello di CPU"
 
-#: ui/main.ui:388
+#: ui/main.ui:396
 msgid "_Brand:"
 msgstr "M_arca:"
 
-#: ui/main.ui:421
+#: ui/main.ui:429
 msgid "S_eries:"
 msgstr "S_erie:"
 
-#: ui/main.ui:454
+#: ui/main.ui:462
 msgid "M_odel:"
 msgstr "M_odello:"
 
-#: ui/main.ui:495
+#: ui/main.ui:503
 msgid "Score:"
 msgstr "Punteggio:"
 
-#: ui/main.ui:544
+#: ui/main.ui:552
 msgid "Index"
 msgstr "Indice"
 
-#: ui/main.ui:599
+#: ui/main.ui:607
 msgid "Quantity"
 msgstr "Quantità"
-
-#: ui/shortcuts.ui:16
-msgid "General commands"
-msgstr "Comandi generali"
 
 #: ui/shortcuts.ui:21
 msgid "Show the about dialog"
@@ -125,7 +121,3 @@ msgstr "Rimuove dall'elenco il modello di CPU attualmente selezionata"
 #: ui/shortcuts.ui:71
 msgid "Clear the selection list"
 msgstr "Svuota l'elenco delle selezioni"
-
-#: ui/shortcuts.ui:85
-msgid "Close the search bar"
-msgstr "Chiude la barra di ricerca"

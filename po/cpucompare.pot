@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPUCompare\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/cpucompare/issues/\n"
-"POT-Creation-Date: 2022-08-19 01:32+0200\n"
+"POT-Creation-Date: 2022-08-20 17:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,9 @@ msgstr ""
 
 #: cpucompare/ui/about.py:67
 #, python-brace-format
-msgid "Version {VERSION}\nDatabase version {DATABASE_VERSION}"
+msgid ""
+"Version {VERSION}\n"
+"Database version {DATABASE_VERSION}"
 msgstr ""
 
 #: cpucompare/ui/about.py:71
@@ -62,44 +64,36 @@ msgstr ""
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: ui/main.ui:63
-msgid "Find"
-msgstr ""
-
-#: ui/main.ui:135 ui/main.ui:141 ui/shortcuts.ui:28
+#: ui/main.ui:141 ui/main.ui:147 ui/shortcuts.ui:28
 msgid "Open the options menu"
 msgstr ""
 
-#: ui/main.ui:363 ui/shortcuts.ui:78
+#: ui/main.ui:364 ui/main.ui:371 ui/shortcuts.ui:78
 msgid "Find a CPU model"
 msgstr ""
 
-#: ui/main.ui:388
+#: ui/main.ui:396
 msgid "_Brand:"
 msgstr ""
 
-#: ui/main.ui:421
+#: ui/main.ui:429
 msgid "S_eries:"
 msgstr ""
 
-#: ui/main.ui:454
+#: ui/main.ui:462
 msgid "M_odel:"
 msgstr ""
 
-#: ui/main.ui:495
+#: ui/main.ui:503
 msgid "Score:"
 msgstr ""
 
-#: ui/main.ui:544
+#: ui/main.ui:552
 msgid "Index"
 msgstr ""
 
-#: ui/main.ui:599
+#: ui/main.ui:607
 msgid "Quantity"
-msgstr ""
-
-#: ui/shortcuts.ui:16
-msgid "General commands"
 msgstr ""
 
 #: ui/shortcuts.ui:21
@@ -120,8 +114,4 @@ msgstr ""
 
 #: ui/shortcuts.ui:71
 msgid "Clear the selection list"
-msgstr ""
-
-#: ui/shortcuts.ui:85
-msgid "Close the search bar"
 msgstr ""

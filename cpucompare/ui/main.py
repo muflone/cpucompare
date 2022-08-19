@@ -25,17 +25,17 @@ from gi.repository import Gtk
 from cpucompare.constants import (APP_NAME,
                                   FILE_ICON,
                                   FILE_SETTINGS)
-from cpucompare.functions import get_treeview_selected_row
-from cpucompare.localize import text_gtk30
-from cpucompare.settings import Settings
 from cpucompare.database import ModelsDB
+from cpucompare.functions import get_treeview_selected_row
+from cpucompare.localize import text
+from cpucompare.models.cpubrands import CPUBrands
+from cpucompare.models.cpumodels import CPUModels
+from cpucompare.models.cpuselections import CPUSelections
+from cpucompare.models.cpuseries import CPUSeries
+from cpucompare.settings import Settings
 from cpucompare.ui.about import UIAbout
 from cpucompare.ui.base import UIBase
 from cpucompare.ui.shortcuts import UIShortcuts
-from cpucompare.models.cpubrands import CPUBrands
-from cpucompare.models.cpuseries import CPUSeries
-from cpucompare.models.cpumodels import CPUModels
-from cpucompare.models.cpuselections import CPUSelections
 
 SECTION_WINDOW_NAME = 'main'
 
@@ -63,8 +63,8 @@ class UIMain(UIBase):
         self.model_cpumodels_all = CPUModels(self.ui.model_models_all)
         self.model_selection = CPUSelections(self.ui.model_selections,
                                              self.database.get_max_score())
-        # Add a match function to find the input text in the whole text instead
-        # of matching only the models starting with the input key
+        # Add a match function to search the input text in the whole text
+        # instead of matching only the models starting with the input key
         self.ui.entrycompletion_search.set_match_func(
             self.do_entrycompletion_search_match,
             self.model_cpumodels_all)
@@ -74,17 +74,20 @@ class UIMain(UIBase):
     def load_ui(self):
         """Load the interface UI"""
         logging.debug(f'{self.__class__.__name__} load UI')
-        # Initialize translations
-        self.ui.action_about.set_label(text_gtk30('About'))
         # Initialize titles and tooltips
         self.set_titles()
+        self.ui.entry_cputype_search.set_icon_tooltip_text(
+            Gtk.EntryIconPosition.PRIMARY,
+            self.ui.entry_cputype_search.get_tooltip_text())
+        self.ui.entry_cputype_search.set_icon_tooltip_text(
+            Gtk.EntryIconPosition.SECONDARY, text('Clear'))
         # Initialize Gtk.HeaderBar
         self.ui.header_bar.props.title = self.ui.window.get_title()
         self.ui.window.set_titlebar(self.ui.header_bar)
         self.set_buttons_icons(buttons=[self.ui.button_add,
                                         self.ui.button_remove,
                                         self.ui.button_clear,
-                                        self.ui.button_find,
+                                        self.ui.button_search,
                                         self.ui.button_about,
                                         self.ui.button_options])
         # Set buttons with always show image
@@ -129,7 +132,7 @@ class UIMain(UIBase):
 
     def do_entrycompletion_search_match(self, widget, key, treeiter, model):
         """Search the item using the input text, regardless of the text case
-        This will find all the items which contains the input key, not only
+        This will search all the items which contains the input key, not only
         those which begins with such text"""
         return key in model.get_key(treeiter).lower()
 
@@ -182,10 +185,10 @@ class UIMain(UIBase):
         self.model_selection.clear()
         self.ui.action_clear.set_sensitive(False)
 
-    def on_action_find_toggled(self, widget):
+    def on_action_search_toggled(self, widget):
         """Show and hide the search entry"""
-        status = self.ui.action_find.get_active()
-        self.ui.revealer_find.set_reveal_child(status)
+        status = self.ui.action_search.get_active()
+        self.ui.revealer_search.set_reveal_child(status)
         if status:
             # Grab focus when search is enabled
             self.ui.entry_cputype_search.grab_focus()
@@ -193,9 +196,9 @@ class UIMain(UIBase):
             # Set focus on the next widget if the focus was on the search entry
             self.ui.combo_brands.grab_focus()
 
-    def on_action_find_close_activate(self, widget):
+    def on_action_search_close_activate(self, widget):
         """Close the search"""
-        self.ui.action_find.set_active(False)
+        self.ui.action_search.set_active(False)
 
     def on_combo_brands_changed(self, widget):
         """Change the CPU brand and reload the CPU series list"""

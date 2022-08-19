@@ -34,18 +34,23 @@ for module in (gettext, locale):
     module.textdomain(APP_DOMAIN)
 
 # Import some translated messages from GTK+ domain
-for message in ('_Remove', '_Clear List', 'Properties'):
-    text(message=message, gtk30=True)
+for message in ('About', '_Clear List', 'General', '_Remove', 'Search'):
+    store_message(strip_colon(strip_underline(message)),
+                  strip_colon(strip_underline(text(message=message,
+                                                   gtk30=True))))
+
+# Import some translated messages from GTK+ domain and context
+for message in ('_Add', '_Clear', '_Quit'):
+    store_message(strip_colon(strip_underline(message)),
+                  strip_colon(strip_underline(text(message=message,
+                                                   gtk30=True,
+                                                   context='Stock label'))))
 
 # Import some variations
-store_message('Type:', '%s:' % text(message='Type', gtk30=True))
-for message in ('_Brand:', 'S_eries:', 'M_odel:', 'Score:'):
-    new_message = strip_colon(strip_underline(message))
-    store_message(new_message,
+store_message('Type:',
+              '%s:' % text(message='Type',
+                           gtk30=True))
+for message in ('_Brand:', 'M_odel:', 'Score:', 'S_eries:'):
+    store_message(strip_colon(strip_underline(message)),
                   strip_colon(strip_underline(text(message=message,
                                                    gtk30=False))))
-
-# With domain context
-for message in ('_Quit', '_Add'):
-    text(message=message, gtk30=True, context='Stock label')
-store_message('Quit', text(message='_Quit', gtk30=True).replace('_', ''))

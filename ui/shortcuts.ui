@@ -13,7 +13,7 @@
         <child>
           <object class="GtkShortcutsGroup">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">General commands</property>
+            <property name="title">General</property>
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
@@ -76,13 +76,6 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;F</property>
                 <property name="title" translatable="yes">Find a CPU model</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">Escape</property>
-                <property name="title" translatable="yes">Close the search bar</property>
               </object>
             </child>
           </object>
