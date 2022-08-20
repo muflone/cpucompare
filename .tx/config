@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 
 [cpucompare.cpucompare]
+file_filter = po/<lang>.po
 source_file = po/cpucompare.pot
 source_lang = en
-file_filter = po/<lang>.po
 type = PO
