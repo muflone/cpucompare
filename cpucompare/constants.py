@@ -26,7 +26,7 @@ from xdg import BaseDirectory
 
 # Application constants
 APP_NAME = 'CPUCompare'
-APP_VERSION = '0.8.1'
+APP_VERSION = '0.8.2'
 APP_DESCRIPTION = 'Make comparisons between CPU models'
 APP_DOMAIN = 'cpucompare'
 APP_AUTHOR = 'Fabio Castelli'

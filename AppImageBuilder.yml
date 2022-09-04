@@ -27,7 +27,7 @@ AppDir:
     id: com.muflone.cpucompare
     name: cpucompare
     icon: cpucompare
-    version: 0.8.1
+    version: 0.8.2
     exec: usr/bin/python3
     exec_args: "$APPDIR/usr/share/cpucompare/cpucompare.py $@"
 
