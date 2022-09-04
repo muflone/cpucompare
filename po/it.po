@@ -44,7 +44,7 @@ msgstr "Effettua confronti tra modelli di CPU"
 
 #: cpucompare/ui/about.py:80
 msgid "Contributors:"
-msgstr "Contributori"
+msgstr "Contributori:"
 
 #: cpucompare/ui/about.py:87
 msgid "Project home page"
