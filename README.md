@@ -11,7 +11,7 @@
 
 **Source code:** https://github.com/muflone/cpucompare/
 
-**Documentation:** https://www.muflone.com/cpucompare/
+**Documentation:** http://www.muflone.com/cpucompare/
 
 **Translations:** https://explore.transifex.com/muflone/cpucompare/
 
@@ -23,7 +23,7 @@ For each brand you'll find a list of the CPU series and for each series you'll
 get a list of the corresponding CPU models with a speed score for each one of
 them.
 
-![Main window](https://www.muflone.com/resources/cpucompare/archive/latest/english/main.png)
+![Main window](http://www.muflone.com/resources/cpucompare/archive/latest/english/main.png)
 
 # System Requirements
 

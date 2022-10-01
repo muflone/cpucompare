@@ -17,18 +17,18 @@
     <category>System</category>
   </categories>
   <url type="homepage">https://github.com/muflone/cpucompare/</url>
-  <url type="help">https://www.muflone.com/cpucompare/</url>
+  <url type="help">http://www.muflone.com/cpucompare/</url>
   <url type="translate">https://explore.transifex.com/muflone/cpucompare/</url>
   <url type="bugtracker">https://github.com/muflone/cpucompare/issues/</url>
-  <url type="contact">https://www.muflone.com/contacts/</url>
+  <url type="contact">http://www.muflone.com/contacts/</url>
 
   <launchable type="desktop-id">cpucompare.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://www.muflone.com/resources/cpucompare/archive/latest/english/main.png</image>
+      <image>http://www.muflone.com/resources/cpucompare/archive/latest/english/main.png</image>
     </screenshot>
     <screenshot>
-      <image>https://www.muflone.com/resources/cpucompare/archive/latest/english/about.png</image>
+      <image>http://www.muflone.com/resources/cpucompare/archive/latest/english/about.png</image>
     </screenshot>
   </screenshots>
 </component>
